@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { 
   MousePointer2, 
   Keyboard, 
@@ -113,17 +112,13 @@ export const RentalGearSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid of 6 Pro Gear Rental Cards */}
+      {/* Grid of 6 Pro Gear Rental Cards (Smooth Stable CSS without Blink) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        {RENTAL_GEAR.map((item, idx) => {
+        {RENTAL_GEAR.map((item) => {
           const Icon = item.icon;
           return (
-            <motion.div
+            <div
               key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.45, delay: idx * 0.06 }}
               className="p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-[#131018] to-[#0a080d] border border-white/[0.08] hover:border-[#E32124]/40 transition-all duration-300 shadow-xl hover:shadow-[0_0_25px_rgba(227,33,36,0.15)] flex flex-col justify-between group relative overflow-hidden"
             >
               {/* Top Accent Line */}
@@ -171,7 +166,7 @@ export const RentalGearSection: React.FC = () => {
                   На Ленина, 19 →
                 </span>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

@@ -25,8 +25,6 @@ interface ZonesShowcaseProps {
 
 export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zonesList }) => {
   const [expandedZoneId, setExpandedZoneId] = useState<string | null>(null);
-  // Фаза закрытия: окно ещё смонтировано и играет CSS-анимацию выхода,
-  // размонтирование — по таймеру. Никаких exit-клонов framer (см. index.css).
   const [isClosing, setIsClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
 
@@ -49,7 +47,6 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
       return;
     }
 
-    // Открытие нового обзора отменяет незавершённое закрытие
     if (closeTimerRef.current !== null) {
       window.clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
@@ -59,7 +56,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
   };
 
   const closeExpanded = () => {
-    if (closeTimerRef.current !== null) return; // уже закрывается
+    if (closeTimerRef.current !== null) return;
     sound.playClick();
     setIsClosing(true);
     closeTimerRef.current = window.setTimeout(() => {
@@ -70,7 +67,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
   };
 
   return (
-    <section id="zones" className="relative py-8 sm:py-12 bg-transparent overflow-hidden scroll-mt-24">
+    <section id="zones" className="relative py-8 sm:py-12 bg-transparent overflow-hidden scroll-mt-24 select-none">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -83,12 +80,12 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
           <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight uppercase text-white">
             ЗОНЫ <span className="text-[#E32124]">//</span> И ЭКСКЛЮЗИВЫ
           </h2>
-          <p className="mt-3 text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Интерактивная карта игровых пространств. Нажмите на любую зону, чтобы раскрыть детальную спецификацию прямо в окне. При клике на Автосимы — откроется отдельный раздел.
+          <p className="mt-3 text-zinc-400 text-xs sm:text-sm md:text-base leading-relaxed">
+            Интерактивная карта игровых пространств. Нажмите на любую зону, чтобы раскрыть полноразмерные фото и детальную спецификацию.
           </p>
         </div>
 
-        {/* Creative Asymmetric Bento Grid (100% Reliable across all viewports) */}
+        {/* Creative Asymmetric Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-5 mb-4">
 
           {/* 1. PREMIUM — большой вертикальный герой (md: 7 cols) */}
@@ -157,23 +154,23 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
 
       </div>
 
-      {/* Full-Screen Lightbox Modal — чистый CSS-вход/выход (без framer exit-клонов) */}
+      {/* Expanded Zone Lightbox Modal with Fullscreen Capability */}
       {expandedZone && (
         <div
-          className={`fixed inset-0 z-[200] flex items-center justify-center pt-20 pb-4 px-3 sm:px-6 sm:py-6 ${
+          className={`fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 ${
             isClosing ? 'animate-zones-overlay-out pointer-events-none' : 'animate-zones-overlay-in'
           }`}
         >
-          {/* Затемнение фона */}
+          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/85 backdrop-blur-md"
             onClick={closeExpanded}
           />
 
-          {/* Окно */}
+          {/* Modal Container */}
           <div
             key={expandedZone.id}
-            className={`relative w-full max-w-6xl max-h-[calc(100vh-6rem)] sm:max-h-[88vh] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#E32124]/50 bg-[#0a0a12] shadow-[0_0_80px_rgba(227,33,36,0.35)] flex flex-col z-10 ${
+            className={`relative w-full max-w-5xl max-h-[92vh] overflow-y-auto rounded-3xl border border-[#E32124]/50 bg-[#0c0a14] shadow-[0_0_80px_rgba(227,33,36,0.35)] flex flex-col z-10 ${
               isClosing ? 'animate-zones-window-out' : 'animate-zones-window-in'
             }`}
           >
@@ -189,7 +186,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
   );
 };
 
-// ===== Expanded Zone Modal (Full-Screen Detail with Pure CSS Double-Buffered Gallery) =====
+// ===== Expanded Zone Modal Component (Large Photos on Top + Fullscreen Lightbox) =====
 interface ExpandedZoneModalProps {
   zone: ZoneType;
   onClose: () => void;
@@ -199,18 +196,26 @@ interface ExpandedZoneModalProps {
 const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, onOpenBooking }) => {
   const gallery = zone.gallery && zone.gallery.length > 0 ? zone.gallery : [zone.image];
   const [activeImage, setActiveImage] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Auto-play slideshow every 4.0 seconds
-  React.useEffect(() => {
-    if (gallery.length <= 1 || isPaused) return;
-
-    const interval = setInterval(() => {
-      setActiveImage((prev) => (prev + 1) % gallery.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [gallery.length, isPaused]);
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        setActiveImage((i) => (i + 1) % gallery.length);
+      } else if (e.key === 'ArrowLeft') {
+        setActiveImage((i) => (i - 1 + gallery.length) % gallery.length);
+      } else if (e.key === 'Escape') {
+        if (isFullscreen) {
+          setIsFullscreen(false);
+        } else {
+          onClose();
+        }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [gallery.length, isFullscreen, onClose]);
 
   const next = () => {
     sound.playClick();
@@ -223,220 +228,303 @@ const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, on
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 w-full h-full overflow-y-auto lg:overflow-hidden">
-      {/* Mobile Absolute Close Button */}
-      <button
-        onClick={onClose}
-        className="lg:hidden absolute top-3 right-3 z-30 p-2 rounded-xl bg-black/80 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all shadow-xl active:scale-95 cursor-pointer"
-        aria-label="Закрыть"
-      >
-        <X className="w-4 h-4" />
-      </button>
-
-      {/* Media Side (Stable Double-Buffered Stack) */}
-      <div 
-        className="lg:col-span-5 relative min-h-[240px] sm:min-h-[320px] lg:min-h-full bg-black flex flex-col justify-between group/gallery shrink-0"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <div className="absolute inset-0 overflow-hidden bg-black pointer-events-none">
+    <>
+      <div className="flex flex-col w-full">
+        
+        {/* 1. Large Top Photo Section with Fullscreen Trigger */}
+        <div className="relative w-full h-[320px] sm:h-[420px] lg:h-[480px] bg-black shrink-0 overflow-hidden group/gallery">
+          
+          {/* Main Photo */}
           {gallery.map((imgUrl, idx) => {
             const isActive = idx === activeImage;
             return (
               <div
                 key={idx}
-                className={`absolute inset-0 transition-opacity duration-600 ease-in-out ${
+                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
                   isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
                 }`}
               >
                 <img
                   src={imgUrl}
                   alt={`${zone.name} ${idx + 1}`}
-                  className={`w-full h-full object-cover transition-transform duration-[5500ms] ease-out ${
-                    isActive ? 'scale-105' : 'scale-100'
-                  }`}
-                  loading="lazy"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
             );
           })}
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#000000] via-[#000000]/40 to-transparent pointer-events-none z-20" />
 
-        {/* Верхние бейджи, счётчик фото и индикатор авто-слайдшоу */}
-        <div className="relative z-30 p-4 sm:p-5 flex items-start justify-between gap-2 font-mono pr-12 lg:pr-5">
-          <div className="flex flex-wrap gap-2">
-            <span className="px-3 py-1.5 rounded-xl bg-[#000000]/80 border border-white/15 text-xs text-white flex items-center gap-1.5 shadow-md">
-              <Users className="w-3.5 h-3.5 text-[#E32124]" />
-              {zone.capacity}
-            </span>
-            {zone.badge && (
-              <span className="px-3 py-1.5 rounded-xl bg-[#E32124] text-white text-xs font-bold shadow-lg shadow-red-600/30">
-                {zone.badge}
+          {/* Gradient Vignettes */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0a14] via-transparent to-black/60 pointer-events-none z-20" />
+
+          {/* Top Bar on Photo: Badges + Fullscreen + Close */}
+          <div className="absolute top-4 left-4 right-4 z-30 flex items-center justify-between gap-2 font-mono">
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1.5 rounded-xl bg-black/80 border border-white/15 text-xs text-white flex items-center gap-1.5 backdrop-blur-md shadow-lg">
+                <Users className="w-3.5 h-3.5 text-[#E32124]" />
+                {zone.capacity}
               </span>
-            )}
+              {zone.badge && (
+                <span className="px-3 py-1.5 rounded-xl bg-[#E32124] text-white text-xs font-bold shadow-lg shadow-red-600/30">
+                  {zone.badge}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Fullscreen Expansion Button */}
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setIsFullscreen(true);
+                }}
+                className="px-3 py-1.5 rounded-xl bg-black/80 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all text-xs flex items-center gap-1.5 backdrop-blur-md shadow-lg cursor-pointer active:scale-95"
+                title="Развернуть на весь экран"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">На весь экран</span>
+              </button>
+
+              {/* Close Modal Button */}
+              <button
+                onClick={onClose}
+                className="p-2 rounded-xl bg-black/80 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all backdrop-blur-md shadow-lg cursor-pointer active:scale-95"
+                aria-label="Закрыть"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
+          {/* Navigation Arrows on Photo */}
           {gallery.length > 1 && (
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-black/80 border border-white/15 text-xs font-mono text-zinc-300 shrink-0 shadow-md">
-              <span className={`w-1.5 h-1.5 rounded-full ${isPaused ? 'bg-zinc-400' : 'bg-[#E32124] animate-ping'}`} />
-              <span>{activeImage + 1} / {gallery.length}</span>
+            <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 z-30 flex items-center justify-between pointer-events-none">
+              <button
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  prev(); 
+                }}
+                className="p-3 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all pointer-events-auto active:scale-90 shadow-2xl cursor-pointer"
+                aria-label="Предыдущее фото"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  next(); 
+                }}
+                className="p-3 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all pointer-events-auto active:scale-90 shadow-2xl cursor-pointer"
+                aria-label="Следующее фото"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
           )}
+
+          {/* Bottom Photo Thumbnails & Counter */}
+          {gallery.length > 1 && (
+            <div className="absolute bottom-4 left-4 right-4 z-30 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+                {gallery.map((g, i) => (
+                  <button
+                    key={g + i}
+                    onClick={(e) => { 
+                      e.stopPropagation(); 
+                      sound.playClick(); 
+                      setActiveImage(i); 
+                    }}
+                    className={`w-12 sm:w-14 h-12 sm:h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 shadow-lg ${
+                      i === activeImage 
+                        ? 'border-[#E32124] ring-2 ring-[#E32124]/60 scale-105' 
+                        : 'border-white/20 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={g} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="px-3 py-1 rounded-xl bg-black/80 border border-white/20 text-xs font-mono text-zinc-300 shrink-0 backdrop-blur-md">
+                {activeImage + 1} / {gallery.length}
+              </div>
+            </div>
+          )}
+
         </div>
 
-        {/* Стрелки навигации по галерее */}
-        {gallery.length > 1 && (
-          <div className="relative z-30 px-3 flex items-center justify-between pointer-events-none">
-            <button
-              onClick={(e) => { 
-                e.stopPropagation(); 
-                prev(); 
-              }}
-              className="p-2.5 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
-              aria-label="Предыдущее фото"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={(e) => { 
-                e.stopPropagation(); 
-                next(); 
-              }}
-              className="p-2.5 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
-              aria-label="Следующее фото"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
-        {/* Нижний ряд миниатюр */}
-        {gallery.length > 1 && (
-          <div className="relative z-30 p-3 sm:p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
-            <div className="flex flex-wrap gap-2">
-              {gallery.map((g, i) => (
-                <button
-                  key={g + i}
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
-                    sound.playClick(); 
-                    setActiveImage(i); 
-                  }}
-                  className={`w-10 sm:w-12 h-10 sm:h-12 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                    i === activeImage 
-                      ? 'border-[#E32124] ring-2 ring-[#E32124]/50 scale-105' 
-                      : 'border-white/20 opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={g} alt="" className="w-full h-full object-cover"  decoding="async" />
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Информация (Детали и описание) */}
-      <div className="lg:col-span-7 p-5 sm:p-8 lg:p-10 flex flex-col lg:max-h-[88vh] lg:overflow-y-auto">
-        <div>
-          {/* Верхняя строка с кнопкой закрытия (Desktop) */}
-          <div className="hidden lg:flex items-center justify-between gap-4 mb-4 pb-3 border-b border-white/[0.08]">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#E32124] flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5" />
-              Спецификация пространства CyberX
-            </span>
-            <button
-              onClick={onClose}
-              className="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-[#E32124] text-zinc-300 hover:text-white transition-colors text-xs font-mono flex items-center gap-1 cursor-pointer"
-            >
-              <X className="w-3.5 h-3.5" />
-              <span>Свернуть</span>
-            </button>
-          </div>
-
-          {/* Заголовок и подзаголовок зоны */}
-          <div className="mb-5 sm:mb-6">
-            <h3 className="text-xl sm:text-3xl lg:text-4xl font-display font-black text-white uppercase tracking-tight">
+        {/* 2. Detailed Info Section (Placed Below in Full Width) */}
+        <div className="p-6 sm:p-8 lg:p-10 space-y-6">
+          
+          {/* Title & Tagline */}
+          <div className="border-b border-white/[0.08] pb-5">
+            <h3 className="text-2xl sm:text-4xl font-display font-black text-white uppercase tracking-tight">
               {zone.name}
             </h3>
-            <p className="text-xs sm:text-sm text-zinc-300 mt-1 font-light">
+            <p className="text-xs sm:text-sm text-zinc-300 mt-1.5 font-light">
               {zone.tagline}
+            </p>
+            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mt-3 max-w-4xl font-normal">
+              {zone.description}
             </p>
           </div>
 
-          {/* Описание */}
-          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-5 sm:mb-6">
-            {zone.description}
-          </p>
-
-          {/* Железо */}
-          <div className="mb-5 sm:mb-6">
-            <span className="text-xs font-mono font-bold tracking-wider text-zinc-300 uppercase block mb-3 flex items-center gap-2">
-              <Monitor className="w-3.5 h-3.5 text-[#E32124]" />
-              Оснащение и конфигурация:
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {zone.hardwareBrief.map((hw, i) => (
-                <div key={i} className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-zinc-300 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#E32124] shrink-0" />
-                  <span className="truncate">{hw}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Особенности */}
-          <div className="mb-5 sm:mb-6">
-            <span className="text-xs font-mono font-bold tracking-wider text-zinc-300 uppercase block mb-2.5 flex items-center gap-2">
-              <Coffee className="w-3.5 h-3.5 text-[#E32124]" />
-              Особенности и сервис:
-            </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {zone.features.map((feat, i) => (
-                <div key={i} className="flex items-start gap-2 text-xs text-zinc-400 font-mono">
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>{feat}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Цена и CTA */}
-        <div className="pt-5 sm:pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono mt-auto">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="font-display font-black text-xl sm:text-2xl text-white">
-                {zone.pricePerHour} ₽
+          {/* Specs & Hardware */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono">
+            <div>
+              <span className="text-xs font-bold tracking-wider text-zinc-300 uppercase block mb-3 flex items-center gap-2">
+                <Monitor className="w-3.5 h-3.5 text-[#E32124]" />
+                Оснащение и конфигурация:
               </span>
-              <span className="text-xs text-zinc-400">/ час</span>
+              <div className="space-y-2">
+                {zone.hardwareBrief.map((hw, i) => (
+                  <div key={i} className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-xs text-zinc-300 flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E32124] shrink-0 shadow-[0_0_8px_#E32124]" />
+                    <span>{hw}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="text-[11px] text-zinc-400">
-              Ночной пакет (10 ч): <span className="text-white font-bold">{zone.priceNight} ₽</span>
+
+            <div>
+              <span className="text-xs font-bold tracking-wider text-zinc-300 uppercase block mb-3 flex items-center gap-2">
+                <Coffee className="w-3.5 h-3.5 text-[#E32124]" />
+                Особенности и сервис:
+              </span>
+              <div className="space-y-2">
+                {zone.features.map((feat, i) => (
+                  <div key={i} className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-xs text-zinc-300 flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <button
-            onClick={() => {
-              sound.playTrigger();
-              onOpenBooking(
-                zone.id.includes('premium') || zone.id.includes('sim-racing') || zone.id.includes('projector')
-                  ? 'cyberx-arena'
-                  : undefined,
-                zone.id,
-              );
-            }}
-            onMouseEnter={() => sound.playHover()}
-            className="py-3 sm:py-3.5 px-6 sm:px-8 rounded-2xl font-mono font-bold text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white bg-[#E32124] hover:bg-[#FF2A2E] shadow-lg shadow-red-600/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <Zap className="w-4 h-4" />
-            <span>Забронировать {zone.name.split('//')[0].trim()}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* Price & Action Row */}
+          <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-5 font-mono">
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-display font-black text-2xl sm:text-3xl text-white">
+                  {zone.pricePerHour} ₽
+                </span>
+                <span className="text-xs text-zinc-400">/ час</span>
+              </div>
+              <div className="text-xs text-zinc-400 mt-0.5">
+                Ночной пакет (10 ч): <span className="text-white font-bold">{zone.priceNight} ₽</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                sound.playTrigger();
+                onOpenBooking(
+                  zone.id.includes('premium') || zone.id.includes('sim-racing') || zone.id.includes('projector')
+                    ? 'cyberx-arena'
+                    : undefined,
+                  zone.id,
+                );
+              }}
+              onMouseEnter={() => sound.playHover()}
+              className="py-4 px-8 rounded-full font-mono font-black text-xs sm:text-sm uppercase tracking-[0.18em] text-white bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] shadow-[0_0_30px_rgba(227,33,36,0.6)] hover:shadow-[0_0_50px_rgba(227,33,36,0.95)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20"
+            >
+              <Zap className="w-4 h-4" />
+              <span>Забронировать {zone.name.split('//')[0].trim()}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
         </div>
+
       </div>
-    </div>
+
+      {/* =========================================================================
+          3. FULLSCREEN IMMERSIVE LIGHTBOX VIEWER (100vw x 100vh)
+      ========================================================================= */}
+      {isFullscreen && (
+        <div 
+          className="fixed inset-0 z-[300] bg-black/98 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8 animate-fadeIn select-none"
+          onClick={() => setIsFullscreen(false)}
+        >
+          {/* Top Bar */}
+          <div className="flex items-center justify-between gap-4 font-mono z-10" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-3">
+              <span className="font-display font-black text-white text-lg sm:text-xl uppercase">
+                {zone.name}
+              </span>
+              <span className="text-xs text-zinc-400 px-3 py-1 rounded-full bg-white/10 border border-white/15">
+                {activeImage + 1} / {gallery.length}
+              </span>
+            </div>
+
+            <button
+              onClick={() => setIsFullscreen(false)}
+              className="p-3 rounded-2xl bg-white/10 hover:bg-[#E32124] text-white transition-all cursor-pointer shadow-xl active:scale-90"
+              aria-label="Закрыть полноэкранный режим"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Center Image with Huge Full-Res View */}
+          <div className="relative my-auto flex items-center justify-center max-h-[78vh] w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={gallery[activeImage]}
+              alt={`${zone.name} full`}
+              className="max-h-[78vh] max-w-full w-auto object-contain rounded-2xl shadow-2xl border border-white/10"
+            />
+
+            {/* Left & Right Fullscreen Arrows */}
+            {gallery.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    prev(); 
+                  }}
+                  className="absolute left-2 sm:left-6 p-4 rounded-full bg-black/80 hover:bg-[#E32124] text-white border border-white/20 transition-all active:scale-90 shadow-2xl cursor-pointer"
+                  aria-label="Предыдущее фото"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    next(); 
+                  }}
+                  className="absolute right-2 sm:right-6 p-4 rounded-full bg-black/80 hover:bg-[#E32124] text-white border border-white/20 transition-all active:scale-90 shadow-2xl cursor-pointer"
+                  aria-label="Следующее фото"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Bottom Thumbnail Strip */}
+          {gallery.length > 1 && (
+            <div className="flex items-center justify-center gap-3 overflow-x-auto py-2 z-10" onClick={(e) => e.stopPropagation()}>
+              {gallery.map((g, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    sound.playClick();
+                    setActiveImage(idx);
+                  }}
+                  className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                    idx === activeImage 
+                      ? 'border-[#E32124] ring-2 ring-[#E32124] scale-105' 
+                      : 'border-white/20 opacity-50 hover:opacity-100'
+                  }`}
+                >
+                  <img src={g} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

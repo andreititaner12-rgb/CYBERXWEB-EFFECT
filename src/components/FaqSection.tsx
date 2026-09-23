@@ -87,13 +87,7 @@ export const FaqSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-3xl mx-auto mb-10 sm:mb-12"
-        >
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E32124]/10 border border-[#E32124]/30 text-[#E32124] text-xs font-mono font-bold tracking-wider uppercase mb-3 shadow-sm shadow-red-950/40">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>ОТВЕТЫ НА ПОПУЛЯРНЫЕ ВОПРОСЫ</span>
@@ -106,21 +100,17 @@ export const FaqSection: React.FC = () => {
           <p className="mt-3 text-xs sm:text-sm md:text-base text-zinc-300 font-normal leading-relaxed">
             Всё, что важно знать перед визитом в киберарены CyberX в Омске: правила, девайсы, возрастные ограничения и бронирование.
           </p>
-        </motion.div>
+        </div>
 
-        {/* FAQ Accordion List */}
+        {/* FAQ Accordion List (Stable CSS without Blink) */}
         <div className="space-y-3 font-mono">
           {FAQ_DATA.map((item) => {
             const isOpen = openId === item.id;
             const Icon = item.icon;
 
             return (
-              <motion.div
+              <div
                 key={item.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.4 }}
                 className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                   isOpen
                     ? 'bg-gradient-to-b from-[#141018] to-[#0a080e] border-[#E32124]/40 shadow-[0_0_25px_rgba(227,33,36,0.15)]'
@@ -165,7 +155,7 @@ export const FaqSection: React.FC = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
                       <div className="px-5 pb-5 pt-1 sm:pl-[72px] sm:pr-6 text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed border-t border-white/[0.05] mt-1">
@@ -174,7 +164,7 @@ export const FaqSection: React.FC = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             );
           })}
         </div>

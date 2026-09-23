@@ -410,15 +410,17 @@ export function App() {
           {/* Section Divider 04 */}
           <CyberSectionDivider tag="04" />
 
-          {/* E. Interactive Hardware Visualizer & Rental Gear */}
+          {/* E. Interactive Hardware Visualizer (three.js и WebGL-контекст создаются только при приближении) */}
           <LazyMount id="hardware" estimateHeight={900} className="scroll-mt-24">
             <Suspense fallback={null}>
               <HardwareVisualizer />
             </Suspense>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <RentalGearSection />
-            </div>
           </LazyMount>
+
+          {/* Rental Gear Pro Hub (Stable direct render) */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <RentalGearSection />
+          </div>
 
           {/* Section Divider 05 */}
           <CyberSectionDivider tag="05" />
