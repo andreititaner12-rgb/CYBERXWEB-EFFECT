@@ -18,6 +18,7 @@ import { PromoSection } from './components/PromoSection';
 const LocationMapSection = React.lazy(() =>
   import('./components/LocationMapSection').then((m) => ({ default: m.LocationMapSection }))
 );
+import { BrandBottomBanner } from './components/BrandBottomBanner';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
 import { TournamentModal } from './components/TournamentModal';
@@ -352,7 +353,11 @@ export function App() {
       />
 
       {/* 4. Full-Screen Cinematic Hero */}
-      <Hero isReady={!loading} />
+      <Hero 
+        isReady={!loading} 
+        onOpenBooking={() => handleOpenBooking()}
+        onOpenTournaments={() => handleOpenTournaments()}
+      />
 
       {/* 5. Main Content Curtain with Smooth Native Scrolling (Deep Obsidian / Dark Titanium Canvas with Dot Matrix & Ambient Glows) */}
       <div 
@@ -446,6 +451,9 @@ export function App() {
               />
             </Suspense>
           </LazyMount>
+
+          {/* J. Brand Minimalist Typographic Banner (CYBERX. OMSK with Interactive Neon Outline Glow) */}
+          <BrandBottomBanner />
 
         </main>
 
