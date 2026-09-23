@@ -12,12 +12,30 @@
 
 type LenisLike = {
   scrollTo: (target: HTMLElement | number | string, options?: Record<string, unknown>) => void;
+  stop?: () => void;
+  start?: () => void;
 };
 
 let lenisInstance: LenisLike | null = null;
 
 export const setLenisInstance = (lenis: LenisLike | null) => {
   lenisInstance = lenis;
+};
+
+export const getLenisInstance = (): LenisLike | null => {
+  return lenisInstance;
+};
+
+export const pauseLenis = () => {
+  try {
+    lenisInstance?.stop?.();
+  } catch {}
+};
+
+export const resumeLenis = () => {
+  try {
+    lenisInstance?.start?.();
+  } catch {}
 };
 
 export const smoothScrollTo = (element: HTMLElement | string) => {
