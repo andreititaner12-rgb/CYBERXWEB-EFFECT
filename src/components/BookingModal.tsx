@@ -7,7 +7,8 @@ import {
   Download, 
   ShieldCheck, 
   MapPin,
-  Flame
+  Flame,
+  FileText
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 
@@ -75,6 +76,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   );
   const [isMobileDevice, setIsMobileDevice] = useState(false);
   const [showAppStoreQR, setShowAppStoreQR] = useState(false);
+  const [showRulesModal, setShowRulesModal] = useState(false);
 
   useEffect(() => {
     if (defaultArenaId) {
@@ -100,7 +102,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        if (showRulesModal) {
+          setShowRulesModal(false);
+        } else {
+          onClose();
+        }
+      }
     };
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -109,7 +117,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', onKey);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, showRulesModal]);
 
   if (!isOpen) return null;
 
@@ -248,6 +256,18 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 <Download className="w-4 h-4 text-zinc-400" />
                 <span>СКАЧАТЬ В APP STORE</span>
               </button>
+
+              {/* Rules Button under QR/Actions (Mobile) */}
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setShowRulesModal(true);
+                }}
+                className="w-full py-2.5 px-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-zinc-300 hover:text-white border border-white/10 text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer mt-2"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#E32124]" />
+                <span>ПРАВИЛА КЛУБА</span>
+              </button>
             </div>
 
           </div>
@@ -256,22 +276,36 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className="relative p-6 rounded-3xl bg-gradient-to-b from-[#151018] to-[#0A0910] border border-[#E32124]/30 shadow-2xl flex flex-col sm:flex-row items-center gap-6 font-mono overflow-hidden">
             <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-[#E32124]/40 to-transparent pointer-events-none" />
             
-            {/* Left: QR Code Box */}
-            <div className="relative shrink-0 p-3 bg-white rounded-2xl shadow-[0_0_30px_rgba(227,33,36,0.25)] border-2 border-[#E32124]">
-              <img
-                src={showAppStoreQR ? '/qr/qr-appstore.png' : currentClub.qrImage}
-                alt={`QR code for ${showAppStoreQR ? 'App Store' : currentClub.title}`}
-                className="w-40 h-40 object-contain rounded-lg"
-              />
-              {/* Corner Accents */}
-              <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#E32124]" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#E32124]" />
-              <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#E32124]" />
-              <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#E32124]" />
+            {/* Left: QR Code Box + Rules Button directly below */}
+            <div className="flex flex-col items-center gap-3 shrink-0">
+              <div className="relative p-3 bg-white rounded-2xl shadow-[0_0_30px_rgba(227,33,36,0.25)] border-2 border-[#E32124]">
+                <img
+                  src={showAppStoreQR ? '/qr/qr-appstore.png' : currentClub.qrImage}
+                  alt={`QR code for ${showAppStoreQR ? 'App Store' : currentClub.title}`}
+                  className="w-40 h-40 object-contain rounded-lg"
+                />
+                {/* Corner Accents */}
+                <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#E32124]" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#E32124]" />
+                <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#E32124]" />
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#E32124]" />
+              </div>
+
+              {/* Rules Button directly under QR code */}
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setShowRulesModal(true);
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-white/[0.05] hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:border-[#E32124]/50"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#E32124]" />
+                <span>ПРАВИЛА КЛУБА</span>
+              </button>
             </div>
 
             {/* Right: Info & Steps */}
-            <div className="space-y-3 text-left">
+            <div className="space-y-3 text-left flex-1">
               <div>
                 <span className="text-[10px] font-bold uppercase text-[#E32124] tracking-widest block">
                   {showAppStoreQR ? 'ОФИЦИАЛЬНОЕ ПРИЛОЖЕНИЕ' : currentClub.badge}
@@ -337,6 +371,65 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         </div>
 
       </div>
+
+      {/* Rules Modal Window */}
+      {showRulesModal && (
+        <div 
+          className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fadeIn"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowRulesModal(false);
+          }}
+        >
+          <div 
+            className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto bg-[#0d0a14] border border-[#E32124]/40 rounded-3xl p-6 sm:p-8 font-mono shadow-[0_0_50px_rgba(227,33,36,0.3)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+              <div className="flex items-center gap-2 text-white font-black text-lg uppercase font-display">
+                <FileText className="w-5 h-5 text-[#E32124]" />
+                <span>ПРАВИЛА ПОСЕЩЕНИЯ КЛУБОВ</span>
+              </div>
+              <button
+                onClick={() => setShowRulesModal(false)}
+                className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="py-4 space-y-4 text-xs text-zinc-300 leading-relaxed font-normal">
+              <div>
+                <strong className="text-white uppercase font-mono block mb-1">1. Возрастные ограничения (Ночной пакет):</strong>
+                Лицам младше 18 лет находиться на территории клуба в период с 22:00 до 06:00 запрещено законодательством РФ. Для ночных пакетов требуется оригинал паспорта.
+              </div>
+
+              <div>
+                <strong className="text-white uppercase font-mono block mb-1">2. Бережное отношение к технике:</strong>
+                Запрещается употреблять пищу и открытые напитки непосредственно над клавиатурами и ПК общего зала. В залах Premium Squad Suite и Кино-Лаунж предусмотрены отдельные обеденные зоны.
+              </div>
+
+              <div>
+                <strong className="text-white uppercase font-mono block mb-1">3. Собственная периферия:</strong>
+                Разрешено подключение собственных мышек, клавиатур и гарнитур. При возникновении вопросов обращайтесь к дежурному администратору.
+              </div>
+
+              <div>
+                <strong className="text-white uppercase font-mono block mb-1">4. Поведение и безопасность:</strong>
+                В залах запрещены нецензурная брань, агрессивное поведение, курение (в т.ч. электронных сигарет и вейпов) вне специально отведённых зон.
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowRulesModal(false)}
+              className="w-full py-3 rounded-full bg-[#E32124] text-white font-bold text-xs uppercase tracking-wider mt-2 cursor-pointer"
+            >
+              ПОНЯТНО, ЗАКРЫТЬ
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

@@ -12,12 +12,15 @@ import { SimRacingBanner } from './components/SimRacingBanner';
 const HardwareVisualizer = React.lazy(() =>
   import('./components/HardwareVisualizer').then((m) => ({ default: m.HardwareVisualizer }))
 );
+import { RentalGearSection } from './components/RentalGearSection';
 import { TournamentCard } from './components/TournamentCard';
+import { EventsSection } from './components/EventsSection';
 import { PriceSection } from './components/PriceSection';
 import { PromoSection } from './components/PromoSection';
 const LocationMapSection = React.lazy(() =>
   import('./components/LocationMapSection').then((m) => ({ default: m.LocationMapSection }))
 );
+import { FaqSection } from './components/FaqSection';
 import { BrandBottomBanner } from './components/BrandBottomBanner';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
@@ -407,11 +410,14 @@ export function App() {
           {/* Section Divider 04 */}
           <CyberSectionDivider tag="04" />
 
-          {/* E. Interactive Hardware Visualizer (three.js и WebGL-контекст создаются только при приближении) */}
+          {/* E. Interactive Hardware Visualizer & Rental Gear */}
           <LazyMount id="hardware" estimateHeight={900} className="scroll-mt-24">
             <Suspense fallback={null}>
               <HardwareVisualizer />
             </Suspense>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <RentalGearSection />
+            </div>
           </LazyMount>
 
           {/* Section Divider 05 */}
@@ -422,6 +428,12 @@ export function App() {
             onOpenRegister={(tId) => handleOpenTournaments(tId)}
             onOpenAllTournaments={() => handleOpenTournaments()}
             tournamentData={liveTournament}
+          />
+
+          {/* Events & Birthday Party Hub */}
+          <EventsSection
+            onOpenBooking={(arenaId, zoneId) => handleOpenBooking(arenaId, zoneId)}
+            onOpenTournaments={() => handleOpenTournaments()}
           />
 
           {/* Section Divider 06 */}
@@ -455,7 +467,13 @@ export function App() {
             </Suspense>
           </LazyMount>
 
-          {/* J. Brand Minimalist Typographic Banner (CYBERX. OMSK with Interactive Neon Outline Glow) */}
+          {/* Section Divider 09 */}
+          <CyberSectionDivider tag="09" />
+
+          {/* J. Comprehensive FAQ Section */}
+          <FaqSection />
+
+          {/* K. Brand Minimalist Typographic Banner (CYBERX. OMSK with Interactive Neon Outline Glow) */}
           <BrandBottomBanner />
 
         </main>

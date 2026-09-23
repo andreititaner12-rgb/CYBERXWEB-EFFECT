@@ -20,16 +20,18 @@ export const setLenisInstance = (lenis: LenisLike | null) => {
   lenisInstance = lenis;
 };
 
-export const smoothScrollTo = (element: HTMLElement) => {
+export const smoothScrollTo = (element: HTMLElement | string) => {
+  const target = typeof element === 'string' ? document.getElementById(element) : element;
+  if (!target) return;
+
   if (lenisInstance) {
-    const marginTop = parseFloat(window.getComputedStyle(element).scrollMarginTop) || 0;
-    lenisInstance.scrollTo(element, {
+    const marginTop = parseFloat(window.getComputedStyle(target).scrollMarginTop) || 0;
+    lenisInstance.scrollTo(target, {
       offset: -marginTop,
-      duration: 1.15,
+      duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
     return;
   }
-  // Fallback (например, до инициализации Lenis)
-  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };

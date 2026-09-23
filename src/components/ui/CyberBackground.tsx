@@ -41,9 +41,7 @@ const GLOWS: GlowSpec[] = [
   { top: 52, x: 'left: 20%',  size: 'w-[58vw] h-[46vh]', rgb: '99,102,241', alpha: 0.05, k: 0.11 },
   { top: 61, x: 'right: 6%',  size: 'w-[52vw] h-[44vh]', rgb: '20,16,38',  alpha: 0.28, k: 0.07 },
   { top: 71, x: 'left: -10%', size: 'w-[50vw] h-[42vh]', rgb: '227,33,36', alpha: 0.05, k: 0.17 },
-  { top: 80, x: 'right: 14%', size: 'w-[56vw] h-[46vh]', rgb: '147,14,16', alpha: 0.11, k: 0.13 },
-  { top: 90, x: 'left: -12%', size: 'w-[52vw] h-[44vh]', rgb: '20,16,38',  alpha: 0.30, k: 0.08 },
-  { top: 99, x: 'right: 10%', size: 'w-[54vw] h-[46vh]', rgb: '2,132,199', alpha: 0.04, k: 0.10 },
+  { top: 78, x: 'right: 14%', size: 'w-[56vw] h-[46vh]', rgb: '147,14,16', alpha: 0.09, k: 0.13 },
 ];
 
 const ParallaxGlow: React.FC<{ spec: GlowSpec; scrollY: MotionValue<number> }> = ({ spec, scrollY }) => {
@@ -92,8 +90,7 @@ export const CyberBackground: React.FC = () => {
             radial-gradient(ellipse 650px 500px at 90% 22%, rgba(59, 130, 246, 0.035) 0%, transparent 70%),
             radial-gradient(ellipse 750px 550px at 15% 45%, rgba(227, 33, 36, 0.05) 0%, transparent 70%),
             radial-gradient(ellipse 600px 500px at 85% 62%, rgba(99, 102, 241, 0.04) 0%, transparent 70%),
-            radial-gradient(ellipse 800px 500px at 50% 80%, rgba(227, 33, 36, 0.05) 0%, transparent 70%),
-            radial-gradient(ellipse 650px 450px at 30% 95%, rgba(2, 132, 199, 0.03) 0%, transparent 70%)
+            radial-gradient(ellipse 700px 400px at 50% 75%, rgba(227, 33, 36, 0.04) 0%, transparent 70%)
           `
         }}
       />
@@ -105,7 +102,7 @@ export const CyberBackground: React.FC = () => {
 
       {/* 4. Top & Bottom Smooth Edge Fades */}
       <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#020204] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#020204] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#020204] via-[#020204] to-transparent pointer-events-none" />
 
     </div>
   );

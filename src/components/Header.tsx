@@ -32,7 +32,6 @@ export const Header: React.FC<HeaderProps> = ({
   const handleNavClick = (id: string) => {
     sound.playClick();
     setMobileMenuOpen(false);
-    // Give state a tick to close menu overlay before scrolling
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
@@ -54,8 +53,10 @@ export const Header: React.FC<HeaderProps> = ({
         setTimeout(() => onOpenTournaments(), 50);
       } 
     },
-    { num: '05', label: 'АКЦИИ', action: () => handleNavClick('promotions') },
-    { num: '06', label: 'КАК ДОБРАТЬСЯ', action: () => handleNavClick('location') },
+    { num: '05', label: 'МЕРОПРИЯТИЯ', action: () => handleNavClick('events') },
+    { num: '06', label: 'АКЦИИ', action: () => handleNavClick('promotions') },
+    { num: '07', label: 'FAQ', action: () => handleNavClick('faq') },
+    { num: '08', label: 'КАК ДОБРАТЬСЯ', action: () => handleNavClick('location') },
   ];
 
   return (
@@ -76,7 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => handleNavClick('hero')} 
                 className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none shrink-0"
               >
-                {/* Mobile & Desktop Logo */}
                 <img
                   src="/logo-omsk.png"
                   alt="CyberX Community Omsk"
@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               {/* Center: Desktop Navigation Links */}
               <nav 
-                className={`hidden md:flex items-center gap-5 lg:gap-7 font-mono text-[11px] tracking-[0.2em] uppercase text-zinc-300 transition-all duration-300 ${
+                className={`hidden xl:flex items-center gap-5 lg:gap-6 font-mono text-[11px] tracking-[0.2em] uppercase text-zinc-300 transition-all duration-300 ${
                   scrolled
                     ? 'opacity-100 translate-y-0 pointer-events-auto'
                     : 'opacity-0 -translate-y-2 pointer-events-none'
@@ -136,11 +136,27 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E32124] group-hover:w-full transition-all duration-300" />
                 </button>
                 <button
+                  onClick={() => handleNavClick('events')}
+                  onMouseEnter={() => sound.playHover()}
+                  className="hover:text-white transition-colors py-1 relative group cursor-pointer"
+                >
+                  <span>МЕРОПРИЯТИЯ</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E32124] group-hover:w-full transition-all duration-300" />
+                </button>
+                <button
                   onClick={() => handleNavClick('promotions')}
                   onMouseEnter={() => sound.playHover()}
                   className="hover:text-white transition-colors py-1 relative group cursor-pointer"
                 >
                   <span>АКЦИИ</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E32124] group-hover:w-full transition-all duration-300" />
+                </button>
+                <button
+                  onClick={() => handleNavClick('faq')}
+                  onMouseEnter={() => sound.playHover()}
+                  className="hover:text-white transition-colors py-1 relative group cursor-pointer"
+                >
+                  <span>FAQ</span>
                   <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#E32124] group-hover:w-full transition-all duration-300" />
                 </button>
                 <button
@@ -198,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
                     sound.playClick();
                     setMobileMenuOpen(true);
                   }}
-                  className="md:hidden w-10 h-10 rounded-full bg-white/[0.06] active:bg-white/15 border border-white/10 text-zinc-200 active:text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-90"
+                  className="xl:hidden w-10 h-10 rounded-full bg-white/[0.06] active:bg-white/15 border border-white/10 text-zinc-200 active:text-white flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-90"
                   aria-label="Открыть меню"
                 >
                   <Menu className="w-5 h-5" />
@@ -219,14 +235,14 @@ export const Header: React.FC<HeaderProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] md:hidden bg-[#030306]/98 backdrop-blur-3xl flex flex-col justify-between p-5 sm:p-7 overflow-y-auto"
+            className="fixed inset-0 z-[100] xl:hidden bg-[#030306]/98 backdrop-blur-3xl flex flex-col justify-between p-5 sm:p-7 overflow-y-auto"
           >
             {/* Ambient Background Glows */}
             <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-[#E32124]/15 blur-[120px] pointer-events-none" />
             <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
 
             {/* Top Bar: Logo + Close Button */}
-            <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/[0.08]">
+            <div className="relative z-10 flex items-center justify-between pb-3 border-b border-white/[0.08]">
               <div 
                 onClick={() => handleNavClick('hero')} 
                 className="flex items-center gap-2 cursor-pointer"
@@ -251,7 +267,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Middle: Navigation List with Numbers */}
-            <div className="relative z-10 my-auto py-4 space-y-0.5">
+            <div className="relative z-10 my-auto py-3 space-y-0.5">
               {mobileNavItems.map((item) => (
                 <div
                   key={item.num}
@@ -259,13 +275,13 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <button
                     onClick={item.action}
-                    className="w-full py-4 px-2 rounded-xl flex items-center justify-between text-left active:bg-white/[0.05] transition-all cursor-pointer"
+                    className="w-full py-3.5 px-2 rounded-xl flex items-center justify-between text-left active:bg-white/[0.05] transition-all cursor-pointer"
                   >
                     <div className="flex items-baseline gap-3.5">
                       <span className="font-mono text-xs font-bold text-zinc-500">
                         {item.num}
                       </span>
-                      <span className="font-display font-black text-2xl sm:text-3xl tracking-wider text-white uppercase active:text-[#E32124] transition-colors">
+                      <span className="font-display font-black text-xl sm:text-2xl tracking-wider text-white uppercase active:text-[#E32124] transition-colors">
                         {item.label}
                       </span>
                     </div>
@@ -275,7 +291,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Bottom Controls: Primary Red Button + Phone & Status */}
-            <div className="relative z-10 pt-4 space-y-3.5">
+            <div className="relative z-10 pt-3 space-y-3">
               <button
                 onClick={() => {
                   sound.playTrigger();

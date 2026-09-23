@@ -3,6 +3,7 @@ import { ARENAS, DEFAULT_LINKS } from '../data/arenaData';
 import { ArenaLocation, SiteLinks } from '../types';
 import { MapPin, Phone, Send, ArrowUpRight } from 'lucide-react';
 import { sound } from '../utils/sound';
+import { smoothScrollTo } from '../utils/smoothScroll';
 
 interface FooterProps {
   onOpenBooking: () => void;
@@ -104,6 +105,32 @@ export const Footer: React.FC<FooterProps> = ({
                 >
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#E32124]" />
                   <span>Турниры Омска & Призы</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    sound.playClick();
+                    const el = document.getElementById('events');
+                    if (el) smoothScrollTo(el);
+                  }}
+                  className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#E32124]" />
+                  <span>Мероприятия под ключ</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    sound.playClick();
+                    const el = document.getElementById('faq');
+                    if (el) smoothScrollTo(el);
+                  }}
+                  className="hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#E32124]" />
+                  <span>Частые вопросы (FAQ)</span>
                 </button>
               </li>
               <li>

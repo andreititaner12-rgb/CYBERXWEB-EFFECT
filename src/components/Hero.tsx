@@ -29,7 +29,9 @@ export const Hero: React.FC<HeroProps> = ({
     { num: '02', label: 'ПРАЙС', target: 'pricing' },
     { num: '03', label: 'ЖЕЛЕЗО', target: 'hardware' },
     { num: '04', label: 'ТУРНИРЫ', target: 'tournaments' },
-    { num: '05', label: 'АКЦИИ', target: 'promotions' },
+    { num: '05', label: 'МЕРОПРИЯТИЯ', target: 'events' },
+    { num: '06', label: 'АКЦИИ', target: 'promotions' },
+    { num: '07', label: 'FAQ', target: 'faq' },
   ];
 
   // Sound cues on entrance
