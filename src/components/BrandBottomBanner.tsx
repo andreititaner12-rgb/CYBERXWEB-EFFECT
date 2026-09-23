@@ -15,14 +15,14 @@ export const BrandBottomBanner: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#000000] py-16 sm:py-24 md:py-28 border-t border-white/[0.08] select-none">
+    <section className="relative w-full overflow-hidden bg-transparent pt-16 sm:pt-24 pb-12 sm:pb-16 select-none">
       
-      {/* Ambient background glow when hovered */}
+      {/* Dynamic Ambient Background Glow matched with theme */}
       <div 
         className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
         style={{
-          opacity: isHovered ? 0.35 : 0.05,
-          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(227, 33, 36, 0.4) 0%, rgba(227, 33, 36, 0.08) 35%, transparent 70%)`
+          opacity: isHovered ? 0.3 : 0.06,
+          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(227, 33, 36, 0.45) 0%, rgba(227, 33, 36, 0.08) 40%, transparent 70%)`
         }}
       />
 
@@ -32,22 +32,22 @@ export const BrandBottomBanner: React.FC = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onMouseMove={handleMouseMove}
-          className="relative group cursor-default transition-all duration-500 max-w-4xl"
+          className="relative group cursor-default transition-all duration-500 max-w-5xl"
         >
           {/* Typographic Hero Stack */}
-          <div className="space-y-0 sm:space-y-1">
+          <div className="space-y-0.5 sm:space-y-1">
             
             {/* CYBERX. with Red Square Dot */}
-            <div className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[140px] tracking-tight uppercase leading-[0.88] text-white flex items-baseline drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
+            <div className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[150px] tracking-tight uppercase leading-[0.86] text-white flex items-baseline drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
               <span>CYBERX</span>
-              <span className="inline-block w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 bg-[#E32124] ml-2 sm:ml-3 shadow-[0_0_20px_#E32124] transition-transform duration-300 group-hover:scale-125" />
+              <span className="inline-block w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 bg-[#E32124] ml-2.5 sm:ml-4 shadow-[0_0_20px_#E32124] transition-transform duration-300 group-hover:scale-125 group-hover:shadow-[0_0_30px_#E32124]" />
             </div>
 
             {/* OMSK Outlined Text with Interactive Neon Glow on Hover */}
             <div 
-              className={`font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[140px] tracking-tight uppercase leading-[0.88] transition-all duration-500 ${
+              className={`font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[150px] tracking-tight uppercase leading-[0.86] transition-all duration-500 ${
                 isHovered 
-                  ? 'text-outline-banner-glow scale-[1.01] translate-x-1' 
+                  ? 'text-outline-banner-glow scale-[1.008] translate-x-1' 
                   : 'text-outline-banner'
               }`}
             >
@@ -58,8 +58,8 @@ export const BrandBottomBanner: React.FC = () => {
 
           {/* Description Below Typography */}
           <motion.p 
-            initial={{ opacity: 0.7 }}
-            animate={{ opacity: isHovered ? 1 : 0.75 }}
+            initial={{ opacity: 0.75 }}
+            animate={{ opacity: isHovered ? 1 : 0.8 }}
             transition={{ duration: 0.3 }}
             className="mt-6 sm:mt-8 text-xs sm:text-sm md:text-base text-zinc-300 max-w-2xl font-normal leading-relaxed"
           >
@@ -68,20 +68,23 @@ export const BrandBottomBanner: React.FC = () => {
 
           {/* Interactive Dynamic Outline Trail indicator */}
           <div 
-            className="mt-6 h-[2px] w-full bg-white/[0.08] relative overflow-hidden rounded-full transition-all duration-500 group-hover:bg-[#E32124]/20"
+            className="mt-6 sm:mt-8 h-[2px] w-full max-w-xl bg-white/[0.08] relative overflow-hidden rounded-full transition-all duration-500 group-hover:bg-[#E32124]/20"
           >
             <div 
-              className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-[#E32124] to-transparent transition-all duration-75"
+              className="absolute top-0 bottom-0 w-36 bg-gradient-to-r from-transparent via-[#E32124] to-transparent transition-all duration-75"
               style={{
                 left: `${mousePos.x}%`,
                 transform: 'translateX(-50%)',
-                opacity: isHovered ? 1 : 0,
+                opacity: isHovered ? 1 : 0.3,
                 boxShadow: '0 0 15px #E32124'
               }}
             />
           </div>
 
         </div>
+
+        {/* Bottom Connecting Divider seamlessly blending into Footer */}
+        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 sm:mt-16" />
       </div>
 
     </section>
