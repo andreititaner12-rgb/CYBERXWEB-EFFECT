@@ -45,6 +45,7 @@ import {
   Tournament, 
   Promotion 
 } from './types';
+import { setLenisInstance } from './utils/smoothScroll';
 import { sound } from './utils/sound';
 import { Shield } from 'lucide-react';
 
@@ -255,6 +256,7 @@ export function App() {
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    setLenisInstance(lenis);
 
     let reqId: number;
     function raf(time: number) {
@@ -273,6 +275,7 @@ export function App() {
     return () => {
       cancelAnimationFrame(reqId);
       window.removeEventListener('resize', handleResize);
+      setLenisInstance(null);
       lenis.destroy();
       lenisRef.current = null;
     };
