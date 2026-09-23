@@ -365,7 +365,7 @@ export function App() {
       {/* 5. Main Content Curtain with Smooth Native Scrolling (Deep Obsidian / Dark Titanium Canvas with Dot Matrix & Ambient Glows) */}
       <div 
         id="content-curtain"
-        className="relative z-20 border-t border-white/[0.08] rounded-t-[32px] sm:rounded-t-[40px] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] overflow-hidden bg-[#020204]"
+        className="relative z-20 border-t border-white/[0.12] rounded-t-[36px] sm:rounded-t-[48px] shadow-[0_-35px_120px_rgba(0,0,0,1)] overflow-hidden bg-[#020204]"
       >
         {/* High-Tech Cyber Background with Dot Matrix, Ambient Glow Orbs & Gradient Canvas */}
         <CyberBackground />

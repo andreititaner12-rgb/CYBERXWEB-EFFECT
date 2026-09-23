@@ -15,17 +15,8 @@ export const BrandBottomBanner: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-transparent pt-16 sm:pt-24 pb-12 sm:pb-16 select-none">
+    <section className="relative w-full bg-transparent pt-16 sm:pt-24 pb-10 sm:pb-14 select-none">
       
-      {/* Dynamic Ambient Background Glow matched with theme */}
-      <div 
-        className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
-        style={{
-          opacity: isHovered ? 0.3 : 0.06,
-          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(227, 33, 36, 0.45) 0%, rgba(227, 33, 36, 0.08) 40%, transparent 70%)`
-        }}
-      />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={containerRef}
@@ -75,7 +66,7 @@ export const BrandBottomBanner: React.FC = () => {
               style={{
                 left: `${mousePos.x}%`,
                 transform: 'translateX(-50%)',
-                opacity: isHovered ? 1 : 0.3,
+                opacity: isHovered ? 1 : 0.2,
                 boxShadow: '0 0 15px #E32124'
               }}
             />
@@ -83,8 +74,6 @@ export const BrandBottomBanner: React.FC = () => {
 
         </div>
 
-        {/* Bottom Connecting Divider seamlessly blending into Footer */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 sm:mt-16" />
       </div>
 
     </section>
