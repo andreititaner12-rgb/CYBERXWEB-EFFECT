@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-cyberx-red: #E32124;
+    --color-cyberx-black: #000000;
+    --color-cyberx-white: #FEFEFE;
+  }
+
+  /* Фирменный шрифт Tactic Sans (tailwind font-display ссылается на него) */
+  @font-face {
+    font-family: 'Tactic Sans';
+    src: url('/fonts/TACTICSANS-MED.ttf') format('truetype');
+    font-weight: 400 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Tactic Sans';
+    src: url('/fonts/TACTICSANS-BLD.ttf') format('truetype');
+    font-weight: 600 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Плавный скролл полностью управляется Lenis */
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Ultra-Clean Modern App Window: Native Scrollbars Hidden */
+  html, body {
+    background-color: #000000;
+    color: #FEFEFE;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+    width: 0px;
+    height: 0px;
+  }
+}
+
+/* CyberX Red Glows */
+.glow-cyberx {
+  box-shadow: 0 0 35px -5px rgba(227, 33, 36, 0.45);
+}
+
+.glow-cyberx-sm {
+  box-shadow: 0 0 16px -3px rgba(227, 33, 36, 0.35);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 25px rgba(227, 33, 36, 0.7);
+}
+
+.border-cyberx-glow {
+  border-color: rgba(227, 33, 36, 0.6);
+  box-shadow: 0 0 22px -3px rgba(227, 33, 36, 0.35);
+}
+
+/* Cyberpunk Dot Matrix Canvas */
+.cyber-dots-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Subtle Technical Cyber Grid */
+.cyber-grid-subtle {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Dynamic Seamless CyberX Canvas (Deep Obsidian Canvas - Maximum Red Contrast) */
+.cyberx-ambient-lights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 15% 10%, rgba(15, 23, 42, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(227, 33, 36, 0.035) 0%, transparent 45%),
+    radial-gradient(circle at 20% 60%, rgba(10, 15, 28, 0.045) 0%, transparent 50%),
+    radial-gradient(circle at 80% 85%, rgba(227, 33, 36, 0.025) 0%, transparent 45%);
+}
+
+/* Background Ripple Cell Animation (Aceternity UI) */
+@keyframes cell-ripple {
+  0% {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+  40% {
+    background-color: rgba(227, 33, 36, 0.28);
+    border-color: rgba(227, 33, 36, 0.85);
+    box-shadow: 0 0 25px rgba(227, 33, 36, 0.6);
+  }
+  100% {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+}
+
+.animate-cell-ripple {
+  animation: cell-ripple var(--duration, 400ms) cubic-bezier(0.16, 1, 0.3, 1) none 1 var(--delay, 0ms);
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: rgba(11, 11, 15, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(17, 17, 24, 0.85) 0%, rgba(9, 9, 13, 0.95) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  border-color: rgba(227, 33, 36, 0.45);
+}
+
+/* CyberX Lightning Line Decoration (SVG/CSS) */
+.cyberx-lightning {
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+}
+
+/* Crosshair Reticle overlay */
+.crosshair-hud {
+  position: relative;
+}
+.crosshair-hud::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 120px; height: 120px;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(227, 33, 36, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* CartoDB Dark Matter styling for Leaflet */
+.carto-dark-matter-tiles {
+  filter: contrast(108%) brightness(95%);
+}
+
+.leaflet-container {
+  background-color: #020204 !important;
+  font-family: inherit;
+}
+
+.leaflet-tile-pane {
+  background-color: #020204 !important;
+}
+
+.custom-cyberx-pin {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Золотой переливающийся акцент для слова «ЭКСКЛЮЗИВ» */
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #8a5a12 0%,
+    #f5cf5c 20%,
+    #ffe9a8 35%,
+    #ffffff 50%,
+    #ffd95e 65%,
+    #c9932a 82%,
+    #8a5a12 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-shimmer 2.75s linear infinite;
+}
+
+@keyframes gold-shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Золотая переливающаяся ПЛАШКА (бейдж целиком).
+   ВАЖНО (урок анти-лаг аудита): анимация background-position — это PAINT-свойство,
+   оно перерисовывает бейдж 60 раз/сек вечно и валит композитор на большом вьюпорте
+   (полосы/рывки в полноэкранном режиме). Поэтому перелив перенесён на ::before-полосу,
+   которая ездит transform-ом: композитор анимирует слой, repaint = 0.
+   Визуально идентично: тот же градиент, тот же период 2.6s, бесшовный цикл. */
+.badge-gold-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #8a5a12; /* статичная подложка (крайние тона градиента) */
+  color: #241300;
+  border: 1px solid rgba(255, 228, 140, 0.7);
+  box-shadow: 0 0 16px rgba(255, 209, 0, 0.55), inset 0 0 8px rgba(255, 245, 200, 0.35);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.badge-gold-shimmer::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -200%;
+  top: 0;
+  bottom: 0;
+  width: 400%;
+  /* тот же градиент; один период = 200% ширины бейджа */
+  background: linear-gradient(
+    90deg,
+    #8a5a12 0%,
+    #e6b63a 20%,
+    #ffe98a 38%,
+    #fff4c9 50%,
+    #ffdf6b 62%,
+    #e6b63a 80%,
+    #8a5a12 100%
+  );
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  animation: gold-shimmer-slide 2.6s linear infinite;
+  will-change: transform;
+}
+
+/* сдвиг на 50% полосы (400%) = ровно один период градиента (200% бейджа) —
+   бесшовный цикл, как у прежнего background-position 0% -> -200% */
+@keyframes gold-shimmer-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+
+/* Пульсирующие/пингующие индикаторы: выводим в отдельные композитные слои,
+   чтобы их opacity/transform-анимации не перерисовывали родительские слои
+   (особенно стеклянный хедер с backdrop-filter) */
+.animate-pulse { will-change: opacity; }
+.animate-ping  { will-change: transform, opacity; }
+
+/* Внутри живой Leaflet-карты промоушен ОТКЛЮЧАЕМ: маркеры с ping/pulse
+   становятся GPU-слоями поверх постоянно трансформирующихся тайл-панелей —
+   на слабых GPU это давало разрывы/артефакты по всей области карты.
+   Маленькие маркеры дешевле перерисовывать, чем держать слоями. */
+.leaflet-container .animate-pulse,
+.leaflet-container .animate-ping {
+  will-change: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   БЛОК КАРТЫ «КАК ДОБРАТЬСЯ» — устранение разрывов/артефактов.
+   Корень: 8+ оверлеев с backdrop-blur (метки клубов, статус-бар, кнопки
+   зума, нижний бар blur-xl) лежат ПОВЕРХ ЖИВОЙ карты. Каждый кадр
+   движения (скролл страницы, панорама, зум, flyTo) = пересэмплинг блюра
+   сквозь двигающиеся тайлы — на слабых GPU это рвёт кадр. Фоны плашек
+   на 90–95% непрозрачны, блюр там не виден — выключаем фильтр по всему
+   блоку карты. Живая карта + блюр-слои над ней = запрещённая комбинация.
+   ══════════════════════════════════════════════════════════════════ */
+#location .backdrop-blur-sm,
+#location .backdrop-blur,
+#location .backdrop-blur-md,
+#location .backdrop-blur-xl,
+#location .backdrop-blur-2xl,
+.leaflet-container .backdrop-blur-sm,
+.leaflet-container .backdrop-blur,
+.leaflet-container .backdrop-blur-md,
+.leaflet-container .backdrop-blur-xl,
+.leaflet-container .backdrop-blur-2xl {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Glass-карточки на почти непрозрачном фоне (85–95%): backdrop-filter ВЫКЛ.
+   Урок v2.5 («лагает и сыпется весь остаток сайта после зон»): заэкранные
+   блюр-слои НЕ отбрасываются композитором и форсируют обработку фона каждый
+   кадр — 5 карточек железа давали +103 мс/кадр в 1080p. На фоне 85–95%
+   непрозрачности блюр визуально неотличим, поэтому отключаем только у
+   секций с почти непрозрачными карточками (железо, карта), не глобально.
+   ══════════════════════════════════════════════════════════════════ */
+#hardware .glass-card,
+#location .glass-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Модалка «Зоны и эксклюзивы» (v2.3): вход/выход на чистом CSS.
+   ЗАПРЕЩЕНО возвращать framer AnimatePresence/motion exit здесь:
+   exit-клон полноэкранного окна с backdrop-blur-md создаёт всплеск
+   композитинга GPU (двойной полноэкранный блюр), из-за которого сайт
+   «сыпется» и дёргается до перезагрузки страницы.
+   ══════════════════════════════════════════════════════════════════ */
+@keyframes zonesModalOverlayIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zonesModalOverlayOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes zonesModalWindowIn {
+  from { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.92); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes zonesModalWindowOut {
+  from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  to   { opacity: 0; transform: translate3d(0, 12px, 0) scale(0.92); }
+}
+.animate-zones-overlay-in  { animation: zonesModalOverlayIn  0.2s ease-out both; }
+.animate-zones-overlay-out { animation: zonesModalOverlayOut 0.2s ease-in  both; }
+.animate-zones-window-in   { animation: zonesModalWindowIn   0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-zones-window-out  { animation: zonesModalWindowOut  0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ══════════════════════════════════════════════════════════════════
+   Плавная смена блока обзора клуба (Arena Deep Dive).
+   Только opacity/transform — GPU-композитинг, без exit-клонов framer.
+   ══════════════════════════════════════════════════════════════════ */
+@keyframes cyberxDeepDiveIn {
+  from { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.995); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+.cyberx-deepdive {
+  animation: cyberxDeepDiveIn 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  transition: opacity 0.26s ease-in-out, transform 0.26s ease-in-out;
+}
+
+/* Отключаем backdrop-filter у блока обзора: фон почти непрозрачный (98%),
+   blur визуально не виден, а заставляет сэмплить весь экран за блоком. */
+.cyberx-deepdive.glass-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.cyberx-deepdive-fading {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0) scale(0.997);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Галерея обзора клуба: вход нового фото — АНИМАЦИЯМИ (не transition!):
+   фото монтируется уже активным, transition сработать не может.
+   galleryPhotoIn — плавное проявление поверх затухающего старого (кроссфейд
+   + затемнение через чёрную подложку), galleryKenBurns — медленный зум,
+   паритет с эффектом галереи «Зоны и эксклюзивы».
+   ══════════════════════════════════════════════════════════════════ */
+@keyframes galleryPhotoIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes galleryKenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+
+.gallery-photo-in {
+  animation: galleryPhotoIn 0.7s ease-in-out both;
+}
+
+.gallery-kenburns {
+  animation: galleryKenBurns 6s ease-out both;
+}
