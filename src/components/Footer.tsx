@@ -8,6 +8,7 @@ import { smoothScrollTo } from '../utils/smoothScroll';
 interface FooterProps {
   onOpenBooking: () => void;
   onOpenTournaments: () => void;
+  onOpenRules?: () => void;
   arenasList?: ArenaLocation[];
   siteLinks?: SiteLinks;
 }
@@ -15,6 +16,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ 
   onOpenBooking, 
   onOpenTournaments,
+  onOpenRules,
   arenasList = ARENAS,
   siteLinks = DEFAULT_LINKS,
 }) => {
@@ -188,7 +190,19 @@ export const Footer: React.FC<FooterProps> = ({
 
           <div className="flex items-center gap-6">
             <span className="hover:text-zinc-300 transition-colors cursor-pointer">Политика конфиденциальности</span>
-            <span className="hover:text-zinc-300 transition-colors cursor-pointer">Правила посещения</span>
+            <button
+              onClick={() => {
+                sound.playClick();
+                if (onOpenRules) {
+                  onOpenRules();
+                } else {
+                  onOpenBooking();
+                }
+              }}
+              className="hover:text-[#E32124] transition-colors cursor-pointer text-left"
+            >
+              Правила посещения
+            </button>
             <button
               onClick={scrollToTop}
               className="text-[#E32124] hover:text-white transition-colors uppercase cursor-pointer"

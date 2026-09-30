@@ -9,11 +9,14 @@ import {
   MapPin, 
   Flame, 
   FileText,
-  CheckCircle2,
-  AlertTriangle,
+  Search,
+  ChevronLeft,
+  ChevronRight,
   ArrowRight
 } from 'lucide-react';
+import { CLUB_RULES_PAGE_1, CLUB_RULES_PAGE_2 } from '../data/clubRulesData';
 import { sound } from '../utils/sound';
+import { pauseLenis, resumeLenis } from '../utils/smoothScroll';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -82,6 +85,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   
   // Step: 'rules' (first time in session) or 'booking'
   const [viewStep, setViewStep] = useState<'rules' | 'booking'>('booking');
+  const [rulesActivePage, setRulesActivePage] = useState<1 | 2>(1);
+  const [rulesSearch, setRulesSearch] = useState('');
 
   useEffect(() => {
     if (defaultArenaId) {
@@ -119,14 +124,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   // Lock background scroll & close on Escape
   useEffect(() => {
     if (!isOpen) return;
+    pauseLenis();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     const originalOverflow = document.body.style.overflow;
+    const originalTouch = document.body.style.touchAction;
     document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+
     window.addEventListener('keydown', onKey);
     return () => {
+      resumeLenis();
       document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouch;
       window.removeEventListener('keydown', onKey);
     };
   }, [isOpen, onClose]);
@@ -148,100 +159,225 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setViewStep('booking');
   };
 
+  const currentRules = rulesActivePage === 1 ? CLUB_RULES_PAGE_1 : CLUB_RULES_PAGE_2;
+  const filteredRules = rulesSearch.trim()
+    ? [...CLUB_RULES_PAGE_1, ...CLUB_RULES_PAGE_2].filter((r) =>
+        r.text.toLowerCase().includes(rulesSearch.toLowerCase().trim())
+      )
+    : currentRules;
+
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn select-none overscroll-contain"
+      className="fixed inset-0 z-[150] flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
       data-lenis-prevent="true"
       onClick={onClose}
     >
       <div 
         data-lenis-prevent="true"
-        className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto overscroll-contain bg-gradient-to-b from-[#141018] via-[#0E0B14] to-[#07060A] border border-white/10 rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.95)] p-6 sm:p-8"
+        data-lenis-prevent-wheel="true"
+        className={`relative w-full h-full sm:h-auto overflow-hidden overscroll-contain bg-gradient-to-b from-[#141018] via-[#0E0B14] to-[#07060A] border-0 sm:border border-white/10 rounded-none sm:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.95)] flex flex-col my-auto ${
+          viewStep === 'rules' ? 'max-w-4xl sm:max-h-[90vh]' : 'max-w-xl sm:max-h-[92vh] p-6 sm:p-8'
+        }`}
         onClick={(e) => e.stopPropagation()}
         onWheel={(e) => e.stopPropagation()}
       >
         {/* Top Accent Crimson Line */}
         <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#E32124] to-transparent shadow-[0_0_10px_#E32124] pointer-events-none" />
 
-        {/* Close Button */}
-        <button
-          onClick={() => {
-            sound.playClick();
-            onClose();
-          }}
-          className="absolute top-5 right-5 p-2 rounded-2xl bg-white/[0.05] hover:bg-white/[0.1] text-zinc-400 hover:text-white transition-all cursor-pointer z-20"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        {/* Close Button for Booking view */}
+        {viewStep === 'booking' && (
+          <button
+            onClick={() => {
+              sound.playClick();
+              onClose();
+            }}
+            className="absolute top-5 right-5 p-2 rounded-2xl bg-white/[0.05] hover:bg-white/[0.1] text-zinc-400 hover:text-white transition-all cursor-pointer z-20"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
 
         {/* =========================================================================
-            STEP 1: FIRST-TIME SESSION CLUB RULES SCREEN
+            STEP 1: EXPANDED 2-PAGE OFFICIAL CLUB RULES VIEWER
         ========================================================================= */}
         {viewStep === 'rules' ? (
-          <div className="space-y-5 animate-fadeIn">
-            {/* Header */}
-            <div className="font-mono text-center sm:text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E32124]/15 border border-[#E32124]/30 text-[#E32124] text-[10px] font-bold uppercase tracking-wider mb-2">
-                <FileText className="w-3.5 h-3.5" />
-                <span>РЕГЛАМЕНТ & БЕЗОПАСНОСТЬ</span>
+          <div className="flex flex-col h-full w-full animate-fadeIn font-mono">
+            
+            {/* Top Bar */}
+            <div className="shrink-0 bg-[#140f1c]/95 border-b border-white/10 px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-[#E32124]/20 border border-[#E32124]/50 flex items-center justify-center text-[#E32124] shrink-0">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-display font-black text-lg sm:text-xl text-white uppercase tracking-tight">
+                      ПРАВИЛА КЛУБА
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#E32124] text-white font-bold uppercase hidden sm:inline">
+                      CYBERX COMMUNITY
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-zinc-400 mt-0.5">
+                    Ознакомьтесь с правилами киберарен перед началом бронирования
+                  </div>
+                </div>
               </div>
-              <h3 className="font-display font-black text-2xl sm:text-3xl uppercase tracking-tight text-white">
-                ПРАВИЛА ПОСЕЩЕНИЯ <span className="text-[#E32124]">CYBERX</span>
-              </h3>
-              <p className="text-xs text-zinc-400 mt-1">
-                Пожалуйста, ознакомьтесь с основными правилами пребывания в кибераренах перед бронированием места.
-              </p>
+
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onClose();
+                }}
+                className="p-2 rounded-xl bg-white/[0.05] hover:bg-[#E32124] text-zinc-300 hover:text-white border border-white/15 transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
-            {/* Rules Cards List */}
-            <div className="space-y-3 font-mono text-xs">
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-3">
-                <div className="w-7 h-7 rounded-xl bg-[#E32124]/20 border border-[#E32124]/40 flex items-center justify-center text-[#E32124] shrink-0 font-bold">
-                  18+
-                </div>
-                <div>
-                  <div className="text-white font-bold uppercase text-[11px]">Ночной пакет (22:00 — 08:00)</div>
-                  <div className="text-zinc-400 mt-0.5 leading-relaxed text-[11px]">
-                    Лицам младше 18 лет вход в ночное время строго запрещен законом РФ. Для оформления ночной сессии необходим оригинал паспорта.
-                  </div>
-                </div>
-              </div>
+            {/* Sub-Header: Tabs + Search */}
+            <div className="shrink-0 bg-[#0d0a14] border-b border-white/[0.08] px-4 sm:px-6 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              {!rulesSearch && (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      sound.playClick();
+                      setRulesActivePage(1);
+                    }}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                      rulesActivePage === 1
+                        ? 'bg-[#E32124] text-white shadow-md shadow-red-600/40 border border-white/20'
+                        : 'bg-white/[0.04] text-zinc-400 hover:text-white border border-white/10'
+                    }`}
+                  >
+                    <span>СТРАНИЦА 01</span>
+                    <span className="text-[10px] opacity-75">(1—23)</span>
+                  </button>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-3">
-                <div className="w-7 h-7 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
-                  <AlertTriangle className="w-4 h-4" />
+                  <button
+                    onClick={() => {
+                      sound.playClick();
+                      setRulesActivePage(2);
+                    }}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                      rulesActivePage === 2
+                        ? 'bg-[#E32124] text-white shadow-md shadow-red-600/40 border border-white/20'
+                        : 'bg-white/[0.04] text-zinc-400 hover:text-white border border-white/10'
+                    }`}
+                  >
+                    <span>СТРАНИЦА 02</span>
+                    <span className="text-[10px] opacity-75">(24—43)</span>
+                  </button>
                 </div>
-                <div>
-                  <div className="text-white font-bold uppercase text-[11px]">Бережное отношение к девайсам</div>
-                  <div className="text-zinc-400 mt-0.5 leading-relaxed text-[11px]">
-                    Запрещено употреблять открытые напитки и пищу над игровыми клавиатурами общего зала. В VIP комнатах и лаунжах предусмотрены обеденные столы.
-                  </div>
-                </div>
-              </div>
+              )}
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-3">
-                <div className="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-white font-bold uppercase text-[11px]">Своя периферия разрешена</div>
-                  <div className="text-zinc-400 mt-0.5 leading-relaxed text-[11px]">
-                    Вы можете подключать свои мыши, клавиатуры и наушники. Администратор поможет мгновенно настроить софт.
-                  </div>
-                </div>
+              {/* Search Bar */}
+              <div className="relative flex-1 sm:max-w-xs">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
+                <input
+                  type="text"
+                  value={rulesSearch}
+                  onChange={(e) => setRulesSearch(e.target.value)}
+                  placeholder="Поиск по правилам (18+, еда, bios...)"
+                  className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-[#E32124]/70 transition-all font-mono"
+                />
+                {rulesSearch && (
+                  <button
+                    onClick={() => setRulesSearch('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* Confirm & Proceed Button */}
-            <div className="pt-2">
+            {/* Scrollable Rules Content */}
+            <div 
+              data-lenis-prevent="true"
+              data-lenis-prevent-wheel="true"
+              className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-3 font-mono text-xs no-scrollbar"
+            >
+              {filteredRules.length === 0 ? (
+                <div className="text-center py-10 text-zinc-500">
+                  По запросу «{rulesSearch}» правил не найдено
+                </div>
+              ) : (
+                filteredRules.map((rule) => {
+                  const isWarning = /ночн|18\+|оружи|драть|алког|ущерб|биос|bios|чит|скинченджер/i.test(rule.text);
+                  const numStr = rule.id < 10 ? `0${rule.id}` : `${rule.id}`;
+
+                  return (
+                    <div
+                      key={rule.id}
+                      className={`p-3.5 rounded-2xl border transition-all ${
+                        isWarning
+                          ? 'bg-gradient-to-r from-red-950/20 via-black/40 to-black/60 border-red-500/30'
+                          : 'bg-white/[0.02] border-white/[0.07]'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+                          isWarning
+                            ? 'bg-[#E32124] text-white shadow-red-900/50'
+                            : 'bg-white/[0.08] text-zinc-300 border border-white/10'
+                        }`}>
+                          {numStr}
+                        </span>
+                        <p className="text-zinc-200 leading-relaxed font-normal pt-0.5">
+                          {rule.text}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+
+              {!rulesSearch && (
+                <div className="pt-3 flex items-center justify-between border-t border-white/[0.06] text-xs text-zinc-400">
+                  {rulesActivePage === 1 ? (
+                    <button
+                      onClick={() => {
+                        sound.playClick();
+                        setRulesActivePage(2);
+                      }}
+                      className="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 text-white border border-white/10 flex items-center gap-2 cursor-pointer transition-all ml-auto"
+                    >
+                      <span>Перейти к Странице 02 (Правила 24—43)</span>
+                      <ChevronRight className="w-4 h-4 text-[#E32124]" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        sound.playClick();
+                        setRulesActivePage(1);
+                      }}
+                      className="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 text-white border border-white/10 flex items-center gap-2 cursor-pointer transition-all"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-[#E32124]" />
+                      <span>Вернуться к Странице 01 (Правила 1—23)</span>
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Confirm Action */}
+            <div className="shrink-0 bg-[#0c0a14]/95 border-t border-white/10 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+              <div className="flex items-center gap-2 text-xs text-zinc-400">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Незнание правил не освобождает от ответственности</span>
+              </div>
+
               <button
                 onClick={handleConfirmRules}
-                className="w-full py-4 px-6 rounded-full bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] text-white font-mono font-black text-xs sm:text-sm uppercase tracking-[0.18em] shadow-[0_0_35px_rgba(227,33,36,0.7)] hover:shadow-[0_0_50px_rgba(227,33,36,0.95)] hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20"
+                className="w-full sm:w-auto py-3.5 px-6 sm:px-8 rounded-2xl font-mono font-black text-xs sm:text-sm uppercase tracking-[0.16em] text-white bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] shadow-[0_0_30px_rgba(227,33,36,0.65)] hover:shadow-[0_0_45px_rgba(227,33,36,0.95)] hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20 shrink-0"
               >
                 <span>ПОНЯТНО, ПЕРЕЙТИ К БРОНИРОВАНИЮ</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
+
           </div>
         ) : (
           /* =========================================================================

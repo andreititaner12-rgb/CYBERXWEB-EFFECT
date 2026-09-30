@@ -24,6 +24,7 @@ import { FaqSection } from './components/FaqSection';
 import { BrandBottomBanner } from './components/BrandBottomBanner';
 import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
+import { ClubRulesModal } from './components/ClubRulesModal';
 import { TournamentModal } from './components/TournamentModal';
 import { OwnerAdminModal } from './components/OwnerAdminModal';
 import { OwnerSecurityGate, MASTER_SECRET_KEY } from './components/OwnerSecurityGate';
@@ -71,6 +72,8 @@ export function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [bookingArenaId, setBookingArenaId] = useState<string | undefined>(undefined);
   const [bookingZoneId, setBookingZoneId] = useState<string | undefined>(undefined);
+
+  const [rulesModalOpen, setRulesModalOpen] = useState(false);
 
   const [tournamentsOpen, setTournamentsOpen] = useState(false);
   const [targetTournamentId, setTargetTournamentId] = useState<string | undefined>(undefined);
@@ -286,13 +289,13 @@ export function App() {
 
   // Pause / Resume Lenis when any modal is opened / closed
   useEffect(() => {
-    const isAnyModalOpen = tournamentsOpen || bookingOpen || adminOpen || gateOpen;
+    const isAnyModalOpen = tournamentsOpen || bookingOpen || adminOpen || gateOpen || rulesModalOpen;
     if (isAnyModalOpen) {
       lenisRef.current?.stop();
     } else {
       lenisRef.current?.start();
     }
-  }, [tournamentsOpen, bookingOpen, adminOpen, gateOpen]);
+  }, [tournamentsOpen, bookingOpen, adminOpen, gateOpen, rulesModalOpen]);
 
   const handleOpenBooking = (arenaId?: string, zoneId?: string) => {
     setBookingArenaId(arenaId);
@@ -484,6 +487,7 @@ export function App() {
         <Footer
           onOpenBooking={() => handleOpenBooking()}
           onOpenTournaments={() => handleOpenTournaments()}
+          onOpenRules={() => setRulesModalOpen(true)}
           arenasList={liveArenas}
           siteLinks={liveLinks}
         />
@@ -509,6 +513,16 @@ export function App() {
         onClose={() => setBookingOpen(false)}
         defaultArenaId={bookingArenaId}
         defaultZoneId={bookingZoneId}
+      />
+
+      {/* Standalone Official 2-Page Club Rules Modal */}
+      <ClubRulesModal
+        isOpen={rulesModalOpen}
+        onClose={() => setRulesModalOpen(false)}
+        onConfirmAndBook={() => {
+          setRulesModalOpen(false);
+          handleOpenBooking();
+        }}
       />
 
       {/* Tournament Hub Modal */}
