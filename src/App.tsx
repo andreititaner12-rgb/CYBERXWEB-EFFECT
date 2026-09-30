@@ -300,7 +300,20 @@ export function App() {
   const handleOpenBooking = (arenaId?: string, zoneId?: string) => {
     setBookingArenaId(arenaId);
     setBookingZoneId(zoneId);
-    setBookingOpen(true);
+
+    const isConfirmed = (() => {
+      try {
+        return sessionStorage.getItem('cyberx_rules_confirmed') === 'true';
+      } catch {
+        return false;
+      }
+    })();
+
+    if (isConfirmed) {
+      setBookingOpen(true);
+    } else {
+      setRulesModalOpen(true);
+    }
   };
 
   const handleOpenTournaments = (tournamentId?: string) => {
@@ -511,17 +524,28 @@ export function App() {
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+        onOpenRules={() => setRulesModalOpen(true)}
         defaultArenaId={bookingArenaId}
         defaultZoneId={bookingZoneId}
       />
 
-      {/* Standalone Official 2-Page Club Rules Modal */}
+      {/* Standalone & First-Booking Gate 2-Page Official Rules Modal */}
       <ClubRulesModal
         isOpen={rulesModalOpen}
+        isFirstBookingGate={(() => {
+          try {
+            return sessionStorage.getItem('cyberx_rules_confirmed') !== 'true';
+          } catch {
+            return true;
+          }
+        })()}
         onClose={() => setRulesModalOpen(false)}
         onConfirmAndBook={() => {
+          try {
+            sessionStorage.setItem('cyberx_rules_confirmed', 'true');
+          } catch {}
           setRulesModalOpen(false);
-          handleOpenBooking();
+          setBookingOpen(true);
         }}
       />
 
