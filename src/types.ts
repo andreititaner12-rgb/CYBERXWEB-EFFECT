@@ -1,0 +1,139 @@
+export interface ArenaLocation {
+  id: string;
+  name: string;
+  tagline: string;
+  address: string;
+  metro: string;
+  area: string;
+  rigsCount: number;
+  vipRoomsCount: number;
+  ps5RoomsCount: number;
+  phone: string;
+  telegram: string;
+  workingHours: string;
+  rating: number;
+  reviewsCount: number;
+  image: string;
+  gallery?: string[];
+  features: string[];
+  status: 'ONLINE' | 'MAINTENANCE';
+  coordinates: { x: number; y: number };
+}
+
+export interface ZoneType {
+  id: string;
+  name: string;
+  category: string;
+  tagline: string;
+  description: string;
+  capacity: string;
+  hardwareBrief: string[];
+  features: string[];
+  pricePerHour: number;
+  priceNight: number;
+  image: string;
+  gallery?: string[];
+  badge?: string;
+  popular?: boolean;
+}
+
+export interface HardwareItem {
+  id: string;
+  category: 'monitors' | 'rigs' | 'keyboards' | 'mice' | 'audio' | 'chairs';
+  categoryLabel: string;
+  name: string;
+  model: string;
+  tagline: string;
+  image: string;
+  keySpecs: { label: string; value: string; detail?: string }[];
+  description: string;
+  proAdvantage: string;
+  interactiveType: 'hertz' | 'actuation' | 'sensor' | 'audioGraph' | 'fps' | 'ergonomics';
+}
+
+export interface Tournament {
+  id: string;
+  title: string;
+  game: 'CS2' | 'DOTA 2' | 'VALORANT' | 'EA FC 25' | 'TEKKEN 8';
+  badge?: string;
+  gameTag?: string;
+  prizePool: string;
+  prizePoolNumeric: number;
+  date: string;
+  time: string;
+  location: string;
+  format: string;
+  slotsTotal: number;
+  slotsRegistered: number;
+  registrationOpen: boolean;
+  entryFee: string;
+  streamUrl?: string;
+  description: string;
+  rules: string[];
+  prizes: { place: string; reward: string }[];
+}
+
+export interface Promotion {
+  id: string;
+  title: string;
+  tag: string;
+  discount: string;
+  period: string;
+  description: string;
+  perks: string[];
+  code: string;
+  colorScheme: 'red' | 'dark' | 'steel';
+  featured?: boolean;
+}
+
+export interface PriceRow {
+  period: string;
+  subtext?: string;
+  weekday: string;
+  weekend: string;
+  filterKey?: 'morning' | '1h' | '3h' | '5h' | 'night';
+}
+
+export interface PriceCategory {
+  id: string;
+  title: string;
+  badge?: string;
+  highlight?: boolean;
+  iconType?: string;
+  specs: string;
+  rows: PriceRow[];
+  extraInfo?: string;
+}
+
+export interface ClubPrices {
+  pc: PriceCategory[];
+  lounge: PriceCategory[];
+}
+
+export type AllPricesData = Record<string, ClubPrices>;
+
+export interface SiteLinks {
+  telegramHandle: string;
+  telegramUrl: string;
+  vkUrl: string;
+  googleFormUrl: string;
+  appStoreUrl: string;
+  phoneLenina: string;
+  phoneEvropa: string;
+  phoneOktyabr: string;
+  addressLenina: string;
+  addressEvropa: string;
+  addressOktyabr: string;
+}
+
+export interface BookingState {
+  arenaId: string;
+  zoneId: string;
+  date: string;
+  time: string;
+  durationHours: number;
+  guestsCount: number;
+  customerName: string;
+  customerPhone: string;
+  notes?: string;
+}

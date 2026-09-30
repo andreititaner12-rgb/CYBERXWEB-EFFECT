@@ -1,0 +1,195 @@
+import React, { useState } from 'react';
+import { PROMOTIONS } from '../data/arenaData';
+import { Promotion } from '../types';
+import { Tag, Check, Copy, CheckCheck, ArrowUpRight } from 'lucide-react';
+import { sound } from '../utils/sound';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatedGroup } from './ui/AnimatedGroup';
+
+interface PromoSectionProps {
+  onOpenBooking: () => void;
+  promotionsList?: Promotion[];
+}
+
+export const PromoSection: React.FC<PromoSectionProps> = ({ onOpenBooking, promotionsList }) => {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  // Индекс карточки под курсором: красная обводка «переезжает» между акциями (layoutId)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const promos = promotionsList || PROMOTIONS;
+
+  const copyCode = (code: string) => {
+    sound.playClick();
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+    } catch {
+      // Ignore clipboard failure gracefully
+    }
+    setCopiedCode(code);
+    setTimeout(() => setCopiedCode(null), 2500);
+  };
+
+  return (
+    <section id="promotions" className="py-8 sm:py-12 scroll-mt-24 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Centered Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-10"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E32124]/10 border border-[#E32124]/30 text-[#E32124] text-xs font-mono font-bold tracking-wider uppercase mb-3.5">
+            <Tag className="w-3.5 h-3.5" />
+            Привилегии & Пакеты CyberX Омск
+          </div>
+          <h2 className="font-display font-black text-3xl sm:text-5xl tracking-tight uppercase text-white">
+            АКЦИИ <span className="text-[#E32124]">//</span> И БОНУСЫ
+          </h2>
+          <p className="mt-3 text-zinc-400 text-sm sm:text-base leading-relaxed">
+            Специальные предложения для новых гостей, ночных пакетов и комбо с кальяном в CyberX Arena, Европе и Октябре.
+          </p>
+        </motion.div>
+
+        {/* Motion-Primitives AnimatedGroup Staggered Card Grid */}
+        <AnimatedGroup preset="slide" staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {promos.map((promo: Promotion, idx: number) => {
+            const isCopied = copiedCode === promo.code;
+            return (
+              <div
+                key={promo.id}
+                className="relative group block p-1 h-full w-full"
+                onMouseEnter={() => {
+                  sound.playHover();
+                  setHoveredIndex(idx);
+                }}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {/* Движущаяся красная обводка: плавно переезжает от акции к акции */}
+                <AnimatePresence>
+                  {hoveredIndex === idx && (
+                    <motion.span
+                      aria-hidden="true"
+                      layoutId="promoHoverGlow"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        transition: { duration: 0.15 },
+                      }}
+                      exit={{
+                        opacity: 0,
+                        transition: { duration: 0.15, delay: 0.2 },
+                      }}
+                      transition={{ type: 'spring', stiffness: 340, damping: 32 }}
+                      className="pointer-events-none absolute inset-0 z-30 block rounded-3xl"
+                      style={{
+                        border: '1.5px solid rgba(227, 33, 36, 0.7)',
+                        boxShadow:
+                          '0 0 28px rgba(227,33,36,0.3), inset 0 0 26px rgba(227,33,36,0.07)',
+                        background: 'rgba(227,33,36,0.05)',
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+                <div className={`h-full w-full p-6 sm:p-7 rounded-3xl flex flex-col justify-between relative z-20 transition-all duration-300 border ${
+                  promo.colorScheme === 'red'
+                    ? 'bg-[#120a0c] border-[#E32124]/50 shadow-xl shadow-red-950/40 group-hover:border-[#E32124] group-hover:shadow-[0_0_30px_rgba(227,33,36,0.25)]'
+                    : 'bg-[#08080e] border-white/[0.08] group-hover:border-[#E32124]/50 group-hover:bg-[#0c0c16] group-hover:shadow-[0_0_25px_rgba(227,33,36,0.15)]'
+                }`}>
+                  <div>
+                    {/* Badge & Discount (Rounded) */}
+                    <div className="flex items-center justify-between gap-2 mb-4 font-mono">
+                      <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-lg bg-white/[0.06] text-[#E32124] border border-white/[0.08]">
+                        {promo.tag}
+                      </span>
+                      <span className="font-display font-black text-xs text-white px-3 py-1 rounded-full bg-[#E32124] shadow-md shadow-red-600/30">
+                        {promo.discount}
+                      </span>
+                    </div>
+
+                    <h3 className="font-display font-black text-xl text-white group-hover:text-[#E32124] transition-colors uppercase">
+                      {promo.title}
+                    </h3>
+
+                    <div className="text-xs font-mono text-zinc-400 mt-1 mb-4">
+                      {promo.period}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-6">
+                      {promo.description}
+                    </p>
+
+                    {/* Perks list */}
+                    <div className="space-y-2 mb-6 pt-4 border-t border-white/[0.06]">
+                      {promo.perks.map((perk: string, i: number) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-zinc-300 font-mono">
+                          <Check className="w-3.5 h-3.5 text-[#E32124] shrink-0 mt-0.5" />
+                          <span>{perk}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Promo Code & Action (Rounded) */}
+                  <div className="pt-4 border-t border-white/[0.06] space-y-3 font-mono">
+                    <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#000000]/80 border border-white/[0.08]">
+                      <div className="truncate pr-2">
+                        <span className="text-[9px] text-zinc-500 uppercase block">Промокод акции</span>
+                        <span className="text-xs font-bold text-white tracking-widest">{promo.code}</span>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyCode(promo.code);
+                        }}
+                        className="px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-xs text-zinc-300 hover:text-white transition-all flex items-center gap-1 shrink-0 cursor-pointer"
+                      >
+                        {isCopied ? (
+                          <>
+                            <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                            <span className="text-emerald-400 font-bold">Скопирован</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Копировать</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        sound.playTrigger();
+                        onOpenBooking();
+                      }}
+                      onMouseEnter={() => sound.playHover()}
+                      className="w-full py-2.5 rounded-2xl font-mono font-bold text-xs uppercase tracking-[0.15em] text-white bg-white/[0.06] hover:bg-[#E32124] border border-white/[0.08] hover:border-[#E32124] transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer"
+                    >
+                      <span>Активировать пакет</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </AnimatedGroup>
+
+      </div>
+    </section>
+  );
+};
