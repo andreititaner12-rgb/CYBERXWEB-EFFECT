@@ -86,9 +86,15 @@ export function App() {
   // Selected arena in the ecosystem (Default to CyberX Arena - Flagship)
   const [selectedArenaId] = useState<string>('cyberx-arena');
 
-  // Dynamic state for live prices with localStorage persistence
+  // Dynamic state for live prices with localStorage persistence & versioning
   const [livePrices, setLivePrices] = useState<AllPricesData>(() => {
     try {
+      const version = localStorage.getItem('cyberx_price_version');
+      if (version !== 'v2_omsk_2026_updated') {
+        localStorage.setItem('cyberx_price_version', 'v2_omsk_2026_updated');
+        localStorage.setItem('cyberx_live_prices', JSON.stringify(DEFAULT_PRICES));
+        return DEFAULT_PRICES;
+      }
       const saved = localStorage.getItem('cyberx_live_prices');
       return saved ? JSON.parse(saved) : DEFAULT_PRICES;
     } catch {

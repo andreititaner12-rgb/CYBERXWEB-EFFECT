@@ -122,7 +122,7 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
                 <div>
                   <span className="text-[10px] text-zinc-400 uppercase block">Стоимость заезда</span>
                   <div className="font-display font-black text-2xl text-white">
-                    400 ₽ <span className="text-xs font-normal text-zinc-400">/ час</span>
+                    600 ₽ <span className="text-xs font-normal text-zinc-400">/ час (утро от 400 ₽)</span>
                   </div>
                 </div>
 
