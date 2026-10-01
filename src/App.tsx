@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Lenis from 'lenis';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { BrandManifesto } from './components/BrandManifesto';
@@ -30,6 +29,7 @@ import { OwnerAdminModal } from './components/OwnerAdminModal';
 import { OwnerSecurityGate, MASTER_SECRET_KEY } from './components/OwnerSecurityGate';
 import { CustomCrosshairCursor } from './components/CustomCrosshairCursor';
 import { Preloader } from './components/Preloader';
+import { TopScrollProgressBar } from './components/ui/TopScrollProgressBar';
 import { CyberSectionDivider } from './components/ui/CyberSectionDivider';
 import { CyberBackground } from './components/ui/CyberBackground';
 import { LazyMount } from './components/ui/LazyMount';
@@ -56,17 +56,9 @@ import { Shield } from 'lucide-react';
 export function App() {
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
+  const [lenisInstance, setLenisInstanceRef] = useState<Lenis | null>(null);
   const audioPlayedRef = useRef(false);
   const lenisRef = useRef<Lenis | null>(null);
-
-  // Smooth Top Scroll Progress Tracker
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  });
-  const progressOpacity = useTransform(scrollYProgress, [0, 0.003], [0, 1]);
 
   // Modal states
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -269,6 +261,7 @@ export function App() {
     });
     lenisRef.current = lenis;
     setLenisInstance(lenis);
+    setLenisInstanceRef(lenis);
 
     let reqId: number;
     function raf(time: number) {
@@ -288,6 +281,7 @@ export function App() {
       cancelAnimationFrame(reqId);
       window.removeEventListener('resize', handleResize);
       setLenisInstance(null);
+      setLenisInstanceRef(null);
       lenis.destroy();
       lenisRef.current = null;
     };
@@ -357,13 +351,8 @@ export function App() {
       {/* 1. CyberX CS2 Tactical Crosshair Reticle Cursor */}
       <CustomCrosshairCursor />
 
-      {/* 2. Global Neon CyberX Top Scroll Progress Indicator (Replaces standard right scrollbar, 0 initial flicker) */}
-      {!loading && (
-        <motion.div
-          style={{ scaleX, opacity: progressOpacity }}
-          className="fixed top-0 left-0 right-0 h-[3px] sm:h-[3.5px] bg-gradient-to-r from-[#8B0000] via-[#E32124] to-[#FF4D4D] shadow-[0_0_14px_#E32124,0_0_24px_rgba(227,33,36,0.85)] z-[100] origin-left pointer-events-none"
-        />
-      )}
+      {/* 2. Global Neon CyberX Top Scroll Progress Indicator (Strict 1:1 GPU sync with Lenis & ResizeObserver) */}
+      <TopScrollProgressBar lenis={lenisInstance} loading={loading} />
 
       {/* 3. CyberX Sleek Loading Screen */}
       {loading && <Preloader onComplete={handlePreloaderComplete} />}
