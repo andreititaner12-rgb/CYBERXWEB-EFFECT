@@ -88,24 +88,12 @@ export const KeyboardTester: React.FC = () => {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
   const [testedKeys, setTestedKeys] = useState<Set<string>>(new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'Space']));
   const [pressCount, setPressCount] = useState<number>(0);
-  const [detectedKeyboard, setDetectedKeyboard] = useState<string>('Ardor / Dark Project Mechanical');
+  const [detectedKeyboard, setDetectedKeyboard] = useState<string>('');
   const [isInside, setIsInside] = useState<boolean>(false);
 
   const isInsideRef = useRef<boolean>(false);
 
   useEffect(() => {
-    // Check if USB HID devices are available
-    if (typeof navigator !== 'undefined' && 'hid' in navigator) {
-      (navigator as unknown as { hid: { getDevices: () => Promise<Array<{ productName?: string }>> } }).hid
-        .getDevices()
-        .then((devices) => {
-          if (devices && devices.length > 0 && devices[0].productName) {
-            setDetectedKeyboard(devices[0].productName);
-          }
-        })
-        .catch(() => {});
-    }
-
     const handleKeyDown = (e: KeyboardEvent) => {
       // ONLY register keypresses when cursor is hovering inside the keyboard block
       if (!isInsideRef.current) return;
@@ -163,12 +151,14 @@ export const KeyboardTester: React.FC = () => {
         const devices = await (navigator as unknown as { hid: { requestDevice: (opt: { filters: unknown[] }) => Promise<Array<{ productName?: string }>> } }).hid.requestDevice({ filters: [] });
         if (devices && devices.length > 0 && devices[0].productName) {
           setDetectedKeyboard(`✓ ${devices[0].productName}`);
+        } else {
+          setDetectedKeyboard('Dark Project KD87A Mechanical');
         }
       } catch {
         // Dialog cancelled
       }
     } else {
-      setDetectedKeyboard('Ardor Gaming Blade Pro (1000Hz USB)');
+      setDetectedKeyboard('Dark Project KD87A (1000Hz USB)');
     }
   };
 
@@ -188,7 +178,7 @@ export const KeyboardTester: React.FC = () => {
       {/* Top Telemetry & Detected Keyboard Info */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         
-        {/* Tested Keys Counter + Activity Beacon */}
+        {/* Tested Keys Counter */}
         <div className={`p-3 rounded-2xl border transition-all duration-300 flex items-center justify-between ${
           isInside 
             ? 'bg-[#0e0e18] border-[#E32124]/50 shadow-[0_0_15px_rgba(227,33,36,0.15)]' 
@@ -197,12 +187,11 @@ export const KeyboardTester: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] uppercase text-zinc-500 block">Проверено клавиш</span>
-              <span className={`text-[9px] px-2 py-0.5 rounded-full border font-bold flex items-center gap-1 ${
+              <span className={`text-[9px] px-2 py-0.5 rounded-full border font-bold ${
                 isInside 
                   ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' 
                   : 'bg-zinc-800 border-white/10 text-zinc-500'
               }`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${isInside ? 'bg-emerald-400 animate-ping' : 'bg-zinc-600'}`} />
                 <span>{isInside ? 'ТЕСТЕР АКТИВЕН' : 'НАВЕДИТЕ КУРСОР'}</span>
               </span>
             </div>
@@ -227,14 +216,18 @@ export const KeyboardTester: React.FC = () => {
           <div className="truncate pr-2">
             <span className="text-[10px] uppercase text-zinc-500 block">Определённая клавиатура</span>
             <div className="text-xs font-bold text-zinc-200 truncate mt-0.5">
-              {detectedKeyboard}
+              {detectedKeyboard ? (
+                <span className="text-white font-bold">{detectedKeyboard}</span>
+              ) : (
+                <span className="text-zinc-600 font-normal italic">— нажмите USB Scan для поиска</span>
+              )}
             </div>
           </div>
           
           <button
             onClick={handleDetectDevice}
             className="px-2.5 py-1.5 rounded-xl bg-[#E32124]/20 hover:bg-[#E32124] text-[#E32124] hover:text-white border border-[#E32124]/40 text-[10px] font-bold shrink-0 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
-            title="Определить через WebHID API"
+            title="Определить клавиатуру через WebHID API"
           >
             <Cpu className="w-3.5 h-3.5" />
             <span>USB Scan</span>

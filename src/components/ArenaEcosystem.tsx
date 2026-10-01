@@ -286,7 +286,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                     <div>
                       <span className="text-[10px] text-zinc-500 uppercase block">Стартовый тариф</span>
                       <span className="text-lg lg:text-xl font-display font-black text-white whitespace-nowrap">
-                        от {arena.id === 'cyberx-arena' ? 130 : arena.id === 'cyberx-evropa' ? 70 : 100} ₽<span className="text-xs font-mono font-normal text-zinc-400">/час</span>
+                        от {arena.id === 'cyberx-arena' ? 110 : 70} ₽<span className="text-xs font-mono font-normal text-zinc-400">/час</span>
                       </span>
                     </div>
 
@@ -538,7 +538,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                   <div>
                     <div className="text-[10px] text-zinc-500 uppercase">Стартовый тариф</div>
                     <div className="text-xl font-display font-black text-white">
-                      от {currentArena.id === 'cyberx-arena' ? 130 : currentArena.id === 'cyberx-evropa' ? 70 : 100} ₽ <span className="text-xs font-mono font-normal text-zinc-400">/ час</span>
+                      от {currentArena.id === 'cyberx-arena' ? 110 : 70} ₽ <span className="text-xs font-mono font-normal text-zinc-400">/ час</span>
                     </div>
                   </div>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   MousePointer2, 
   Keyboard, 
@@ -8,8 +8,12 @@ import {
   Gauge, 
   Check, 
   ShieldCheck,
-  Award
+  Award,
+  Box,
+  X
 } from 'lucide-react';
+import { Mouse3DViewer } from './ui/Mouse3DViewer';
+import { sound } from '../utils/sound';
 
 interface RentalItem {
   id: string;
@@ -20,6 +24,7 @@ interface RentalItem {
   badge: string;
   description: string;
   highlight?: string;
+  has3D?: boolean;
 }
 
 const RENTAL_GEAR: RentalItem[] = [
@@ -31,7 +36,8 @@ const RENTAL_GEAR: RentalItem[] = [
     badge: '4000Hz Polling',
     description: 'Легендарный эталон киберспорта. Ультралегкий вес 60 г, сенсор Hero 2 (32000 DPI) и гибридные оптико-механические свитчи Lightforce.',
     specs: ['Вес 60г • Hero 2 32K DPI', 'Отклик 0.25 мс (4000 Гц)', 'Тефлоновые глайды PTFE'],
-    highlight: 'Топ для CS2 & Valorant'
+    highlight: 'Топ для CS2 & Valorant',
+    has3D: true,
   },
   {
     id: 'kb-wooting',
@@ -86,6 +92,8 @@ const RENTAL_GEAR: RentalItem[] = [
 ];
 
 export const RentalGearSection: React.FC = () => {
+  const [showMouse3D, setShowMouse3D] = useState(false);
+
   return (
     <div id="rental-gear" className="mt-12 sm:mt-16 pt-10 border-t border-white/[0.08] relative z-10 select-none">
       
@@ -112,14 +120,20 @@ export const RentalGearSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid of 6 Pro Gear Rental Cards (Smooth Stable CSS without Blink) */}
+      {/* Grid of 6 Pro Gear Rental Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
         {RENTAL_GEAR.map((item) => {
           const Icon = item.icon;
+          const isMouse = item.id === 'mouse-superlight';
+
           return (
             <div
               key={item.id}
-              className="p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-[#131018] to-[#0a080d] border border-white/[0.08] hover:border-[#E32124]/40 transition-all duration-300 shadow-xl hover:shadow-[0_0_25px_rgba(227,33,36,0.15)] flex flex-col justify-between group relative overflow-hidden"
+              className={`p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-[#131018] to-[#0a080d] border transition-all duration-300 shadow-xl flex flex-col justify-between group relative overflow-hidden ${
+                isMouse && showMouse3D 
+                  ? 'border-[#E32124] ring-1 ring-[#E32124]/50 shadow-[0_0_30px_rgba(227,33,36,0.25)]' 
+                  : 'border-white/[0.08] hover:border-[#E32124]/40 hover:shadow-[0_0_25px_rgba(227,33,36,0.15)]'
+              }`}
             >
               {/* Top Accent Line */}
               <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-[#E32124]/50 transition-all duration-300" />
@@ -147,6 +161,42 @@ export const RentalGearSection: React.FC = () => {
                 <p className="text-xs text-zinc-400 mt-2 font-normal leading-relaxed">
                   {item.description}
                 </p>
+
+                {/* 3D Model Interactive Trigger for Mouse */}
+                {isMouse && (
+                  <div className="mt-3">
+                    <button
+                      onClick={() => {
+                        sound.playClick();
+                        setShowMouse3D(!showMouse3D);
+                      }}
+                      className={`w-full py-2 px-3 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer border ${
+                        showMouse3D
+                          ? 'bg-[#E32124] text-white border-[#E32124] shadow-md shadow-red-600/40'
+                          : 'bg-white/[0.04] hover:bg-[#E32124]/20 text-zinc-300 hover:text-white border-white/10 hover:border-[#E32124]/50'
+                      }`}
+                    >
+                      {showMouse3D ? (
+                        <>
+                          <X className="w-3.5 h-3.5" />
+                          <span>СВЕРНУТЬ 3D МОДЕЛЬ</span>
+                        </>
+                      ) : (
+                        <>
+                          <Box className="w-3.5 h-3.5 text-[#E32124]" />
+                          <span>3D МОДЕЛЬ // ВРАЩЕНИЕ 360°</span>
+                        </>
+                      )}
+                    </button>
+
+                    {/* Unmounted when collapsed to save 100% GPU resources */}
+                    {showMouse3D && (
+                      <div className="mt-3 animate-fadeIn">
+                        <Mouse3DViewer />
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Specs List */}
                 <div className="mt-4 pt-3 border-t border-white/[0.05] space-y-1.5 font-mono text-[11px] text-zinc-300">

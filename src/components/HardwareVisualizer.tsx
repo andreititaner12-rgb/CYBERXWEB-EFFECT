@@ -20,7 +20,6 @@ import { sound } from '../utils/sound';
 import { DisplaySmoothnessSimulator } from './ui/DisplaySmoothnessSimulator';
 import { KeyboardTester } from './ui/KeyboardTester';
 import { MouseTester } from './ui/MouseTester';
-import { Mouse3DViewer } from './ui/Mouse3DViewer';
 import { PcTelemetryBenchmark } from './ui/PcTelemetryBenchmark';
 import { AudioSpatialTester } from './ui/AudioSpatialTester';
 
@@ -39,7 +38,7 @@ export const HardwareVisualizer: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-8 sm:py-12 bg-transparent">
+    <section className="relative py-8 sm:py-12 bg-transparent select-none">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -57,7 +56,7 @@ export const HardwareVisualizer: React.FC = () => {
           </p>
         </div>
 
-        {/* Category Selector Tabs (Unobstructed, Centered, Wrapped, No Scrollbar) */}
+        {/* Category Selector Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-8 overflow-visible">
           {categories.map((cat) => {
             const Icon = cat.icon;
@@ -83,7 +82,7 @@ export const HardwareVisualizer: React.FC = () => {
           })}
         </div>
 
-        {/* Main Hardware Interactive Visualizer Display (Stable Monolithic Container) */}
+        {/* Main Hardware Interactive Visualizer Display */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch transition-all duration-300">
           
           {/* Left Column: Interactive Module Playground */}
@@ -109,14 +108,7 @@ export const HardwareVisualizer: React.FC = () => {
               </div>
             </div>
 
-            {/* DYNAMIC INTERACTIVE MODULE
-                Все интерактивные виджеты монтируются ОДИН РАЗ и переключаются
-                CSS-скрытием (display:none). Прежнее условное монтирование
-                пересоздавало canvas/WebGL-контексты при каждой смене вкладки
-                (three.js-мышь: загрузка модели + компиляция шейдеров) —
-                сайт «дёргался, будто перезагружается». Скрытые виджеты
-                стоят ноль: их IntersectionObserver-ы видят display:none
-                и останавливают рендер-циклы. */}
+            {/* Dynamic Interactive Modules */}
             <div className="my-4 p-4 sm:p-5 rounded-3xl bg-[#06060c] border border-white/[0.08] relative">
 
               {/* 1. MONITOR REFRESH RATE & SHOCKWAVE PHYSICS SIMULATOR */}
@@ -205,21 +197,11 @@ export const HardwareVisualizer: React.FC = () => {
 
           </div>
 
-          {/* Right Column: Visual Photo Card / 3D Model & Key Specs Breakdown */}
+          {/* Right Column: Visual Photo Card & Key Specs Breakdown */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-4">
             
-            {/* Либо реальная 3D-модель мыши, либо фото-карточка.
-                3D-вьюер живёт постоянно (WebGL-контекст создаётся один раз),
-                переключение — CSS-скрытием: пересоздание three.js-сцены на
-                каждой смене вкладки стоило сотен мс («как перезагрузка»). */}
-            <div className={selectedItem.category === 'mice' ? '' : 'hidden'}>
-              <Mouse3DViewer />
-            </div>
-            <div
-              className={`relative h-72 sm:h-80 rounded-3xl overflow-hidden border border-white/[0.1] group bg-gradient-to-b from-[#11111a] to-[#06060a] shadow-2xl flex items-center justify-center ${
-                selectedItem.category === 'mice' ? '!hidden' : ''
-              }`}
-            >
+            {/* Visual Photo Card */}
+            <div className="relative h-72 sm:h-80 rounded-3xl overflow-hidden border border-white/[0.1] group bg-gradient-to-b from-[#11111a] to-[#06060a] shadow-2xl flex items-center justify-center">
               <img
                 src={selectedItem.image}
                 alt={selectedItem.name}
