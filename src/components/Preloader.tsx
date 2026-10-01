@@ -73,6 +73,15 @@ export const Preloader: React.FC<{ onComplete: () => void }> = ({ onComplete }) 
     return () => clearInterval(interval);
   }, []);
 
+  // Auto-enter fallback after telemetry finishes (guarantees site loads even without interaction)
+  useEffect(() => {
+    if (!isReadyToEnter) return;
+    const autoTimer = setTimeout(() => {
+      handleEnter();
+    }, 2800);
+    return () => clearTimeout(autoTimer);
+  }, [isReadyToEnter, handleEnter]);
+
   return (
     <AnimatePresence>
       {!isFinished && (

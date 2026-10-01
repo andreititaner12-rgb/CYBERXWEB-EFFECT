@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const isSandbox = Boolean(process.env.E2B_SANDBOX || process.env.E2B_SANDBOX_ID);
+
 export default defineConfig({
   plugins: [react()],
   build: {
@@ -25,6 +27,7 @@ export default defineConfig({
     strictPort: true,
     cors: true,
     allowedHosts: true,
+    hmr: isSandbox ? { clientPort: 443 } : true,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
