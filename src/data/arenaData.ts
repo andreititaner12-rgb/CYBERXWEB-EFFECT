@@ -748,7 +748,7 @@ export const UPCOMING_TOURNAMENT: Tournament = {
   gameTag: 'COUNTER-STRIKE 2 // 5v5 OMSK LAN BATTLE',
   prizePool: '150 000 ₽',
   prizePoolNumeric: 150000,
-  date: '20 Сентября 2026',
+  date: '25 Октября 2026',
   time: '12:00 Омск (09:00 МСК)',
   location: 'CYBERX ARENA (ул. Ленина, 19) + Стрим Twitch',
   format: 'Double Elimination // LAN Final 5x5',
@@ -757,7 +757,7 @@ export const UPCOMING_TOURNAMENT: Tournament = {
   registrationOpen: true,
   entryFee: '2 000 ₽ с команды (100% на баланс)',
   streamUrl: 'https://twitch.tv',
-  description: 'Главный сезонный LAN-турнир по CS2 в Омске на сцене CyberX Arena. 16 команд сразятся за призовой фонд 150,000 ₽, чемпионский кубок CyberX и мерч. Финал комментируют профессиональные кастеры.',
+  description: 'Главный сезонный LAN-турнир по CS2 в Омске на сцене CyberX Arena. Команды сразятся за призовой фонд 150,000 ₽, чемпионский кубок CyberX и мерч. Финал комментируют профессиональные кастеры.',
   rules: [
     'Формат: 5х5 Competitive, MR12, Овертаймы MR3 $10,000',
     'Официальный маппул Active Duty CS2',

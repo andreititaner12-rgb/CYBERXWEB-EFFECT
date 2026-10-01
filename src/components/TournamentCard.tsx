@@ -13,15 +13,6 @@ import {
 import { sound } from '../utils/sound';
 import { motion } from 'framer-motion';
 
-// Correct Russian pluralization for "слот / слота / слотов"
-const pluralSlots = (n: number): string => {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return 'слот';
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'слота';
-  return 'слотов';
-};
-
 interface TournamentCardProps {
   onOpenRegister: (tournamentId: string) => void;
   onOpenAllTournaments: () => void;
@@ -34,25 +25,28 @@ export const TournamentCard: React.FC<TournamentCardProps> = ({
   tournamentData,
 }) => {
   const [timeLeft, setTimeLeft] = useState({
-    days: 17,
-    hours: 12,
-    minutes: 41,
-    seconds: 56,
+    days: 24,
+    hours: 8,
+    minutes: 42,
+    seconds: 15,
   });
 
   useEffect(() => {
-    const targetDate = new Date('2026-09-20T12:00:00+06:00').getTime();
+    // Target date: 25 Октября 2026, 12:00 (Омск GMT+6)
+    const targetDate = new Date('2026-10-25T12:00:00+06:00').getTime();
 
     const updateTimer = () => {
-      const now = new Date().getTime();
+      const now = Date.now();
       const difference = targetDate - now;
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60)) / (1000 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
         setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
 
@@ -62,7 +56,6 @@ export const TournamentCard: React.FC<TournamentCardProps> = ({
   }, []);
 
   const tournament = tournamentData || UPCOMING_TOURNAMENT;
-  const slotPercentage = Math.round((tournament.slotsRegistered / tournament.slotsTotal) * 100);
 
   return (
     <section id="tournaments" className="relative py-8 sm:py-12 bg-transparent overflow-hidden scroll-mt-24 select-none">
@@ -159,22 +152,17 @@ export const TournamentCard: React.FC<TournamentCardProps> = ({
                 </div>
               </div>
 
-              {/* Slot Availability Progress (Rounded) */}
-              <div className="p-4 rounded-2xl bg-[#08080d] border border-white/[0.06] space-y-2 font-mono">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-300">
-                    Слоты команд: <span className="text-white font-bold">{tournament.slotsRegistered}</span> / {tournament.slotsTotal}
-                  </span>
-                  <span className="text-[#E32124] font-bold">
-                    Осталось всего {tournament.slotsTotal - tournament.slotsRegistered} {pluralSlots(tournament.slotsTotal - tournament.slotsRegistered)}!
+              {/* Registered Teams Status Card (Clean without artificial slot cap) */}
+              <div className="p-4 rounded-2xl bg-[#08080d] border border-white/[0.06] flex items-center justify-between font-mono">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                  <span className="text-xs text-zinc-300">
+                    Зарегистрировано команд: <strong className="text-white font-extrabold text-sm ml-1">{tournament.slotsRegistered}</strong>
                   </span>
                 </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-[#E32124] to-[#FF5E66] rounded-full transition-all duration-500"
-                    style={{ width: `${slotPercentage}%` }}
-                  />
-                </div>
+                <span className="text-emerald-400 text-xs font-bold uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/30 shrink-0">
+                  Регистрация открыта
+                </span>
               </div>
 
             </div>

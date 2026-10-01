@@ -420,8 +420,8 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                     </p>
                   </div>
 
-                  {/* Compact Single-Row Thumbnail Strip (Smooth horizontal scroll without clipping) */}
-                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1">
+                  {/* Compact Single-Row Thumbnail Strip (Auto-fits all thumbnails evenly on desktop with 0 clipping) */}
+                  <div className="flex items-center sm:grid sm:grid-flow-col sm:auto-cols-fr gap-1.5 sm:gap-2 overflow-x-auto sm:overflow-visible no-scrollbar py-2 px-1 w-full">
                     {galleryPhotos.map((photo, pIdx) => (
                       <button
                         key={pIdx}
@@ -430,7 +430,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                           sound.playClick();
                           setGalleryIndex(pIdx);
                         }}
-                        className={`h-9 w-13 sm:h-11 sm:w-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 shadow-lg ${
+                        className={`h-9 w-12 sm:h-11 sm:w-auto rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 sm:shrink shadow-lg ${
                           galleryIndex === pIdx
                             ? 'border-[#E32124] ring-2 ring-[#E32124]/70 scale-105 opacity-100 z-10'
                             : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/40'

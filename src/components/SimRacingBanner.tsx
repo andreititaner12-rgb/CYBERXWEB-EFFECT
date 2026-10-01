@@ -227,7 +227,7 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
             sound.playClick();
             setIsLightboxOpen(false);
           }}
-          className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 select-none animate-zones-overlay-in cursor-zoom-out"
+          className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 select-none animate-zones-overlay-in cursor-default"
         >
           {/* Top Bar with Title & Close Button */}
           <div className="flex items-center justify-between z-10 w-full max-w-6xl mx-auto" onClick={(e) => e.stopPropagation()}>
@@ -253,17 +253,17 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
           </div>
 
           {/* Centered High-Res Image */}
-          <div className="relative my-auto flex items-center justify-center max-h-[82vh] w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="relative my-auto flex items-center justify-center max-h-[82vh] w-full cursor-default" onClick={(e) => e.stopPropagation()}>
             <img
               src="/images/sim-racing-real.jpg"
               alt="CyberX Sim Racing Омск Ленина 19 Fullscreen"
-              className="max-h-[80vh] max-w-full w-auto object-contain rounded-2xl shadow-2xl border border-white/20"
+              className="max-h-[80vh] max-w-full w-auto object-contain rounded-2xl shadow-2xl border border-white/20 cursor-default"
             />
           </div>
 
           {/* Bottom Bar Caption */}
-          <div className="text-center text-xs font-mono text-zinc-400 py-1" onClick={(e) => e.stopPropagation()}>
-            Нажмите <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/20">ESC</kbd> или кликните в любое место для закрытия
+          <div className="text-center text-xs font-mono text-zinc-300 py-1" onClick={(e) => e.stopPropagation()}>
+            Нажмите <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/20 font-bold">ESC</kbd> или <span className="text-white font-bold">Крестик</span> для закрытия
           </div>
         </div>,
         document.body
