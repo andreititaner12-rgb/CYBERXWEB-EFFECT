@@ -7,12 +7,14 @@ export default defineConfig({
     target: 'esnext',
     cssMinify: true,
     minify: 'esbuild',
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           framer: ['framer-motion'],
           lucide: ['lucide-react'],
+          three: ['three'],
         },
       },
     },
