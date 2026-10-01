@@ -126,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({
           y: contentTranslateY, 
           scale: contentScale 
         }}
-        className="relative z-20 w-full max-w-[1520px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24 xl:px-28 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-6 sm:pb-10 flex-1 flex flex-col justify-center"
+        className="relative z-20 w-full max-w-[1520px] mx-auto px-5 sm:px-12 md:px-16 lg:px-24 xl:px-28 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-4 sm:pb-8 flex-1 flex flex-col justify-center"
       >
         
         {/* 1. Category Eyebrow Tag */}
@@ -134,22 +134,22 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
           animate={isReady ? { opacity: 1, x: 0, filter: 'blur(0px)' } : { opacity: 0, x: -20, filter: 'blur(10px)' }}
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-3 mb-3 sm:mb-4 lg:mb-5"
+          className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-4 lg:mb-5"
         >
-          <span className="w-6 sm:w-9 h-[2px] bg-[#E32124] shadow-[0_0_8px_#E32124]" />
-          <span className="font-mono text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.25em] text-zinc-300 uppercase">
+          <span className="w-5 sm:w-9 h-[2px] bg-[#E32124] shadow-[0_0_10px_#E32124]" />
+          <span className="font-mono text-[9px] xs:text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.22em] sm:tracking-[0.25em] text-zinc-300 uppercase">
             СЕТЬ КИБЕРСПОРТИВНЫХ АРЕН — ОМСК
           </span>
         </motion.div>
 
-        {/* 2. Main Title: Large Scale Modern Typography */}
+        {/* 2. Main Title: Scaled Up Mobile & Desktop Modern Typography */}
         <div className="space-y-0.5 sm:space-y-1">
           {/* CYBERX (Solid bold white) */}
           <motion.h1 
             initial={{ opacity: 0, y: 35, filter: 'blur(16px)' }}
             animate={isReady ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 35, filter: 'blur(16px)' }}
             transition={{ duration: 0.55, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight text-white uppercase leading-[0.82] drop-shadow-[0_10px_35px_rgba(0,0,0,0.85)]"
+            className="font-display font-black text-[4.2rem] xs:text-[4.8rem] sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight text-white uppercase leading-[0.84] sm:leading-[0.82] drop-shadow-[0_10px_35px_rgba(0,0,0,0.85)]"
           >
             CYBERX
           </motion.h1>
@@ -159,7 +159,7 @@ export const Hero: React.FC<HeroProps> = ({
             initial={{ opacity: 0, y: 35, filter: 'blur(16px)' }}
             animate={isReady ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 35, filter: 'blur(16px)' }}
             transition={{ duration: 0.55, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight uppercase leading-[0.82] text-outline-hero drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]"
+            className="font-display font-black text-[4.2rem] xs:text-[4.8rem] sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight uppercase leading-[0.84] sm:leading-[0.82] text-outline-hero drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]"
           >
             АРЕНЫ
           </motion.div>
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({
             initial={{ opacity: 0, y: 35, filter: 'blur(16px)' }}
             animate={isReady ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 35, filter: 'blur(16px)' }}
             transition={{ duration: 0.55, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight uppercase leading-[0.82] text-outline-hero drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]"
+            className="font-display font-black text-[4.2rem] xs:text-[4.8rem] sm:text-8xl md:text-9xl lg:text-[130px] xl:text-[160px] 2xl:text-[180px] tracking-tight uppercase leading-[0.84] sm:leading-[0.82] text-outline-hero drop-shadow-[0_10px_30px_rgba(0,0,0,0.85)]"
           >
             ОМСКА
           </motion.div>
@@ -180,7 +180,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 25, filter: 'blur(12px)' }}
           animate={isReady ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 25, filter: 'blur(12px)' }}
           transition={{ duration: 0.55, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 sm:mt-8 md:mt-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 max-w-5xl"
+          className="mt-4 sm:mt-8 md:mt-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-8 max-w-5xl"
         >
           {/* Paragraph Description */}
           <p className="text-xs sm:text-sm md:text-base text-zinc-300 max-w-md font-normal leading-relaxed drop-shadow-md">
@@ -188,7 +188,7 @@ export const Hero: React.FC<HeroProps> = ({
           </p>
 
           {/* Action Buttons (Right adjacent) */}
-          <div className="flex flex-row items-center gap-3 sm:gap-4 shrink-0 flex-wrap">
+          <div className="flex flex-row items-center gap-2.5 sm:gap-4 shrink-0 flex-wrap">
             {/* Primary Red Pill Button: ЗАБРОНИРОВАТЬ СТОЛ */}
             <button
               onClick={() => {
@@ -196,7 +196,7 @@ export const Hero: React.FC<HeroProps> = ({
                 onOpenBooking();
               }}
               onMouseEnter={() => sound.playHover()}
-              className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] text-white font-mono text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-[0.18em] shadow-[0_0_30px_rgba(227,33,36,0.65)] hover:shadow-[0_0_50px_rgba(227,33,36,0.95)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-white/20 overflow-hidden whitespace-nowrap"
+              className="group relative px-5 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] text-white font-mono text-xs sm:text-sm font-black uppercase tracking-wider sm:tracking-[0.18em] shadow-[0_0_30px_rgba(227,33,36,0.65)] hover:shadow-[0_0_50px_rgba(227,33,36,0.95)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border border-white/20 overflow-hidden whitespace-nowrap"
             >
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
               <span>ЗАБРОНИРОВАТЬ СТОЛ</span>
@@ -207,7 +207,7 @@ export const Hero: React.FC<HeroProps> = ({
             <button
               onClick={() => scrollTo('manifesto')}
               onMouseEnter={() => sound.playHover()}
-              className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/[0.05] hover:bg-white/[0.14] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.18em] border border-white/25 hover:border-white/50 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-1.5 cursor-pointer overflow-hidden whitespace-nowrap"
+              className="group relative px-5 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white/[0.05] hover:bg-white/[0.14] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider sm:tracking-[0.18em] border border-white/25 hover:border-white/50 backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer overflow-hidden whitespace-nowrap"
             >
               <span className="group-hover:text-white transition-colors">ПОЗНАКОМИТЬСЯ</span>
             </button>
@@ -216,29 +216,28 @@ export const Hero: React.FC<HeroProps> = ({
 
       </motion.div>
 
-      {/* 4. Bottom Navigation Bar with Scroll Prompt */}
-      <div className="relative z-20 w-full border-t border-white/[0.08] bg-black/60 backdrop-blur-xl">
-        <div className="max-w-[1520px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24 xl:px-28 py-3.5 sm:py-4 flex items-center justify-between gap-4 flex-wrap">
+      {/* 4. Bottom Navigation Bar with Centered Aesthetic Ribbon */}
+      <div className="relative z-20 w-full border-t border-white/[0.12] bg-[#030308]/85 backdrop-blur-2xl shadow-[0_-12px_35px_rgba(0,0,0,0.7)] shrink-0">
+        <div className="max-w-[1520px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-3 sm:py-4 flex items-center justify-between gap-4">
           
-          {/* Categories Navigation */}
-          <div className="flex items-center gap-4 sm:gap-7 md:gap-9 lg:gap-11 overflow-x-auto no-scrollbar py-0.5">
+          {/* Categories Navigation with Aesthetic Capsules */}
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 overflow-x-auto no-scrollbar py-1 flex-1">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.target}
                 initial={{ opacity: 0, y: 10 }}
                 animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                transition={{ duration: 0.35, delay: 0.5 + index * 0.06 }}
+                transition={{ duration: 0.35, delay: 0.45 + index * 0.05 }}
                 onClick={() => scrollTo(item.target)}
                 onMouseEnter={() => sound.playHover()}
-                className="group inline-flex items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm md:text-base font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-zinc-300 hover:text-white transition-all cursor-pointer whitespace-nowrap py-1 relative"
+                className="group inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.08] border border-white/[0.06] hover:border-[#E32124]/50 transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0 shadow-sm"
               >
-                <span className="text-[#E32124] text-[10px] sm:text-xs font-mono font-bold group-hover:text-white transition-colors">
+                <span className="px-1.5 py-0.5 rounded bg-[#E32124]/15 border border-[#E32124]/40 text-[#E32124] text-[10px] sm:text-xs font-mono font-bold group-hover:bg-[#E32124] group-hover:text-white transition-colors shadow-sm">
                   {item.num}
                 </span>
-                <span className="group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(227,33,36,0.8)] transition-all">
+                <span className="font-sans font-black text-xs sm:text-sm md:text-[15px] uppercase tracking-wider text-zinc-300 group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(227,33,36,0.8)] transition-all">
                   {item.label}
                 </span>
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#E32124] group-hover:w-full transition-all duration-300 shadow-[0_0_8px_#E32124]" />
               </motion.button>
             ))}
           </div>
@@ -250,14 +249,14 @@ export const Hero: React.FC<HeroProps> = ({
             transition={{ duration: 0.4, delay: 0.75 }}
             onClick={() => scrollTo('manifesto')}
             onMouseEnter={() => sound.playHover()}
-            className="hidden sm:inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm font-bold tracking-[0.2em] text-zinc-400 hover:text-white transition-colors cursor-pointer group py-1 shrink-0"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-[#E32124]/20 border border-white/[0.08] hover:border-[#E32124]/40 text-xs font-mono font-bold tracking-[0.2em] text-zinc-300 hover:text-white transition-all cursor-pointer group shrink-0 shadow-sm"
           >
             <span className="group-hover:text-[#E32124] transition-colors">ЛИСТАЙТЕ</span>
             <motion.div
               animate={{ y: [0, 3, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
             >
-              <ChevronDown className="w-4 h-4 text-[#E32124] group-hover:translate-y-0.5 transition-transform" />
+              <ChevronDown className="w-4 h-4 text-[#E32124]" />
             </motion.div>
           </motion.button>
 

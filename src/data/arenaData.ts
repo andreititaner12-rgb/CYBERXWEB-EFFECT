@@ -280,7 +280,7 @@ export const ZONES: ZoneType[] = [
 export const DEFAULT_LINKS: SiteLinks = {
   telegramHandle: '@cyberxcommunityomsklenina',
   telegramUrl: 'https://t.me/cyberxcommunityomsklenina',
-  vkUrl: 'https://vk.com/cyberx_omsk_lenina',
+  vkUrl: 'https://vk.ru/omsklenina',
   googleFormUrl: 'https://forms.google.com',
   appStoreUrl: 'https://apps.apple.com/app/cyberx-community/id1528654867',
   phoneLenina: '+7 (908) 110-97-77',

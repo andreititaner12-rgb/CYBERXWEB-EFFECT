@@ -137,7 +137,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <a
-                  href={siteLinks.vkUrl || "https://vk.com/cyberx_omsk_lenina"}
+                  href={siteLinks.vkUrl || "https://vk.ru/omsklenina"}
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-white transition-colors flex items-center gap-1.5"
