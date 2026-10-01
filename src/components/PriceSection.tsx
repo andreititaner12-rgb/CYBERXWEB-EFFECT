@@ -138,14 +138,18 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
               setActiveTab('lounge');
             }}
             onMouseEnter={() => sound.playHover()}
-            className={`px-4 py-2 rounded-lg font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors duration-150 flex items-center gap-2 cursor-pointer ${
+            className={`px-4 py-2 rounded-lg font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 cursor-pointer ${
               activeTab === 'lounge'
                 ? 'bg-[#E32124] text-white shadow-md shadow-red-600/30 font-extrabold'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
-            <Gauge className="w-4 h-4" />
-            <span>LOUNGE & СИМУЛЯТОРЫ ({currentLoungeCategories.length})</span>
+            <Gamepad2 className="w-4 h-4 shrink-0" />
+            <span className="inline-block transition-opacity duration-300">
+              {selectedArenaId === 'cyberx-arena'
+                ? `PS5 & СИМУЛЯТОРЫ (+ЭКСКЛЮЗИВЫ) (${currentLoungeCategories.length})`
+                : `PS5 & СИМУЛЯТОРЫ (${currentLoungeCategories.length})`}
+            </span>
           </button>
         </div>
 

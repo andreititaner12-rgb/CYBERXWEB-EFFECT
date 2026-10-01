@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { Gauge, Zap, ArrowRight, Trophy } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { Gauge, Zap, ArrowRight, Trophy, Maximize2, X } from 'lucide-react';
 import { sound } from '../utils/sound';
+import { pauseLenis, resumeLenis } from '../utils/smoothScroll';
 
 interface SimRacingBannerProps {
   onOpenBooking: (arenaId: string, zoneId: string) => void;
@@ -8,6 +10,29 @@ interface SimRacingBannerProps {
 
 export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking }) => {
   const [selectedGame, setSelectedGame] = useState<string>('assetto');
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+
+  // Lock body scroll and pause Lenis when lightbox is active
+  useEffect(() => {
+    if (isLightboxOpen) {
+      pauseLenis();
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      const handleKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setIsLightboxOpen(false);
+        }
+      };
+      window.addEventListener('keydown', handleKey);
+
+      return () => {
+        resumeLenis();
+        document.body.style.overflow = prevOverflow;
+        window.removeEventListener('keydown', handleKey);
+      };
+    }
+  }, [isLightboxOpen]);
 
   const games = [
     { id: 'forza', name: 'FORZA HORIZON 6', desc: 'Открытый мир, живописные трассы и топ-суперкары' },
@@ -21,7 +46,7 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
   const activeGameInfo = games.find((g) => g.id === selectedGame) || games[0];
 
   return (
-    <section className="relative py-8 sm:py-12 bg-transparent overflow-hidden select-none">
+    <section id="sim-racing" className="relative py-8 sm:py-12 bg-transparent overflow-hidden select-none scroll-mt-24">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -138,27 +163,36 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
             <div className="lg:col-span-5 flex flex-col justify-between p-4 sm:p-5 rounded-3xl bg-[#090910] border border-white/[0.1] relative font-mono shadow-2xl overflow-hidden group/photo">
               
               {/* Vertical Photo Frame (Tall Portrait Ratio) */}
-              <div className="relative w-full h-[360px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+              <div 
+                onClick={() => {
+                  sound.playClick();
+                  setIsLightboxOpen(true);
+                }}
+                className="relative w-full h-[360px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black cursor-pointer group/frame"
+              >
                 <img
                   src="/images/sim-racing-real.jpg"
                   alt="CyberX Sim Racing Омск Ленина 19"
-                  className="w-full h-full object-cover object-center group-hover/photo:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover object-center group-hover/frame:scale-105 transition-transform duration-700 ease-out"
                 />
 
                 {/* Dark Vignettes */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#090910] via-transparent to-black/30 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#090910]/80 via-transparent to-black/40 pointer-events-none" />
                 
-                {/* Location Badge */}
-                <span className="absolute top-3 left-3 text-[11px] font-mono text-white font-bold bg-black/85 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md shadow-lg flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#E32124] animate-ping" />
-                  <span>📍 CyberX Arena // ул. Ленина, 19</span>
-                </span>
-
-                {/* Bottom Overlay Pill on Photo */}
-                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 text-xs text-zinc-200 flex items-center justify-between">
-                  <span>Гоночные перчатки Moza Sparco</span>
-                  <span className="text-amber-400 font-bold">В наличии на ресепшн</span>
-                </div>
+                {/* Fullscreen Photo Button at Top */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    sound.playClick();
+                    setIsLightboxOpen(true);
+                  }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="absolute top-3.5 right-3.5 z-20 px-3.5 py-2 rounded-xl bg-black/85 hover:bg-[#E32124] text-white text-xs font-mono font-bold flex items-center gap-2 border border-white/20 backdrop-blur-md transition-all shadow-xl cursor-pointer active:scale-95 group/btn"
+                  title="Открыть фото на весь экран"
+                >
+                  <Maximize2 className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" />
+                  <span>ФОТО НА ВЕСЬ ЭКРАН</span>
+                </button>
               </div>
 
               {/* Action Booking Button */}
@@ -184,6 +218,56 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
         </div>
 
       </div>
+
+      {/* Full-Screen Sim Racing Photo Lightbox Portal */}
+      {isLightboxOpen && typeof document !== 'undefined' && createPortal(
+        <div
+          data-lenis-prevent="true"
+          onClick={() => {
+            sound.playClick();
+            setIsLightboxOpen(false);
+          }}
+          className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 sm:p-6 select-none animate-zones-overlay-in cursor-zoom-out"
+        >
+          {/* Top Bar with Title & Close Button */}
+          <div className="flex items-center justify-between z-10 w-full max-w-6xl mx-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-2.5">
+              <span className="badge-gold-shimmer px-3 py-1 rounded-lg text-xs font-mono font-bold uppercase">
+                Sim-Racing Moza
+              </span>
+              <span className="text-xs font-mono text-zinc-400 hidden sm:inline">
+                CyberX Arena • ул. Ленина, 19
+              </span>
+            </div>
+
+            <button
+              onClick={() => {
+                sound.playClick();
+                setIsLightboxOpen(false);
+              }}
+              className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-[#E32124] text-white transition-all cursor-pointer shadow-lg active:scale-90"
+              aria-label="Закрыть фото"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+          </div>
+
+          {/* Centered High-Res Image */}
+          <div className="relative my-auto flex items-center justify-center max-h-[82vh] w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src="/images/sim-racing-real.jpg"
+              alt="CyberX Sim Racing Омск Ленина 19 Fullscreen"
+              className="max-h-[80vh] max-w-full w-auto object-contain rounded-2xl shadow-2xl border border-white/20"
+            />
+          </div>
+
+          {/* Bottom Bar Caption */}
+          <div className="text-center text-xs font-mono text-zinc-400 py-1" onClick={(e) => e.stopPropagation()}>
+            Нажмите <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/20">ESC</kbd> или кликните в любое место для закрытия
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

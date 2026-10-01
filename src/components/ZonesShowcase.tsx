@@ -644,10 +644,10 @@ const BentoZoneCard: React.FC<BentoZoneCardProps> = ({
       </div>
 
       {/* Нижний контент и цена */}
-      <div className="relative z-10 mt-auto pt-8 font-mono">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div>
-            <h3 className={`font-display font-black text-white group-hover:text-[#E32124] transition-colors leading-tight uppercase ${tall ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'}`}>
+      <div className="relative z-10 mt-auto pt-6 font-mono">
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <h3 className={`font-display font-black text-white group-hover:text-[#E32124] transition-colors leading-tight uppercase ${tall ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'} break-words`}>
               {zone.name}
             </h3>
             <p className="text-xs text-zinc-300 mt-1 max-w-xl font-light line-clamp-1 sm:line-clamp-2">
@@ -655,15 +655,15 @@ const BentoZoneCard: React.FC<BentoZoneCardProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 pt-2 sm:pt-0">
-            <div className="text-right">
-              <span className="text-[10px] text-zinc-400 uppercase block">Тариф</span>
-              <span className="text-base sm:text-lg font-display font-black text-white">
+          <div className="flex items-center justify-between xl:justify-end gap-3 shrink-0 pt-2 xl:pt-0">
+            <div className="text-left xl:text-right shrink-0">
+              <span className="text-[10px] text-zinc-400 uppercase block leading-none mb-0.5">Тариф</span>
+              <span className="text-base sm:text-lg font-display font-black text-white whitespace-nowrap">
                 {zone.pricePerHour} ₽ <span className="text-[10px] font-normal text-zinc-400">/ час</span>
               </span>
             </div>
 
-            <div className={`px-3.5 py-2 rounded-xl font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md ${
+            <div className={`px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md shrink-0 whitespace-nowrap ${
               redirectTo
                 ? 'bg-[#E32124] text-white'
                 : isExpanded
@@ -673,12 +673,12 @@ const BentoZoneCard: React.FC<BentoZoneCardProps> = ({
               {redirectTo ? (
                 <>
                   <span>Открыть раздел</span>
-                  <ExternalLink className="w-3 h-3" />
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                 </>
               ) : (
                 <>
                   <span>{isExpanded ? 'Закрыть' : 'Обзор'}</span>
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0 group-hover:translate-x-0.5 transition-transform" />
                 </>
               )}
             </div>

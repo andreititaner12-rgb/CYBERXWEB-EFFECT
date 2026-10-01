@@ -353,10 +353,24 @@ export const DEFAULT_PRICES: AllPricesData = {
         ]
       },
       {
-        id: 'solo-arena',
-        title: 'SOLO',
-        badge: 'ПРИВАТНЫЙ ЗАЛ',
+        id: 'duo-arena',
+        title: 'DUO ROOM',
+        badge: 'ПАРНЫЙ ЗАЛ',
         iconType: 'ShieldCheck',
+        specs: '2 Игрока • RTX 5070 Ti • 400-480Hz • Звукоизоляция',
+        rows: [
+          { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '200 ₽', weekend: '220 ₽', filterKey: 'morning' },
+          { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '270 ₽', weekend: '300 ₽', filterKey: '1h' },
+          { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '650 ₽', weekend: '750 ₽', filterKey: '3h' },
+          { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 000 ₽', weekend: '1 100 ₽', filterKey: '5h' },
+          { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '1 300 ₽', weekend: '1 400 ₽', filterKey: 'night' },
+        ]
+      },
+      {
+        id: 'solo-arena',
+        title: 'SOLO ROOM',
+        badge: 'ПРИВАТНЫЙ ЗАЛ',
+        iconType: 'Flame',
         specs: 'RTX 5070 Ti • 400–600Hz • Звукоизоляция',
         rows: [
           { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '250 ₽', weekend: '270 ₽', filterKey: 'morning' },
@@ -433,7 +447,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'standard-evropa',
         title: 'STANDARD',
-        badge: '3060, 4060, 240 HZ',
+        badge: 'БАЗОВЫЙ',
         iconType: 'Monitor',
         specs: 'RTX 3060 / 4060 • 240Hz • Абонемент 7 000 ₽',
         rows: [
@@ -448,7 +462,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'standard-plus-evropa',
         title: 'STANDARD+',
-        badge: '5070 TI, 240 HZ',
+        badge: 'ПОПУЛЯРНЫЙ',
         highlight: true,
         iconType: 'Zap',
         specs: 'RTX 5070 Ti • 240Hz • Абонемент 8 000 ₽',
@@ -463,8 +477,8 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'vip-evropa',
-        title: 'VIP ZONE',
-        badge: '5070 TI, 24.5" 240 HZ',
+        title: 'VIP ROOM',
+        badge: 'PRO КИБЕРСПОРТ',
         iconType: 'Crown',
         specs: 'RTX 5070 Ti • 24.5" 240Hz • Абонемент 10 000 ₽',
         rows: [
@@ -478,9 +492,9 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'super-vip-duo-evropa',
-        title: 'SUPER VIP | DUO',
-        badge: '480 HZ 2K / 400 HZ',
-        iconType: 'Flame',
+        title: 'DUO ROOM',
+        badge: 'ПАРНЫЙ ЗАЛ',
+        iconType: 'ShieldCheck',
         specs: '5070 Ti • 27" 480Hz 2K, 24" 400Hz • Абонемент 11 000 ₽',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '150 ₽', weekend: '170 ₽', filterKey: 'morning' },
@@ -494,8 +508,8 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'solo-evropa',
         title: 'SOLO ROOM',
-        badge: '5070 TI, 400-600 HZ',
-        iconType: 'ShieldCheck',
+        badge: 'ТОП ФЛАГМАН 600HZ',
+        iconType: 'Flame',
         specs: '5070 Ti • Ryzen 7800X3D • 600Hz • Абонемент 12 000 ₽',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '190 ₽', weekend: '210 ₽', filterKey: 'morning' },
@@ -522,20 +536,6 @@ export const DEFAULT_PRICES: AllPricesData = {
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '900 ₽', weekend: '900 ₽', filterKey: 'night' },
           { period: 'Паровой коктейль', subtext: 'Lounge Hookah', weekday: '1 000 ₽', weekend: '1 000 ₽', filterKey: 'night' },
         ]
-      },
-      {
-        id: 'sim-evropa',
-        title: 'АВТОСИМУЛЯТОРЫ',
-        badge: 'CYBERX ARENA (ЛЕНИНА, 19)',
-        highlight: true,
-        iconType: 'Gauge',
-        specs: 'Moza Direct Drive • Moza Load Cell • UltraWide',
-        rows: [
-          { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '400 ₽', weekend: '500 ₽', filterKey: 'morning' },
-          { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '600 ₽', weekend: '700 ₽', filterKey: '1h' },
-          { period: '2 ЧАСА', subtext: '08:00 – 19:00', weekday: '1 000 ₽', weekend: '1 100 ₽', filterKey: '3h' },
-          { period: '3 ЧАСА', subtext: 'Дневной сет', weekday: '1 350 ₽', weekend: '1 500 ₽', filterKey: '5h' },
-        ]
       }
     ]
   },
@@ -557,7 +557,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'vip-oktyabr',
-        title: 'VIP ZONE',
+        title: 'VIP ROOM',
         badge: 'PRO КИБЕРСПОРТ',
         iconType: 'Crown',
         specs: 'RTX 4070 • 280Hz • HyperX Cloud Pro',
@@ -571,7 +571,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'trio-oktyabr',
-        title: 'TRIO ZONE',
+        title: 'TRIO ROOM',
         badge: 'КОМНАТА НА 3 ПК',
         highlight: true,
         iconType: 'Users',
@@ -585,7 +585,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'duo-oktyabr',
-        title: 'DUO ZONE',
+        title: 'DUO ROOM',
         badge: 'ПАРНЫЙ ЗАЛ',
         iconType: 'ShieldCheck',
         specs: '2 Игрока • RTX 4070 • 280Hz • Комфорт',
@@ -598,7 +598,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'solo-oktyabr',
-        title: 'SOLO ZONE',
+        title: 'SOLO ROOM',
         badge: 'ТОП ФЛАГМАН 600HZ',
         iconType: 'Flame',
         specs: 'Ryzen 7 7800X3D • BenQ 600Hz • Звукоизоляция',
@@ -613,7 +613,7 @@ export const DEFAULT_PRICES: AllPricesData = {
     lounge: [
       {
         id: 'tv-oktyabr',
-        title: 'TV ZONE (PS5)',
+        title: 'АРЕНДА TV (PS5)',
         badge: '3 ЗАЛА PS5 В ОКТЯБРЕ',
         iconType: 'Tv',
         specs: 'PlayStation 5 • 4K экран • Мягкие диваны',
@@ -624,20 +624,6 @@ export const DEFAULT_PRICES: AllPricesData = {
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 100 ₽', weekend: '1 100 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '900 ₽', weekend: '900 ₽', filterKey: 'night' },
           { period: 'Паровой коктейль', subtext: 'Lounge Hookah', weekday: '800 ₽', weekend: '800 ₽', filterKey: 'night' },
-        ]
-      },
-      {
-        id: 'sim-oktyabr',
-        title: 'АВТОСИМУЛЯТОРЫ',
-        badge: 'CYBERX ARENA (ЛЕНИНА, 19)',
-        highlight: true,
-        iconType: 'Gauge',
-        specs: 'Moza Direct Drive • Moza Load Cell • UltraWide',
-        rows: [
-          { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '400 ₽', weekend: '500 ₽', filterKey: 'morning' },
-          { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '600 ₽', weekend: '700 ₽', filterKey: '1h' },
-          { period: '2 ЧАСА', subtext: '08:00 – 19:00', weekday: '1 000 ₽', weekend: '1 100 ₽', filterKey: '3h' },
-          { period: '3 ЧАСА', subtext: 'Дневной сет', weekday: '1 350 ₽', weekend: '1 500 ₽', filterKey: '5h' },
         ]
       }
     ]

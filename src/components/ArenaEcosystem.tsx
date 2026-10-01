@@ -326,7 +326,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
               
               {/* Left Column: Silky Smooth Pure CSS/Opacity Crossfade Photo Gallery */}
               <div 
-                className="lg:col-span-6 relative h-[260px] sm:h-[360px] lg:h-auto lg:min-h-[520px] overflow-hidden bg-black flex flex-col justify-between"
+                className="lg:col-span-6 relative h-[280px] sm:h-[380px] lg:h-full lg:min-h-[580px] overflow-hidden bg-black flex flex-col justify-between"
                 onMouseEnter={() => setIsHoveringGallery(true)}
                 onMouseLeave={() => setIsHoveringGallery(false)}
               >
@@ -357,7 +357,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                   
                   {/* Subtle Gradient Overlays */}
                   <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#000000] via-[#000000]/30 to-transparent pointer-events-none z-20" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70 pointer-events-none z-20" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-20" />
                 </div>
 
                 {/* Top Info Bar on Image */}
@@ -406,7 +406,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                 </div>
 
                 {/* Bottom Bar: Title & Desktop Thumbnails */}
-                <div className="relative z-30 p-3.5 sm:p-6 space-y-2.5">
+                <div className="relative z-30 p-3.5 sm:p-6 pt-4 space-y-2.5 bg-gradient-to-t from-black via-black/70 to-transparent">
                   {/* Desktop Title & Subtitle (hidden on mobile to keep photo visible) */}
                   <div className="hidden lg:block">
                     <span className="text-xs font-mono font-bold tracking-wider text-[#E32124] uppercase">
@@ -420,8 +420,8 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                     </p>
                   </div>
 
-                  {/* Compact Single-Row Thumbnail Strip (Smooth horizontal scroll) */}
-                  <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+                  {/* Compact Single-Row Thumbnail Strip (Smooth horizontal scroll without clipping) */}
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1">
                     {galleryPhotos.map((photo, pIdx) => (
                       <button
                         key={pIdx}
@@ -430,10 +430,10 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                           sound.playClick();
                           setGalleryIndex(pIdx);
                         }}
-                        className={`h-8 w-12 sm:h-10 sm:w-16 rounded-lg overflow-hidden border transition-all cursor-pointer shrink-0 shadow-md ${
+                        className={`h-9 w-13 sm:h-11 sm:w-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 shadow-lg ${
                           galleryIndex === pIdx
-                            ? 'border-[#E32124] ring-2 ring-[#E32124]/60 scale-105'
-                            : 'border-white/20 opacity-60 hover:opacity-100'
+                            ? 'border-[#E32124] ring-2 ring-[#E32124]/70 scale-105 opacity-100 z-10'
+                            : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/40'
                         }`}
                       >
                         <img

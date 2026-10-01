@@ -82,8 +82,8 @@ export function App() {
   const [livePrices, setLivePrices] = useState<AllPricesData>(() => {
     try {
       const version = localStorage.getItem('cyberx_price_version');
-      if (version !== 'v2_omsk_2026_updated') {
-        localStorage.setItem('cyberx_price_version', 'v2_omsk_2026_updated');
+      if (version !== 'v3_omsk_2026_duo_refined') {
+        localStorage.setItem('cyberx_price_version', 'v3_omsk_2026_duo_refined');
         localStorage.setItem('cyberx_live_prices', JSON.stringify(DEFAULT_PRICES));
         return DEFAULT_PRICES;
       }
