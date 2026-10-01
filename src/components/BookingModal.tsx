@@ -40,7 +40,7 @@ const CLUBS_BOOKING: ClubBookingInfo[] = [
     address: 'ул. Ленина, 19',
     langameUrl: 'https://langame.ru/club/799452760',
     qrImage: '/qr/qr-lenina.png',
-    description: '86 ПК • 2 Sim-Racing кокпита • 2 Premium зала • 150" Экран',
+    description: '89 ПК • Solo/Duo • 2 Sim-Racing • 2 Premium зала • 150" Экран',
     badge: 'Центр // Флагман',
   },
   {

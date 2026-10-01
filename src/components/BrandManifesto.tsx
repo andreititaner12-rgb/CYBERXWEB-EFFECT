@@ -13,7 +13,7 @@ export const BrandManifesto: React.FC = () => {
     },
     {
       icon: Monitor,
-      value: '182 ПК',
+      value: '185 ПК',
       label: 'Дисплеи BenQ 600Hz & ASUS 480Hz',
       detail: 'RTX 5070 Ti & Ryzen 7 7800X3D',
     },

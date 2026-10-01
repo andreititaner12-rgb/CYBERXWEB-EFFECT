@@ -40,11 +40,11 @@ export const ARENAS: ArenaLocation[] = [
   {
     id: 'cyberx-arena',
     name: 'CYBERX ARENA // ЛЕНИНА, 19',
-    tagline: 'Главный киберспортивный комплекс Омска со сценой, Premium залами и автосимуляторами',
+    tagline: 'Главный киберспортивный комплекс Омска со сценой, Premium залами, Solo/Duo и автосимуляторами',
     address: 'ул. Ленина, 19',
     metro: 'Ост. «Драмтеатр» / «КДЦ Маяковский»',
     area: '540 м²',
-    rigsCount: 86,
+    rigsCount: 89,
     vipRoomsCount: 2,
     ps5RoomsCount: 4,
     phone: '+7 (908) 110-97-77',
@@ -66,8 +66,9 @@ export const ARENAS: ArenaLocation[] = [
       '/images/arena/15-bar-lounge.jpg'
     ],
     features: [
-      '86 мощных игровых ПК (RTX 5070 Ti / i5-14600KF / BenQ 600Hz & 400Hz)',
+      '89 мощных игровых ПК (RTX 5070 Ti / i5-14600KF / BenQ 600Hz & 400Hz)',
       '2 эксклюзивных Premium зала (5 ПК + PS5 + Большой стол для команды)',
+      'Приватные Solo и Duo комнаты с максимальной шумоизоляцией',
       '2 профессиональных автосимулятора Sim-Racing с рулевой базой Moza и педалями Moza Load Cell',
       'Большой кино-лаунж с проектором 150" для трансляций и турниров',
       '4 приватных PS5 зала с диванами, кальян и бар'
@@ -199,28 +200,28 @@ export const ZONES: ZoneType[] = [
   },
   {
     id: 'solo-stream-room',
-    name: 'SOLO ROOM // RYZEN 7 7800X3D + 600HZ',
-    category: 'КИБЕРХАБЫ ЕВРОПА & ОКТЯБРЬ',
-    tagline: 'Приватная стримерская на топовом процессоре и мониторе 600 Гц',
-    description: 'Приватная изолированная комната в клубах CyberX Европа (Мира) и CyberX Октябрь (Серова). Ультимативный игровой процессор AMD Ryzen 7 7800X3D с 3D V-Cache, видеокарта RTX 5070 Ti, сверхбыстрый монитор BenQ 600Hz, клавиатура Dark Project и микрофон HyperX.',
-    capacity: '1 человек (CyberX Европа & CyberX Октябрь)',
+    name: 'SOLO & DUO ROOMS // 600HZ & RYZEN 7800X3D',
+    category: 'ВО ВСЕХ 3 КЛУБАХ (ЛЕНИНА, ЕВРОПА, ОКТЯБРЬ)',
+    tagline: 'Приватные изолированные комнаты на топовом соревновательном железе',
+    description: 'Приватные изолированные Solo и Duo залы во всех 3 кибераренах CyberX в Омске (Ленина, 19, Мира, 42к1, Серова, 19А). Ультимативные игровые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, видеокарты RTX 5070 Ti, сверхбыстрые мониторы BenQ 600Hz / 400Hz, премиум механика Dark Project и полная звукоизоляция.',
+    capacity: '1–2 человека (Во всех 3 клубах сети)',
     hardwareBrief: [
-      'PC: AMD Ryzen 7 7800X3D / RTX 5070 Ti / 32GB DDR5',
-      'Монитор: BenQ 24.5" 600Hz / 400Hz Extreme Speed',
-      'Клавиатура: Dark Project механическая',
-      'Мышь: Logitech Pro / Dark Project',
-      'Гарнитура: HyperX Cloud Pro'
+      'PC: AMD Ryzen 7 7800X3D / i5-14600KF + RTX 5070 Ti',
+      'Монитор: BenQ 24.5" 600Hz / 400Hz Extreme Speed DyAc 2',
+      'Клавиатура: Dark Project KD87A механическая',
+      'Мышь: Logitech G Pro X Superlight 2 / Ajazz',
+      'Гарнитура: HyperX Cloud Pro + студийный микрофон'
     ],
     features: [
-      'Доступно в CyberX Европа и CyberX Октябрь',
-      'Абсолютная тишина и изоляция',
+      'Доступно во всех 3 кибераренах сети CyberX в Омске',
+      'Абсолютная тишина, приватность и звукоизоляция (55dB)',
       'Максимальный соревновательный FPS (CS2: 750+ FPS)',
-      'Идеально для стримов и турнирных квалификаций'
+      'Идеально для стримов, дуо-праков и турнирных квалификаций'
     ],
     pricePerHour: 250,
     priceNight: 1100,
     image: '/images/evropa/05-mural-solo.jpg',
-    badge: 'Ryzen 7800X3D + 600Hz',
+    badge: 'Во всех 3 клубах (600Hz)',
   },
   {
     id: 'ps5-lounge',
@@ -255,9 +256,9 @@ export const ZONES: ZoneType[] = [
     id: 'pro-stage',
     name: 'ОТКРЫТЫЙ ЗАЛ // SUPER VIP & STANDART',
     category: 'ОБЩИЙ ЗАЛ & VIP',
-    tagline: '182 игровых ПК во всех трех клубах с мониторами до 600Hz',
+    tagline: '185 игровых ПК во всех трех клубах с мониторами до 600Hz',
     description: 'Главные игровые залы сети CyberX в Омске. Мониторы BenQ 600Hz / ASUS 480Hz / 400Hz / 240Hz, видеокарты RTX 5070 Ti / 3060 Ti, кресла Tesoro, гигабитный пинг >1 Гбит.',
-    capacity: '182 игровых ПК суммарно',
+    capacity: '185 игровых ПК суммарно',
     hardwareBrief: [
       'Super VIP: RTX 5070 Ti / i5-14600KF / 32GB DDR5 / BenQ 600Hz',
       'Standart: RTX 3060 Ti / i5-12400F / 16GB / BenQ 144Hz & 240Hz',
@@ -265,7 +266,7 @@ export const ZONES: ZoneType[] = [
       'Кресла: Анатомические Tesoro Zone / Master'
     ],
     features: [
-      '86 ПК в CyberX Arena • 46 ПК в Европе • 50 ПК в Октябре',
+      '89 ПК в CyberX Arena • 46 ПК в Европе • 50 ПК в Октябре',
       'Прямой оптический канал >1 Гбит/с (Ping 0.8ms)',
       'Широкие столы с профессиональными коврами',
       'Быстрый заказ напитков и кальяна к месту'

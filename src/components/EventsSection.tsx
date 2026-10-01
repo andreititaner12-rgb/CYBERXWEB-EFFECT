@@ -81,7 +81,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
               <div className="mt-6 space-y-2.5 font-mono text-xs">
                 <div className="flex items-start gap-2.5 text-zinc-300">
                   <CheckCircle2 className="w-4 h-4 text-[#E32124] shrink-0 mt-0.5" />
-                  <span><strong>Вместимость до 86 ПК</strong> на Ленина 19 или объединение 3 клубов (182 ПК)</span>
+                  <span><strong>Вместимость до 89 ПК</strong> на Ленина 19 или объединение 3 клубов (185 ПК)</span>
                 </div>
                 <div className="flex items-start gap-2.5 text-zinc-300">
                   <CheckCircle2 className="w-4 h-4 text-[#E32124] shrink-0 mt-0.5" />
@@ -188,7 +188,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
         {/* 3 Quick Stats Under Cards */}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 font-mono text-center">
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-            <div className="text-xl sm:text-2xl font-black text-white">182 ПК</div>
+            <div className="text-xl sm:text-2xl font-black text-white">185 ПК</div>
             <div className="text-[11px] text-zinc-400 mt-0.5">В 3 клубах Омска</div>
           </div>
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
