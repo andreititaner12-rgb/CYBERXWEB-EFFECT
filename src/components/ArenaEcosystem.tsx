@@ -326,16 +326,11 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
               
               {/* Left Column: Silky Smooth Pure CSS/Opacity Crossfade Photo Gallery */}
               <div 
-                className="lg:col-span-6 relative min-h-[360px] sm:min-h-[460px] lg:min-h-full overflow-hidden bg-black flex flex-col justify-between"
+                className="lg:col-span-6 relative h-[260px] sm:h-[360px] lg:h-auto lg:min-h-[520px] overflow-hidden bg-black flex flex-col justify-between"
                 onMouseEnter={() => setIsHoveringGallery(true)}
                 onMouseLeave={() => setIsHoveringGallery(false)}
               >
-                {/* Crossfading Image Stack: в DOM только активное и затухающее фото
-                    (8-10 фото сразу монтировать нельзя — спайк растеризации).
-                    ВХОД нового фото — CSS-АНИМАЦИЯМИ (galleryPhotoIn + ken-burns):
-                    в отличие от transition, анимации играют при монтировании,
-                    поэтому кроссфейд и зум реально проигрываются. Старое фото
-                    затухает переходом opacity под новым (z-10). */}
+                {/* Crossfading Image Stack */}
                 <div className="absolute inset-0 overflow-hidden bg-black pointer-events-none">
                   {galleryPhotos.map((photo, idx) => {
                     const isActive = idx === galleryIndex;
@@ -361,58 +356,59 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                   })}
                   
                   {/* Subtle Gradient Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#000000] via-[#000000]/40 to-transparent pointer-events-none z-20" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-20" />
+                  <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#000000] via-[#000000]/30 to-transparent pointer-events-none z-20" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70 pointer-events-none z-20" />
                 </div>
 
                 {/* Top Info Bar on Image */}
-                <div className="relative z-30 p-6 flex items-start justify-between gap-3">
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1.5 rounded-xl bg-[#000000]/85 border border-white/15 text-xs font-mono text-white flex items-center gap-1.5 shadow-md">
-                      <Clock className="w-3.5 h-3.5 text-emerald-400" />
+                <div className="relative z-30 p-3.5 sm:p-6 flex items-start justify-between gap-2 sm:gap-3">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-[#000000]/85 border border-white/15 text-[10px] sm:text-xs font-mono text-white flex items-center gap-1.5 shadow-md">
+                      <Clock className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-emerald-400" />
                       {currentArena.workingHours}
                     </span>
-                    <span className="px-3 py-1.5 rounded-xl bg-[#E32124] text-white text-xs font-mono font-bold shadow-lg shadow-red-600/30">
-                      {currentArena.rigsCount} Игровых ПК
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-[#E32124] text-white text-[10px] sm:text-xs font-mono font-bold shadow-lg shadow-red-600/30">
+                      {currentArena.rigsCount} ПК
                     </span>
-                    <span className="px-3 py-1.5 rounded-xl bg-black/85 border border-white/15 text-white text-xs font-mono font-bold shadow-md">
-                      {currentArena.ps5RoomsCount} PS5 залов
+                    <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-black/85 border border-white/15 text-white text-[10px] sm:text-xs font-mono font-bold shadow-md">
+                      {currentArena.ps5RoomsCount} PS5
                     </span>
                   </div>
 
                   {/* Photo Counter */}
-                  <span className="px-3 py-1 rounded-lg bg-black/85 border border-white/15 text-xs font-mono text-zinc-300 shrink-0 shadow-md">
+                  <span className="px-2.5 sm:px-3 py-1 rounded-lg bg-black/85 border border-white/15 text-[11px] sm:text-xs font-mono text-zinc-300 shrink-0 shadow-md">
                     {galleryIndex + 1} / {galleryPhotos.length}
                   </span>
                 </div>
 
                 {/* Navigation Arrows on Image */}
-                <div className="relative z-30 px-4 flex items-center justify-between pointer-events-none">
+                <div className="relative z-30 px-3 sm:px-4 flex items-center justify-between pointer-events-none">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       prevPhoto();
                     }}
-                    className="w-10 h-10 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] flex items-center justify-center transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
+                    className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] flex items-center justify-center transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
                     aria-label="Предыдущее фото"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" />
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       nextPhoto();
                     }}
-                    className="w-10 h-10 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] flex items-center justify-center transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
+                    className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] flex items-center justify-center transition-all pointer-events-auto active:scale-90 shadow-lg cursor-pointer"
                     aria-label="Следующее фото"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" />
                   </button>
                 </div>
 
-                {/* Bottom Title + Thumbnail Previews */}
-                <div className="relative z-30 p-6 space-y-3">
-                  <div>
+                {/* Bottom Bar: Title & Desktop Thumbnails */}
+                <div className="relative z-30 p-3.5 sm:p-6 space-y-2.5">
+                  {/* Desktop Title & Subtitle (hidden on mobile to keep photo visible) */}
+                  <div className="hidden lg:block">
                     <span className="text-xs font-mono font-bold tracking-wider text-[#E32124] uppercase">
                       Галерея и обзор клуба в Омске
                     </span>
@@ -424,8 +420,8 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                     </p>
                   </div>
 
-                  {/* Thumbnail Previews */}
-                  <div className="flex flex-wrap gap-2 pt-1">
+                  {/* Compact Single-Row Thumbnail Strip (Smooth horizontal scroll) */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
                     {galleryPhotos.map((photo, pIdx) => (
                       <button
                         key={pIdx}
@@ -434,9 +430,9 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                           sound.playClick();
                           setGalleryIndex(pIdx);
                         }}
-                        className={`h-10 w-16 rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                        className={`h-8 w-12 sm:h-10 sm:w-16 rounded-lg overflow-hidden border transition-all cursor-pointer shrink-0 shadow-md ${
                           galleryIndex === pIdx
-                            ? 'border-[#E32124] ring-2 ring-[#E32124]/50 scale-105'
+                            ? 'border-[#E32124] ring-2 ring-[#E32124]/60 scale-105'
                             : 'border-white/20 opacity-60 hover:opacity-100'
                         }`}
                       >
@@ -452,9 +448,22 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
               </div>
 
               {/* Right Column: Details, Infrastructure & Booking Action */}
-              <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
+              <div className="lg:col-span-6 p-5 sm:p-8 lg:p-10 flex flex-col justify-between">
                 <div>
                   
+                  {/* Mobile-Only Header Block (Cleanly displayed below the photo) */}
+                  <div className="block lg:hidden mb-5 pb-4 border-b border-white/[0.08]">
+                    <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-[#E32124] uppercase block">
+                      Галерея и обзор клуба в Омске
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-display font-black text-white mt-0.5 uppercase">
+                      {currentArena.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-300 mt-1 font-light leading-relaxed">
+                      {currentArena.tagline}
+                    </p>
+                  </div>
+
                   {/* Address & Direct Contacts */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 p-4 rounded-2xl bg-[#040407] border border-white/[0.06]">
                     <div>

@@ -269,22 +269,28 @@ export const TournamentModal: React.FC<TournamentModalProps> = ({
               </p>
             </div>
 
-            {/* Filter pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none font-mono">
-              {['ALL', 'CS2', 'DOTA 2', 'VALORANT', 'EA FC 25'].map((game) => (
+            {/* Filter pills with uniform height and single-line layout (no wrap staircase) */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6 font-mono flex-nowrap">
+              {[
+                { id: 'ALL', label: 'Все игры' },
+                { id: 'CS2', label: 'CS2' },
+                { id: 'DOTA 2', label: 'Dota 2' },
+                { id: 'VALORANT', label: 'Valorant' },
+                { id: 'EA FC 25', label: 'EA FC 25' }
+              ].map((item) => (
                 <button
-                  key={game}
+                  key={item.id}
                   onClick={() => {
                     sound.playClick();
-                    setSelectedGameFilter(game);
+                    setSelectedGameFilter(item.id);
                   }}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
-                    selectedGameFilter === game
-                      ? 'bg-[#E32124] text-white border-[#E32124]'
-                      : 'bg-white/[0.03] text-zinc-400 border-white/[0.06] hover:text-white'
+                  className={`h-9 sm:h-10 px-3.5 sm:px-4.5 rounded-xl text-xs font-mono font-bold transition-all border cursor-pointer whitespace-nowrap shrink-0 flex items-center justify-center shadow-sm ${
+                    selectedGameFilter === item.id
+                      ? 'bg-[#E32124] text-white border-[#E32124] shadow-red-600/30'
+                      : 'bg-white/[0.03] text-zinc-400 border-white/[0.08] hover:text-white hover:bg-white/[0.06]'
                   }`}
                 >
-                  {game === 'ALL' ? 'Все дисциплины' : game}
+                  {item.label}
                 </button>
               ))}
             </div>

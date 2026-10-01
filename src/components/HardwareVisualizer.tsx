@@ -108,35 +108,156 @@ export const HardwareVisualizer: React.FC = () => {
               </div>
             </div>
 
-            {/* Dynamic Interactive Modules */}
+            {/* Dynamic Interactive Modules (Desktop) vs Sleek Spec Cards (Mobile) */}
             <div className="my-4 p-4 sm:p-5 rounded-3xl bg-[#06060c] border border-white/[0.08] relative">
 
-              {/* 1. MONITOR REFRESH RATE & SHOCKWAVE PHYSICS SIMULATOR */}
-              <div className={selectedItem.interactiveType === 'hertz' ? '' : 'hidden'}>
-                <DisplaySmoothnessSimulator />
+              {/* DESKTOP INTERACTIVE PLAYGROUND (hidden on mobile, visible on md+) */}
+              <div className="hidden md:block">
+                {/* 1. MONITOR REFRESH RATE & SHOCKWAVE PHYSICS SIMULATOR */}
+                <div className={selectedItem.interactiveType === 'hertz' ? '' : 'hidden'}>
+                  <DisplaySmoothnessSimulator />
+                </div>
+
+                {/* 2. KEYBOARD TESTER & LATENCY CALCULATOR */}
+                <div className={selectedItem.interactiveType === 'actuation' ? '' : 'hidden'}>
+                  <KeyboardTester />
+                </div>
+
+                {/* 3. MOUSE SENSOR & DOUBLE-CLICK / CPS TESTER */}
+                <div className={selectedItem.interactiveType === 'sensor' ? '' : 'hidden'}>
+                  <MouseTester />
+                </div>
+
+                {/* 4. BEAST PC LIVE FPS BENCHMARK */}
+                <div className={selectedItem.interactiveType === 'fps' ? '' : 'hidden'}>
+                  <PcTelemetryBenchmark />
+                </div>
+
+                {/* 5. AUDIO CS2 SPATIAL POSITIONING TESTER */}
+                <div className={selectedItem.interactiveType === 'audioGraph' ? '' : 'hidden'}>
+                  <AudioSpatialTester />
+                </div>
               </div>
 
-              {/* 2. KEYBOARD TESTER & LATENCY CALCULATOR */}
-              <div className={selectedItem.interactiveType === 'actuation' ? '' : 'hidden'}>
-                <KeyboardTester />
+              {/* MOBILE ADAPTED SPEC & FEATURE OVERVIEW (block on mobile, hidden on md+) */}
+              <div className="block md:hidden space-y-3 font-mono">
+                {selectedItem.interactiveType === 'hertz' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs font-bold text-white">
+                      <span>BenQ ZOWIE XL2586X / 2566K</span>
+                      <span className="text-[#E32124] px-2 py-0.5 rounded bg-[#E32124]/10 border border-[#E32124]/30">600Hz / 400Hz</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Технология</span>
+                        <span className="font-bold text-white">DyAc 2 Dual Backlight</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Отклик</span>
+                        <span className="font-bold text-emerald-400">0.5 мс GtG Fast-TN</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Эффект в CS2 & Valorant</span>
+                        <span className="text-zinc-200">Идеальная резкость при спрее и резких стрейфах</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedItem.interactiveType === 'actuation' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs font-bold text-white">
+                      <span>Dark Project KD87A / Ardor Mechanical</span>
+                      <span className="text-[#E32124] px-2 py-0.5 rounded bg-[#E32124]/10 border border-[#E32124]/30">1000Hz Polling</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Свитчи</span>
+                        <span className="font-bold text-white">Gateron Optical Red</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Шумоизоляция</span>
+                        <span className="font-bold text-emerald-400">Плейт + Корпус (Silicone)</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Преимущество</span>
+                        <span className="text-zinc-200">Смазанные с завода стабилизаторы без люфта и дребезга</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedItem.interactiveType === 'sensor' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs font-bold text-white">
+                      <span>Logitech G Pro X Superlight 2 / Ajazz</span>
+                      <span className="text-[#E32124] px-2 py-0.5 rounded bg-[#E32124]/10 border border-[#E32124]/30">60г / HERO 2</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Сенсор</span>
+                        <span className="font-bold text-white">HERO 2 (32000 DPI)</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Частота опроса</span>
+                        <span className="font-bold text-emerald-400">4000Hz Wireless</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Клики</span>
+                        <span className="text-zinc-200">Оптико-механические свитчи Lightforce с нулевой задержкой</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedItem.interactiveType === 'fps' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs font-bold text-white">
+                      <span>RTX 5070 Ti + Ryzen 7 7800X3D</span>
+                      <span className="text-[#E32124] px-2 py-0.5 rounded bg-[#E32124]/10 border border-[#E32124]/30">600+ FPS</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">CS2 (1080p Comp)</span>
+                        <span className="font-bold text-emerald-400">550-700 FPS</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Dota 2 / Valorant</span>
+                        <span className="font-bold text-white">350+ / 700+ FPS</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Память</span>
+                        <span className="text-zinc-200">32GB DDR5 6000MHz с экстремально низкими таймингами</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedItem.interactiveType === 'audioGraph' && (
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between text-xs font-bold text-white">
+                      <span>HyperX Cloud II & III Pro Gaming</span>
+                      <span className="text-[#E32124] px-2 py-0.5 rounded bg-[#E32124]/10 border border-[#E32124]/30">Spatial 7.1</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Динамики</span>
+                        <span className="font-bold text-white">53 мм неодим</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Шумоизоляция</span>
+                        <span className="font-bold text-emerald-400">Закрытая акустика</span>
+                      </div>
+                      <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                        <span className="text-zinc-500 block text-[9px] uppercase">Точность шагов</span>
+                        <span className="text-zinc-200">Кристальное позиционирование шагов и перезарядок в CS2</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* 3. MOUSE SENSOR & DOUBLE-CLICK / CPS TESTER */}
-              <div className={selectedItem.interactiveType === 'sensor' ? '' : 'hidden'}>
-                <MouseTester />
-              </div>
-
-              {/* 4. BEAST PC LIVE FPS BENCHMARK */}
-              <div className={selectedItem.interactiveType === 'fps' ? '' : 'hidden'}>
-                <PcTelemetryBenchmark />
-              </div>
-
-              {/* 5. AUDIO CS2 SPATIAL POSITIONING TESTER */}
-              <div className={selectedItem.interactiveType === 'audioGraph' ? '' : 'hidden'}>
-                <AudioSpatialTester />
-              </div>
-
-              {/* 6. ERGONOMICS CYBERX CHAIRS */}
+              {/* 6. ERGONOMICS CYBERX CHAIRS (Shared Desktop & Mobile) */}
               {selectedItem.interactiveType === 'ergonomics' && (
                 <div className="space-y-4 font-mono text-xs">
                   <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">

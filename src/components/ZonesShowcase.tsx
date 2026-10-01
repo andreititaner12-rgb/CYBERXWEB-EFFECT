@@ -251,8 +251,8 @@ const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, on
 
   return (
     <>
-      {/* 1. STICKY TOP HEADER (Always visible, never clipped or hidden) */}
-      <div className="shrink-0 bg-[#120e1a]/98 backdrop-blur-md border-b border-white/10 px-3.5 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-2.5 sm:gap-3 z-30 font-mono shadow-md">
+      {/* 1. STICKY TOP HEADER (Clean Title + Badge + Single Prominent Close Button) */}
+      <div className="shrink-0 bg-[#120e1a]/98 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-3 z-30 font-mono shadow-md">
         <div className="flex items-center gap-2 sm:gap-3 truncate">
           <h3 className="font-display font-black text-sm sm:text-xl text-white uppercase tracking-tight truncate">
             {zone.name}
@@ -268,29 +268,15 @@ const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, on
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Fullscreen Trigger */}
-          <button
-            onClick={() => {
-              sound.playClick();
-              setIsFullscreen(true);
-            }}
-            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/[0.08] hover:bg-[#E32124] text-zinc-200 hover:text-white border border-white/15 hover:border-[#E32124] transition-all text-xs flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
-            title="Развернуть фото на весь экран"
-          >
-            <Maximize2 className="w-3.5 h-3.5 text-[#E32124] group-hover:text-white" />
-            <span className="text-[11px] sm:text-xs">На весь экран</span>
-          </button>
-
-          {/* Close Modal Button */}
-          <button
-            onClick={onClose}
-            className="p-1.5 sm:p-2 rounded-xl bg-white/[0.08] hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all cursor-pointer active:scale-95 shadow-md flex items-center justify-center shrink-0"
-            aria-label="Закрыть карточку"
-          >
-            <X className="w-5 h-5 sm:w-5 sm:h-5" />
-          </button>
-        </div>
+        {/* Single Dedicated Close Button */}
+        <button
+          onClick={onClose}
+          className="p-1.5 sm:p-2 rounded-xl bg-white/[0.08] hover:bg-[#E32124] text-white border border-white/20 hover:border-[#E32124] transition-all cursor-pointer active:scale-95 shadow-md flex items-center justify-center shrink-0"
+          aria-label="Закрыть карточку"
+          title="Закрыть"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* 2. SCROLLABLE INNER CONTENT (Isolated smooth scroll container) */}
