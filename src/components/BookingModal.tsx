@@ -129,7 +129,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-[150] flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
       data-lenis-prevent="true"
       onClick={onClose}
     >

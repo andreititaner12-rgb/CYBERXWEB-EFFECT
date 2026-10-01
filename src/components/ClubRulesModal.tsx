@@ -76,7 +76,7 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
   return (
     <div
       data-lenis-prevent="true"
-      className="fixed inset-0 z-[160] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
+      className="fixed inset-0 z-[220] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
       onClick={onClose}
     >
       <div

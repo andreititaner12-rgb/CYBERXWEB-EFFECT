@@ -23,8 +23,8 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
   const physicsRef = useRef({
     x: 200,
     y: 90,
-    vx: 5.5,
-    vy: 2.8,
+    vx: 3.2,
+    vy: 1.6,
   });
 
   const shockwavesRef = useRef<Shockwave[]>([]);
@@ -77,57 +77,60 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
 
       const phys = physicsRef.current;
       const hz = hzRef.current;
-
-      // Update position with physics
-      phys.x += phys.vx;
-      phys.y += phys.vy;
-
-      // Friction & smooth glide
-      const friction = isHoveredRef.current ? 0.996 : 0.988;
-      phys.vx *= friction;
-      phys.vy *= friction;
-
-      // Maintain minimum active speed so sphere remains dynamic
-      const currentSpeed = Math.sqrt(phys.vx * phys.vx + phys.vy * phys.vy);
-      if (currentSpeed < 3.2) {
-        const angle = Math.atan2(phys.vy, phys.vx) || 0.6;
-        phys.vx = Math.cos(angle) * 3.8;
-        phys.vy = Math.sin(angle) * 3.8;
-      }
-
       const radius = 17;
 
-      // Smooth bounce off walls with energy conservation
-      if (phys.x - radius <= 0) {
-        phys.x = radius;
-        phys.vx = Math.abs(phys.vx) * 0.96 + 0.4;
-      } else if (phys.x + radius >= width) {
-        phys.x = width - radius;
-        phys.vx = -Math.abs(phys.vx) * 0.96 - 0.4;
-      }
+      // Only calculate physics & movement when user hovers the canvas
+      if (isHoveredRef.current) {
+        phys.x += phys.vx;
+        phys.y += phys.vy;
 
-      if (phys.y - radius <= 0) {
-        phys.y = radius;
-        phys.vy = Math.abs(phys.vy) * 0.96 + 0.4;
-      } else if (phys.y + radius >= height) {
-        phys.y = height - radius;
-        phys.vy = -Math.abs(phys.vy) * 0.96 - 0.4;
-      }
+        // Friction & glide
+        phys.vx *= 0.994;
+        phys.vy *= 0.994;
 
-      // Trail calculation based on Hz setting
-      // At 60Hz: fewer trail steps (choppy gaps)
-      // At 600Hz: dense continuous laser trail
-      const maxTrail = hz === 600 ? 28 : hz === 480 ? 24 : hz === 360 ? 20 : hz === 240 ? 16 : hz === 144 ? 12 : 6;
-      trailRef.current.push({ x: phys.x, y: phys.y });
-      if (trailRef.current.length > maxTrail) {
-        trailRef.current.shift();
+        // Maintain comfortable balanced speed
+        const currentSpeed = Math.sqrt(phys.vx * phys.vx + phys.vy * phys.vy);
+        if (currentSpeed < 2.0) {
+          const angle = Math.atan2(phys.vy, phys.vx) || 0.6;
+          phys.vx = Math.cos(angle) * 2.8;
+          phys.vy = Math.sin(angle) * 2.8;
+        }
+
+        // Boundary collisions with smooth bounce
+        if (phys.x - radius <= 0) {
+          phys.x = radius;
+          phys.vx = Math.abs(phys.vx) * 0.95 + 0.3;
+        } else if (phys.x + radius >= width) {
+          phys.x = width - radius;
+          phys.vx = -Math.abs(phys.vx) * 0.95 - 0.3;
+        }
+
+        if (phys.y - radius <= 0) {
+          phys.y = radius;
+          phys.vy = Math.abs(phys.vy) * 0.95 + 0.3;
+        } else if (phys.y + radius >= height) {
+          phys.y = height - radius;
+          phys.vy = -Math.abs(phys.vy) * 0.95 - 0.3;
+        }
+
+        // Trail calculation based on Hz setting
+        const maxTrail = hz === 600 ? 24 : hz === 480 ? 20 : hz === 360 ? 16 : hz === 240 ? 12 : hz === 144 ? 8 : 4;
+        trailRef.current.push({ x: phys.x, y: phys.y });
+        if (trailRef.current.length > maxTrail) {
+          trailRef.current.shift();
+        }
+      } else {
+        // When not hovered, slowly fade out old trail to save resources
+        if (trailRef.current.length > 0) {
+          trailRef.current.shift();
+        }
       }
 
       // 1. Draw Shockwaves
       shockwavesRef.current = shockwavesRef.current
         .map((sw) => ({
           ...sw,
-          radius: sw.radius + 6.0,
+          radius: sw.radius + 5.5,
           opacity: sw.opacity - 0.045,
         }))
         .filter((sw) => sw.opacity > 0);
@@ -145,8 +148,8 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
       for (let i = 0; i < trail.length; i++) {
         const pt = trail[i];
         const ratio = (i + 1) / trail.length;
-        const alpha = ratio * (hz >= 480 ? 0.35 : hz >= 240 ? 0.45 : 0.55);
-        const ghostRadius = radius * (0.5 + ratio * 0.5);
+        const alpha = ratio * (hz >= 480 ? 0.3 : hz >= 240 ? 0.4 : 0.5);
+        const ghostRadius = radius * (0.55 + ratio * 0.45);
 
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, ghostRadius, 0, Math.PI * 2);
@@ -164,7 +167,7 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
       // 3. Draw Main Physical Red Neon Sphere
       ctx.save();
       ctx.shadowColor = '#E32124';
-      ctx.shadowBlur = hz >= 360 ? 18 : 10;
+      ctx.shadowBlur = isHoveredRef.current ? 16 : 8;
 
       ctx.beginPath();
       ctx.arc(phys.x, phys.y, radius, 0, Math.PI * 2);
@@ -218,6 +221,8 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
 
+    isHoveredRef.current = true;
+
     // Add Shockwave
     shockwavesRef.current.push({
       x: clickX,
@@ -231,7 +236,7 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
     const dx = phys.x - clickX;
     const dy = phys.y - clickY;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const force = Math.max(18, Math.min(42, 500 / dist));
+    const force = Math.max(16, Math.min(36, 420 / dist));
 
     phys.vx += (dx / dist) * force;
     phys.vy += (dy / dist) * force;
@@ -261,7 +266,7 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
     const dx = phys.x - clickX;
     const dy = phys.y - clickY;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const force = Math.max(18, Math.min(42, 500 / dist));
+    const force = Math.max(16, Math.min(36, 420 / dist));
 
     phys.vx += (dx / dist) * force;
     phys.vy += (dy / dist) * force;
@@ -277,8 +282,8 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
     physicsRef.current = {
       x: w / 2,
       y: h / 2,
-      vx: 5.5,
-      vy: -2.8,
+      vx: 3.2,
+      vy: -1.6,
     };
   };
 
@@ -309,7 +314,7 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
               ? 'text-white bg-[#E32124] border-[#E32124] shadow-red-600/30'
               : 'text-zinc-300 bg-white/5 border-white/10'
           }`}>
-            {hzValue} FPS // {frameTimeMs} мс задержка
+            {hzValue} FPS // {frameTimeMs} мс
           </span>
         </div>
       </div>
@@ -352,7 +357,7 @@ export const DisplaySmoothnessSimulator: React.FC = () => {
           <span className="flex items-center gap-1.5 text-zinc-200 truncate">
             <MousePointerClick className="w-3.5 h-3.5 text-[#E32124] shrink-0" />
             <span className="truncate">
-              Кликайте или коснитесь поля для создания ударной волны
+              Наведите курсор и кликайте для создания ударной волны
             </span>
           </span>
           

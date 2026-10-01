@@ -456,12 +456,13 @@ const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, on
         <button
           onClick={() => {
             sound.playTrigger();
-            onOpenBooking(
-              zone.id.includes('premium') || zone.id.includes('sim-racing') || zone.id.includes('projector')
-                ? 'cyberx-arena'
-                : undefined,
-              zone.id,
-            );
+            const arena = zone.id.includes('premium') || zone.id.includes('sim-racing') || zone.id.includes('projector')
+              ? 'cyberx-arena'
+              : undefined;
+            onClose();
+            setTimeout(() => {
+              onOpenBooking(arena, zone.id);
+            }, 80);
           }}
           onMouseEnter={() => sound.playHover()}
           className="w-full sm:w-auto py-3.5 px-6 sm:px-8 rounded-2xl font-mono font-black text-xs sm:text-sm uppercase tracking-[0.16em] text-white bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] shadow-[0_0_25px_rgba(227,33,36,0.5)] hover:shadow-[0_0_40px_rgba(227,33,36,0.85)] hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20 shrink-0"
@@ -537,31 +538,9 @@ const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, on
             )}
           </div>
 
-          {/* Bottom Thumbnail Strip & Caption */}
-          <div className="flex flex-col items-center gap-2 z-10 font-mono py-1" onClick={(e) => e.stopPropagation()}>
-            {gallery.length > 1 && (
-              <div className="flex items-center justify-center gap-2 sm:gap-3 overflow-x-auto py-1 no-scrollbar">
-                {gallery.map((g, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      sound.playClick();
-                      setActiveImage(idx);
-                    }}
-                    className={`w-11 sm:w-16 h-11 sm:h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer shrink-0 ${
-                      idx === activeImage 
-                        ? 'border-[#E32124] ring-2 ring-[#E32124] scale-105' 
-                        : 'border-white/20 opacity-50 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={g} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-            <div className="text-center text-xs text-zinc-300">
-              Нажмите <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/20 font-bold">ESC</kbd> или <span className="text-white font-bold">Крестик</span> для закрытия
-            </div>
+          {/* Bottom Caption */}
+          <div className="text-center text-xs text-zinc-300 py-2 z-10 font-mono" onClick={(e) => e.stopPropagation()}>
+            Нажмите <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white border border-white/20 font-bold">ESC</kbd> или <span className="text-white font-bold">Крестик</span> для закрытия
           </div>
         </div>,
         document.body
