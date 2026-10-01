@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CYBERX OMSK // Бриф и фиксация ответов заказчика</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #06060a;
+      --card-bg: #0c0c14;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --red: #E32124;
+      --red-glow: rgba(227, 33, 36, 0.35);
+      --red-hover: #ff2a2e;
+      --gold: #f59e0b;
+      --emerald: #10b981;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --input-bg: #12121c;
+      --input-border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px 80px;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(227, 33, 36, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(227, 33, 36, 0.05) 0%, transparent 40%);
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* Top Sticky Control Bar */
+    .top-bar {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      background: rgba(12, 12, 20, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .progress-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(227, 33, 36, 0.12);
+      color: var(--red);
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(227, 33, 36, 0.3);
+      font-weight: 700;
+    }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+      box-shadow: 0 0 18px var(--red-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--red-hover);
+      border-color: var(--red-hover);
+      box-shadow: 0 0 25px rgba(227, 33, 36, 0.6);
+    }
+
+    .btn-gold {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold);
+      color: #000;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: inline-block;
+      background: rgba(227, 33, 36, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(227, 33, 36, 0.25);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      color: var(--red);
+      text-shadow: 0 0 20px var(--red-glow);
+    }
+
+    .header-desc {
+      color: var(--text-muted);
+      font-size: 13px;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Question Cards */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .question-card:focus-within {
+      border-color: var(--red);
+      box-shadow: 0 0 25px rgba(227, 33, 36, 0.18);
+    }
+
+    .question-card.answered {
+      border-left: 4px solid var(--emerald);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .q-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 900;
+      font-size: 12px;
+      background: rgba(227, 33, 36, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(227, 33, 36, 0.3);
+      padding: 4px 10px;
+      border-radius: 10px;
+      shrink: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .q-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .q-context {
+      font-size: 12px;
+      color: #d4d4d8;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .preset-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4d4d8;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .preset-pill:hover {
+      background: rgba(227, 33, 36, 0.2);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    .preset-pill.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+      box-shadow: 0 0 10px var(--red-glow);
+    }
+
+    .answer-textarea {
+      width: 100%;
+      min-height: 75px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      resize: vertical;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .answer-textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      background: #151522;
+    }
+
+    .answer-textarea::placeholder {
+      color: #52525b;
+      font-size: 12px;
+    }
+
+    /* Scratchpad Notes Section */
+    .scratchpad-section {
+      background: linear-gradient(135deg, #110e1a 0%, #0c0a14 100%);
+      border: 1px solid rgba(227, 33, 36, 0.35);
+      border-radius: 24px;
+      padding: 26px;
+      margin-top: 36px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .scratchpad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .scratchpad-title {
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .scratchpad-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .scratchpad-textarea {
+      width: 100%;
+      min-height: 140px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 14px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .scratchpad-textarea:focus {
+      outline: none;
+      border-color: var(--red);
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181828;
+      border: 1px solid var(--emerald);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0;
+      }
+      .top-bar, .pills-container, .btn, .tagline {
+        display: none !important;
+      }
+      .question-card, .scratchpad-section {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+      .q-title, h1 {
+        color: #000 !important;
+      }
+      .q-context {
+        background: #f4f4f5 !important;
+        color: #333 !important;
+        border: 1px solid #ddd !important;
+      }
+      .answer-textarea, .scratchpad-textarea {
+        background: #fafafa !important;
+        color: #000 !important;
+        border: 1px solid #bbb !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Top Sticky Bar -->
+    <div class="top-bar">
+      <div class="brand-badge">
+        <span class="status-dot"></span>
+        <span>CYBERX INTERVIEW BRIEF // LIVE</span>
+      </div>
+
+      <div class="brand-badge">
+        <span id="answered-counter" class="progress-pill">0 / 8 ОТВЕЧЕНО</span>
+        <span id="save-status" style="color: var(--text-muted); font-size: 10px;">💾 Автосохранение активно</span>
+      </div>
+
+      <div class="action-group">
+        <button class="btn btn-primary" onclick="copyMarkdownSummary()">
+          📋 Скопировать для Telegram/Заметок
+        </button>
+        <button class="btn btn-gold" onclick="sendViaEmail()">
+          ✉️ Отправить на почту
+        </button>
+        <button class="btn" onclick="downloadTextReport()">
+          💾 Скачать .TXT
+        </button>
+        <button class="btn" onclick="window.print()">
+          🖨️ Печать / PDF
+        </button>
+        <button class="btn" onclick="clearAllData()" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+          🗑️ Сброс
+        </button>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="tagline">План онлайн-согласования с заказчиком</div>
+      <h1>БРИФИНГ <span id="project-title">CYBERX OMSK</span></h1>
+      <p class="header-desc">
+        Интерактивная панель фиксации решений в реальном времени. Вводите ответы во время звонка — все данные мгновенно сохраняются в браузере и экспортируются в один клик.
+      </p>
+    </div>
+
+    <!-- Question 1 -->
+    <div class="question-card" id="card-1">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 01</span>
+        <div class="q-title">На какие комнаты / фишки / эксклюзивы должны быть видеообзоры?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Премиум, Лаунж, Solo Room, Duo Room, Trio Room, Автосимуляторы Sim-Racing. Какой формат обзора предпочтителен: человек рассказывает в кадре (спикер), или динамичный видеооблёт без голоса (с живой массовкой гостей для визуального масштаба)?
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(1, 'Видеооблёт с массовкой (без спикера)')">+ Видеооблёт с массовкой</span>
+        <span class="preset-pill" onclick="addTag(1, 'Solo Room 600Hz')">+ Solo Room 600Hz</span>
+        <span class="preset-pill" onclick="addTag(1, 'Duo Room')">+ Duo Room</span>
+        <span class="preset-pill" onclick="addTag(1, 'Trio Room')">+ Trio Room</span>
+        <span class="preset-pill" onclick="addTag(1, 'Premium Squad Сьют')">+ Premium Сьют</span>
+        <span class="preset-pill" onclick="addTag(1, 'Sim-Racing Moza')">+ Sim-Racing Moza</span>
+        <span class="preset-pill" onclick="addTag(1, 'PS5 Deluxe Лаунжи')">+ PS5 Лаунжи</span>
+      </div>
+      <textarea id="q1" class="answer-textarea" placeholder="Запишите решение заказчика по формату и списку видеообзоров..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-card" id="card-2">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 02</span>
+        <div class="q-title">В технический блок железа ставим реальную отснятую статику?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Фотографируем реальные видеокарты, мониторы BenQ 600Hz, клавиатуры Dark Project и сетапы в клубе или используем рендеры/схемы?
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(2, 'Да, отфоткать реальные сетапы в клубах')">+ Реальные фото из клубов</span>
+        <span class="preset-pill" onclick="addTag(2, 'Качественные студийные рендеры вендоров')">+ Студийные рендеры</span>
+        <span class="preset-pill" onclick="addTag(2, 'Комбинация: живые фото + карточки ТТХ')">+ Живые фото + ТТХ</span>
+      </div>
+      <textarea id="q2" class="answer-textarea" placeholder="Ответ по фотографиям/визуалу для блока оборудования..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-card" id="card-3">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 03</span>
+        <div class="q-title">В арендное оборудование переносим 3D-визуализации?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Добавляем ли 3D-интерактивный просмотр девайсов (мыши Logitech Superlight / Ajazz, гарнитуры HyperX) в блок «Девайсы в аренду»?
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(3, 'Да, переносим интерактивный 3D-просмотрщик')">+ Да, 3D интерактив</span>
+        <span class="preset-pill" onclick="addTag(3, 'Оставляем лаконичные карточки со спецификациями')">+ Только карточки</span>
+        <span class="preset-pill" onclick="addTag(3, '3D только для флагманских мышек')">+ 3D для топ мышек</span>
+      </div>
+      <textarea id="q3" class="answer-textarea" placeholder="Ответ по 3D-визуализации арендных девайсов..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-card" id="card-4">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 04</span>
+        <div class="q-title">Мероприятия под ключ: нужны ли корректировки блока?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Список форматов (Дни Рождения, LAN-турниры, буткемпы, тимбилдинги), наполнение пакетов, цены, условия закрытия арены.
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(4, 'Блок устраивает, оставить текущие форматы')">+ Оставить текущие</span>
+        <span class="preset-pill" onclick="addTag(4, 'Добавить калькулятор / выбор клуба')">+ Добавить выбор клуба</span>
+        <span class="preset-pill" onclick="addTag(4, 'Уточнить цены и включённые опции')">+ Уточнить цены</span>
+      </div>
+      <textarea id="q4" class="answer-textarea" placeholder="Пожелания по корректировке блока мероприятий..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question-card" id="card-5">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 05</span>
+        <div class="q-title">Устраивает ли FAQ блок: что-то добавить или убрать?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Список частых вопросов (бронь, правила со своим девайсом, ночные пакеты, кнопка вызова админа). Оставлять ли кнопку «Позвонить» в FAQ?
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(5, 'FAQ устраивает полностью')">+ Устраивает полностью</span>
+        <span class="preset-pill" onclick="addTag(5, 'Убрать кнопку прямого звонка из FAQ')">+ Убрать звонок</span>
+        <span class="preset-pill" onclick="addTag(5, 'Оставить кнопку связи через Telegram / Бот')">+ Кнопка в Telegram</span>
+      </div>
+      <textarea id="q5" class="answer-textarea" placeholder="Пожелания по составу и кнопкам в FAQ..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="question-card" id="card-6">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 06</span>
+        <div class="q-title">Как реализовать бронь мероприятия под ключ (телефон / почта / Telegram)?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Ранее убрали прямой телефон из обычной брони, чтобы не спамили звонками. Для крупных мероприятий под ключ — куда направлять лид: прямой контакт управляющего в Telegram, почта, форма обратного звонка или Langame?
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(6, 'В личные сообщения Telegram управляющему')">+ В ЛС Telegram</span>
+        <span class="preset-pill" onclick="addTag(6, 'Заявка на корпоративную почту')">+ На почту</span>
+        <span class="preset-pill" onclick="addTag(6, 'Прямой номер управляющего по мероприятиям')">+ Номер управляющего</span>
+        <span class="preset-pill" onclick="addTag(6, 'Форма заявки с выбором даты и клуба')">+ Форма с датой</span>
+      </div>
+      <textarea id="q6" class="answer-textarea" placeholder="Выбранная механика для заявок на мероприятия..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="question-card" id="card-7">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 07</span>
+        <div class="q-title">Правила клуба: оставляем в текущем 2-страничном виде?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Официальный двухстраничный регламент CyberX Community (43 пункта: Page 01 и Page 02) с открытием по клику на бронь и в футере.
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(7, 'Оставляем в текущем официальном 2-страничном виде')">+ Оставляем как есть</span>
+        <span class="preset-pill" onclick="addTag(7, 'Сделать краткую выжимку топ-5 правил')">+ Краткая выжимка</span>
+        <span class="preset-pill" onclick="addTag(7, 'Добавить кнопку скачивания PDF правил')">+ Добавить PDF</span>
+      </div>
+      <textarea id="q7" class="answer-textarea" placeholder="Решение по отображению правил клуба..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="question-card" id="card-8">
+      <div class="q-header">
+        <span class="q-num">ВОПРОС 08</span>
+        <div class="q-title">Какой общий дедлайн проекта? Когда нужен готовый сайт?</div>
+      </div>
+      <div class="q-context">
+        <strong>Контекст:</strong> Финальная дата запуска, этапы приёмки, приоритеты по запуску рекламного трафика.
+      </div>
+      <div class="pills-container">
+        <span class="preset-pill" onclick="addTag(8, 'Срочно: в течение 2-3 дней')">+ 2-3 дня</span>
+        <span class="preset-pill" onclick="addTag(8, 'К концу текущей недели')">+ Конец недели</span>
+        <span class="preset-pill" onclick="addTag(8, 'К запуску турнира / рекламной кампании')">+ К турниру</span>
+      </div>
+      <textarea id="q8" class="answer-textarea" placeholder="Зафиксируйте сроки, дедлайн и приоритеты..." oninput="handleInput()"></textarea>
+    </div>
+
+    <!-- Scratchpad / Notes Section -->
+    <div class="scratchpad-section">
+      <div class="scratchpad-header">
+        <div class="scratchpad-title">
+          <span>📝 Блок примечаний и мыслей</span>
+        </div>
+        <span class="preset-pill" style="background: rgba(227,33,36,0.2); border-color: var(--red); color: #fff;">
+          Свободные заметки
+        </span>
+      </div>
+      <p class="scratchpad-desc">
+        Записывайте сюда любые мысли вне контекста вопросов, договоренности по бюджету, ссылки на материалы, контакты и дополнительные фичи.
+      </p>
+      <textarea id="scratchpad" class="scratchpad-textarea" placeholder="Свободные заметки во время диалога с заказчиком (новые идеи, правки по контенту, цены, доступы)..." oninput="handleInput()"></textarea>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast">
+    <span>✅ Сохранено в буфер обмена!</span>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'cyberx_interview_brief_data_v1';
+
+    // Questions definition
+    const questions = [
+      { id: 'q1', num: '01', title: 'На какие комнаты/фишки/эксклюзивы должны быть видеообзоры?' },
+      { id: 'q2', num: '02', title: 'В тех блок поставим отфоткаем статику?' },
+      { id: 'q3', num: '03', title: 'В арендное оборудование переносим 3D визуализации?' },
+      { id: 'q4', num: '04', title: 'Мероприятия под ключ, нужны ли корректировки блока?' },
+      { id: 'q5', num: '05', title: 'Устраивает ли FAQ блок, что-то добавить, или убрать?' },
+      { id: 'q6', num: '06', title: 'Как реализовать бронь мероприятия под ключ?' },
+      { id: 'q7', num: '07', title: 'Правила клуба, оставляем ли так?' },
+      { id: 'q8', num: '08', title: 'Какой общий дедлайн проекта? Когда уже нужен сайт?' }
+    ];
+
+    // Load saved data on boot
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const data = JSON.parse(saved);
+          questions.forEach(q => {
+            if (data[q.id]) {
+              const el = document.getElementById(q.id);
+              if (el) el.value = data[q.id];
+            }
+          });
+          if (data.scratchpad) {
+            const sp = document.getElementById('scratchpad');
+            if (sp) sp.value = data.scratchpad;
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load saved brief data:', e);
+      }
+      updateStats();
+    });
+
+    // Auto save on input
+    function handleInput() {
+      const data = {};
+      questions.forEach(q => {
+        const el = document.getElementById(q.id);
+        data[q.id] = el ? el.value : '';
+      });
+      const sp = document.getElementById('scratchpad');
+      data.scratchpad = sp ? sp.value : '';
+      data.updatedAt = new Date().toISOString();
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        const statusEl = document.getElementById('save-status');
+        if (statusEl) {
+          const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          statusEl.textContent = `💾 Сохранено (${time})`;
+        }
+      } catch (e) {
+        console.error('Autosave error:', e);
+      }
+
+      updateStats();
+    }
+
+    // Add preset tag into textarea
+    function addTag(qIndex, text) {
+      const qId = `q${qIndex}`;
+      const el = document.getElementById(qId);
+      if (!el) return;
+
+      const current = el.value.trim();
+      if (!current) {
+        el.value = text;
+      } else if (!current.includes(text)) {
+        el.value = current + '\n• ' + text;
+      }
+      el.focus();
+      handleInput();
+    }
+
+    // Update answered counter & card highlight
+    function updateStats() {
+      let count = 0;
+      questions.forEach((q, idx) => {
+        const el = document.getElementById(q.id);
+        const card = document.getElementById(`card-${idx + 1}`);
+        const hasText = el && el.value.trim().length > 0;
+        if (hasText) {
+          count++;
+          if (card) card.classList.add('answered');
+        } else {
+          if (card) card.classList.remove('answered');
+        }
+      });
+
+      const counter = document.getElementById('answered-counter');
+      if (counter) {
+        counter.textContent = `${count} / ${questions.length} ОТВЕЧЕНО`;
+        if (count === questions.length) {
+          counter.style.background = 'rgba(16, 185, 129, 0.2)';
+          counter.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+          counter.style.color = '#10b981';
+        } else {
+          counter.style.background = 'rgba(227, 33, 36, 0.12)';
+          counter.style.borderColor = 'rgba(227, 33, 36, 0.3)';
+          counter.style.color = 'var(--red)';
+        }
+      }
+    }
+
+    // Generate formatted markdown report
+    function generateReportText() {
+      const date = new Date().toLocaleDateString('ru-RU', {
+        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+
+      let report = `# CYBERX OMSK // ОТВЕТЫ ЗАКАЗЧИКА НА БРИФ\n`;
+      report += `Дата фиксации: ${date}\n\n`;
+      report += `====================================================\n\n`;
+
+      questions.forEach((q, idx) => {
+        const el = document.getElementById(q.id);
+        const answer = el && el.value.trim() ? el.value.trim() : '[Ответ не указан]';
+        report += `### ВОПРОС ${q.num}: ${q.title}\n`;
+        report += `ОТВЕТ:\n${answer}\n\n`;
+        report += `----------------------------------------------------\n\n`;
+      });
+
+      const sp = document.getElementById('scratchpad');
+      if (sp && sp.value.trim()) {
+        report += `### ОБЩИЕ ПРИМЕЧАНИЯ И МЫСЛИ:\n`;
+        report += `${sp.value.trim()}\n\n`;
+        report += `====================================================\n`;
+      }
+
+      return report;
+    }
+
+    // 1-Click Copy Summary
+    function copyMarkdownSummary() {
+      const text = generateReportText();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('📋 Ответы скопированы в буфер обмена!');
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('📋 Ответы скопированы в буфер обмена!');
+      });
+    }
+
+    // Send via email (mailto)
+    function sendViaEmail() {
+      const subject = encodeURIComponent(`[CyberX Omsk] Ответы заказчика по брифу проекта`);
+      const body = encodeURIComponent(generateReportText());
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      showToast('✉️ Почтовый клиент открыт с заполненным брифом!');
+    }
+
+    // Download .TXT
+    function downloadTextReport() {
+      const text = generateReportText();
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `CyberX_Brief_Answers_${new Date().toISOString().slice(0, 10)}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('💾 Файл .TXT успешно скачан!');
+    }
+
+    // Clear all data
+    function clearAllData() {
+      if (confirm('Вы уверены, что хотите очистить все введенные ответы и заметки?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        questions.forEach(q => {
+          const el = document.getElementById(q.id);
+          if (el) el.value = '';
+        });
+        const sp = document.getElementById('scratchpad');
+        if (sp) sp.value = '';
+        updateStats();
+        showToast('🗑️ Данные формы очищены');
+      }
+    }
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.querySelector('span').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
