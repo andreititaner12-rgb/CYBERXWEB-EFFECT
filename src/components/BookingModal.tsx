@@ -124,7 +124,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   const handleOpenExternal = (url: string) => {
     sound.playClick();
-    window.open(url, '_blank', 'noopener,noreferrer');
+    if (isMobileDevice) {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
