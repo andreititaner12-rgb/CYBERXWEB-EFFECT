@@ -449,14 +449,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'STANDARD',
         badge: 'БАЗОВЫЙ',
         iconType: 'Monitor',
-        specs: 'RTX 3060 / 4060 • 240Hz • Абонемент 7 000 ₽',
+        specs: 'RTX 3060 / 4060 • 240Hz • Dark Project',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '70 ₽', weekend: '90 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '130 ₽', weekend: '150 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '340 ₽', weekend: '400 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '500 ₽', weekend: '600 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '600 ₽', weekend: '750 ₽', filterKey: 'night' },
-          { period: 'АБОНЕМЕНТ', subtext: 'Выгодный пакет', weekday: '7 000 ₽', weekend: '7 000 ₽', filterKey: 'night' },
         ]
       },
       {
@@ -465,14 +464,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         badge: 'ПОПУЛЯРНЫЙ',
         highlight: true,
         iconType: 'Zap',
-        specs: 'RTX 5070 Ti • 240Hz • Абонемент 8 000 ₽',
+        specs: 'RTX 5070 Ti • 240Hz • HyperX',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '90 ₽', weekend: '130 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '150 ₽', weekend: '170 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '400 ₽', weekend: '460 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '600 ₽', weekend: '700 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '750 ₽', weekend: '850 ₽', filterKey: 'night' },
-          { period: 'АБОНЕМЕНТ', subtext: 'Выгодный пакет', weekday: '8 000 ₽', weekend: '8 000 ₽', filterKey: 'night' },
         ]
       },
       {
@@ -480,14 +478,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'VIP ROOM',
         badge: 'PRO КИБЕРСПОРТ',
         iconType: 'Crown',
-        specs: 'RTX 5070 Ti • 24.5" 240Hz • Абонемент 10 000 ₽',
+        specs: 'RTX 5070 Ti • 24.5" 240Hz • Dark Project',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '110 ₽', weekend: '140 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '170 ₽', weekend: '200 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '470 ₽', weekend: '570 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '700 ₽', weekend: '900 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '800 ₽', weekend: '900 ₽', filterKey: 'night' },
-          { period: 'АБОНЕМЕНТ', subtext: 'Выгодный пакет', weekday: '10 000 ₽', weekend: '10 000 ₽', filterKey: 'night' },
         ]
       },
       {
@@ -495,14 +492,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'DUO ROOM',
         badge: 'ПАРНЫЙ ЗАЛ',
         iconType: 'ShieldCheck',
-        specs: '5070 Ti • 27" 480Hz 2K, 24" 400Hz • Абонемент 11 000 ₽',
+        specs: '5070 Ti • 27" 480Hz 2K, 24" 400Hz • Звукоизоляция',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '150 ₽', weekend: '170 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '210 ₽', weekend: '230 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '590 ₽', weekend: '650 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '900 ₽', weekend: '1 000 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '1 000 ₽', weekend: '1 100 ₽', filterKey: 'night' },
-          { period: 'АБОНЕМЕНТ', subtext: 'Выгодный пакет', weekday: '11 000 ₽', weekend: '11 000 ₽', filterKey: 'night' },
         ]
       },
       {
@@ -510,14 +506,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'SOLO ROOM',
         badge: 'ТОП ФЛАГМАН 600HZ',
         iconType: 'Flame',
-        specs: '5070 Ti • Ryzen 7800X3D • 600Hz • Абонемент 12 000 ₽',
+        specs: '5070 Ti • Ryzen 7800X3D • 600Hz • Звукоизоляция',
         rows: [
           { period: 'УТРО 1 ЧАС', subtext: '08:00 – 14:00', weekday: '190 ₽', weekend: '210 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '250 ₽', weekend: '270 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '700 ₽', weekend: '770 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 100 ₽', weekend: '1 200 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '1 100 ₽', weekend: '1 200 ₽', filterKey: 'night' },
-          { period: 'АБОНЕМЕНТ', subtext: 'Выгодный пакет', weekday: '12 000 ₽', weekend: '12 000 ₽', filterKey: 'night' },
         ]
       }
     ],
