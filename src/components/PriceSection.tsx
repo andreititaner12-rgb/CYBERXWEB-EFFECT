@@ -301,16 +301,10 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
                     </span>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      sound.playClick();
-                      onOpenBooking(selectedArenaId, service.id);
-                    }}
-                    className="py-2.5 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider bg-[#E32124] hover:bg-[#FF2A2E] text-white shadow-[0_0_20px_rgba(227,33,36,0.5)] transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <span>ЗАКАЗАТЬ</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="text-[11px] font-mono text-zinc-400 py-1.5 px-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span>У администратора</span>
+                  </div>
                 </div>
               </div>
             );
@@ -481,27 +475,17 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
             </p>
           </div>
 
-          {/* Quick CTA to switch to extra tab or booking */}
+          {/* Quick CTA to switch to extra tab */}
           <div className="shrink-0 flex items-center gap-2.5 w-full sm:w-auto">
             <button
               onClick={() => {
                 sound.playClick();
                 setActiveTab('extra');
               }}
-              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider border border-white/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider border border-white/15 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Смотреть все карточки ({currentExtraServices.length})</span>
-            </button>
-            <button
-              onClick={() => {
-                sound.playClick();
-                onOpenBooking(selectedArenaId, 'extra-services');
-              }}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#E32124] hover:bg-[#FF2A2E] text-white font-mono text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(227,33,36,0.5)] transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <span>ЗАКАЗАТЬ</span>
-              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 

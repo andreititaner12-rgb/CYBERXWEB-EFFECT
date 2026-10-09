@@ -29,11 +29,11 @@ export const HardwareVisualizer: React.FC = () => {
   const selectedItem: HardwareItem = HARDWARE_LIST.find((h: HardwareItem) => h.category === activeCategory) || HARDWARE_LIST[0];
 
   const categories = [
-    { id: 'monitors', label: 'Дисплеи 600Hz', icon: Monitor },
-    { id: 'keyboards', label: 'Dark Project Механика', icon: Keyboard },
-    { id: 'mice', label: 'Мыши Logitech & Ajazz', icon: Mouse },
-    { id: 'rigs', label: 'RTX 5070 Ti & 7800X3D', icon: Cpu },
-    { id: 'audio', label: 'HyperX Cloud', icon: Headphones },
+    { id: 'monitors', label: 'Мониторы', icon: Monitor },
+    { id: 'keyboards', label: 'Механические клавиатуры', icon: Keyboard },
+    { id: 'mice', label: 'Мыши', icon: Mouse },
+    { id: 'rigs', label: 'Железо', icon: Cpu },
+    { id: 'audio', label: 'Гарнитура', icon: Headphones },
     { id: 'chairs', label: 'Кресла CyberX', icon: Armchair },
   ];
 

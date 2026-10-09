@@ -1348,6 +1348,34 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
           {/* TAB 5: TOURNAMENTS */}
           {activeTab === 'tournaments' && (
             <div className="space-y-5 font-mono">
+              {/* Active Tournament Toggle */}
+              <div className="p-4 rounded-2xl bg-[#14141e] border border-white/10 flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-bold text-white">Статус ближайшего турнира</div>
+                  <div className="text-[10px] text-zinc-400">
+                    {tournamentState.registrationOpen
+                      ? 'Турнир активен, регистрация открыта'
+                      : 'Нет активного турнира (показывается «Сезонные турниры / Следите в Telegram»)'}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setTournamentState({
+                      ...tournamentState,
+                      registrationOpen: !tournamentState.registrationOpen,
+                    })
+                  }
+                  className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                    tournamentState.registrationOpen
+                      ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
+                      : 'bg-white/10 text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  {tournamentState.registrationOpen ? '✓ АКТИВЕН' : 'ОТКЛЮЧЕН'}
+                </button>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs text-zinc-300 block mb-1">Название турнира</label>
