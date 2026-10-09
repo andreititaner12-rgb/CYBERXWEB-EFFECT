@@ -81,7 +81,7 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
                 </h3>
                 
                 <p className="mt-3 text-xs sm:text-sm text-zinc-300 max-w-xl font-normal leading-relaxed">
-                  Почувствуйте реальный перегруз и сцепление колес с асфальтом на рулевой базе <span className="text-white font-bold">Moza Direct Drive</span> с мгновенным Force Feedback, педальном узле <span className="text-white font-bold">Moza Load Cell</span> с тензодатчиками и изогнутых UltraWide мониторах.
+                  Почувствуйте реальный перегруз и сцепление колес с асфальтом на рулевой базе <span className="text-white font-bold">Moza R12 Direct Drive</span> (12 Нм) с мгновенным Force Feedback, педальном узле <span className="text-white font-bold">Moza Load Cell</span> с тензодатчиками и скоростных UltraWide мониторах 165Hz.
                 </p>
               </div>
 
@@ -89,8 +89,8 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono">
                 <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 shadow-sm">
                   <span className="text-[10px] uppercase text-zinc-400 block font-semibold">База руля</span>
-                  <div className="text-xs font-bold text-white mt-1">Moza Direct Drive</div>
-                  <div className="text-[10px] text-[#E32124] mt-0.5 font-bold">Чистый прямой привод FFB</div>
+                  <div className="text-xs font-bold text-white mt-1">Moza R12 Direct Drive</div>
+                  <div className="text-[10px] text-[#E32124] mt-0.5 font-bold">12 Нм чистый прямой привод FFB</div>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 shadow-sm">

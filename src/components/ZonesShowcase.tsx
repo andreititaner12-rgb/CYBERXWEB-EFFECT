@@ -29,7 +29,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
   const [isClosing, setIsClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
 
-  const displayZones = zonesList && zonesList.length >= 6 ? zonesList : ZONES;
+  const displayZones = zonesList && zonesList.length >= 7 ? zonesList : ZONES;
   const expandedZone = displayZones.find((z) => z.id === expandedZoneId) || null;
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
           </p>
         </div>
 
-        {/* Creative Asymmetric Bento Grid */}
+        {/* Creative Asymmetric Bento Grid (7 Cards) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-5 mb-4">
 
           {/* 1. PREMIUM — большой вертикальный герой (md: 7 cols) */}
@@ -123,12 +123,22 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
               zone={displayZones[1]}
               isExpanded={false}
               onClick={() => handleCardClick(displayZones[1])}
-              accentBadge="MOZA DIRECT DRIVE"
+              accentBadge="MOZA R12 DIRECT DRIVE"
               redirectTo="sim-racing"
             />
           </div>
 
-          {/* 3. SOLO & DUO ROOMS (md: 4 cols / 6 cols on tablet) */}
+          {/* 3. LOUNGE BAR (md: 4 cols) */}
+          <div className="col-span-1 md:col-span-6 lg:col-span-4 min-h-[260px] lg:min-h-[290px]">
+            <BentoZoneCard
+              zone={displayZones[2]}
+              isExpanded={expandedZoneId === displayZones[2].id}
+              onClick={() => handleCardClick(displayZones[2])}
+              accentBadge="LOUNGE BAR СО СЦЕНОЙ"
+            />
+          </div>
+
+          {/* 4. SOLO & DUO КОМНАТЫ (md: 4 cols) */}
           <div className="col-span-1 md:col-span-6 lg:col-span-4 min-h-[260px] lg:min-h-[290px]">
             <BentoZoneCard
               zone={displayZones[3]}
@@ -138,17 +148,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
             />
           </div>
 
-          {/* 4. КИНО-ЛАУНЖ (md: 4 cols / 6 cols on tablet) */}
-          <div className="col-span-1 md:col-span-6 lg:col-span-4 min-h-[260px] lg:min-h-[290px]">
-            <BentoZoneCard
-              zone={displayZones[2]}
-              isExpanded={expandedZoneId === displayZones[2].id}
-              onClick={() => handleCardClick(displayZones[2])}
-              accentBadge="ЛАУНЖ-БАР СО СЦЕНОЙ"
-            />
-          </div>
-
-          {/* 5. PS5 DELUXE ЗАЛЫ (md: 4 cols / 12 cols on tablet) */}
+          {/* 5. 16 PS5 КОМНАТ (md: 4 cols) */}
           <div className="col-span-1 md:col-span-12 lg:col-span-4 min-h-[260px] lg:min-h-[290px]">
             <BentoZoneCard
               zone={displayZones[4]}
@@ -158,13 +158,23 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
             />
           </div>
 
-          {/* 6. ОТКРЫТЫЙ ЗАЛ (md: 12 cols) */}
-          <div className="col-span-1 md:col-span-12 min-h-[200px] lg:min-h-[220px]">
+          {/* 6. SUPER VIP (md: 6 cols) */}
+          <div className="col-span-1 md:col-span-6 min-h-[220px] lg:min-h-[240px]">
             <BentoZoneCard
               zone={displayZones[5]}
               isExpanded={expandedZoneId === displayZones[5].id}
               onClick={() => handleCardClick(displayZones[5])}
-              accentBadge="185 ИГРОВЫХ ПК В ОМСКЕ"
+              accentBadge="480HZ 2K // ФЛАГМАН"
+            />
+          </div>
+
+          {/* 7. STANDART И STANDART+ (md: 6 cols) */}
+          <div className="col-span-1 md:col-span-6 min-h-[220px] lg:min-h-[240px]">
+            <BentoZoneCard
+              zone={displayZones[6]}
+              isExpanded={expandedZoneId === displayZones[6].id}
+              onClick={() => handleCardClick(displayZones[6])}
+              accentBadge="55 ПК // ЛЕНИНА, 19"
             />
           </div>
 

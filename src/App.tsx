@@ -114,16 +114,24 @@ export function App() {
     }
   });
 
-  // Dynamic state for live zones with localStorage persistence
+  // Dynamic state for live zones with localStorage persistence & versioning
   const [liveZones, setLiveZones] = useState<ZoneType[]>(() => {
     try {
+      const version = localStorage.getItem('cyberx_zones_version');
+      if (version !== 'v4_7_zones_moza_r12_super_vip') {
+        localStorage.setItem('cyberx_zones_version', 'v4_7_zones_moza_r12_super_vip');
+        localStorage.setItem('cyberx_live_zones', JSON.stringify(ZONES));
+        return ZONES;
+      }
       const saved = localStorage.getItem('cyberx_live_zones');
       if (saved) {
         const parsed: ZoneType[] = JSON.parse(saved);
-        return parsed.map(z => {
-          const fresh = ZONES.find(f => f.id === z.id);
-          return fresh && z.image?.includes('langame.ru') ? { ...z, image: fresh.image } : z;
-        });
+        if (parsed.length >= 7) {
+          return parsed.map(z => {
+            const fresh = ZONES.find(f => f.id === z.id);
+            return fresh && z.image?.includes('langame.ru') ? { ...z, image: fresh.image } : z;
+          });
+        }
       }
       return ZONES;
     } catch {

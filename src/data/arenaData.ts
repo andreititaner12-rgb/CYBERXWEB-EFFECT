@@ -119,22 +119,22 @@ export const ZONES: ZoneType[] = [
     id: 'premium-squad',
     name: 'PREMIUM КОМНАТЫ',
     category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: '5 Pro ПК (RTX 5070 Ti) + PS5 + Большой стол для компании & диван',
-    description: 'Эксклюзив CyberX Arena на ул. Ленина, 19! Изолированная комната премиум-класса на 5–14 человек. 5 мощнейших ПК (i5-14600KF / RTX 5070 Ti / BenQ 600Hz), отдельная зона PlayStation 5 с 4K экраном, мягкий диван и большой переговорно-обеденный стол для компании и перекуса.',
+    tagline: '5 Pro ПК (RTX 5070 Ti) + PS5 + Стол на 6 мест для вашей компании',
+    description: 'Эксклюзив CyberX Arena на ул. Ленина, 19! Изолированная комната премиум-класса на 5–14 человек. 5 мощнейших ПК (i5-14600KF / RTX 5070 Ti), отдельная зона PlayStation 5 с 4K экраном и большой переговорно-обеденный стол на 6 мест для компании, пиццы и напитков.',
     capacity: 'до 14 человек (CyberX Arena // Ленина, 19)',
     hardwareBrief: [
       '5x PC: RTX 5070 Ti / i5-14600KF / 32GB DDR5',
-      '5x Мониторы: BenQ 600Hz / ASUS 480Hz / 400Hz',
-      '1x Sony PlayStation 5 Slim + 4 геймпада DualSense',
-      '4K 120Hz HDR экран + саундбар',
-      'Большой стол на 6–8 посадочных мест + кожаный диван'
+      'Мониторы: Asus ROG Swift 2K 280Hz (32") и ROG Strix 2K 480Hz (27")',
+      '1x Sony PlayStation 5 Slim + 2 геймпада DualSense (+ возможность взять дополнительные)',
+      '4K 120Hz HDR экран',
+      'Большой стол на 6 посадочных мест'
     ],
     features: [
       'Доступно только в CyberX Arena (2 комнаты)',
       'Звукоизоляция 55dB (полная приватность)',
-      'Большой стол для компании и угощений',
-      'Кальян и барное обслуживание',
-      'Вызов администратора в 1 клик'
+      'Большой стол на 6 мест для компании и угощений',
+      'Кальяны, напитки и закуски',
+      'Кнопка вызова администратора в 1 клик'
     ],
     pricePerHour: 2000,
     priceNight: 7000,
@@ -153,14 +153,14 @@ export const ZONES: ZoneType[] = [
     id: 'sim-racing',
     name: 'SIM-RACING // 2 АВТОСИМУЛЯТОРА',
     category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: '2 кокпита на рулевой базе Moza и педальном узле Moza Load Cell',
-    description: 'Эксклюзив CyberX Arena на Ленина, 19 с двумя профессиональными гоночными кокпитами на рулевой базе Moza Direct Drive и педальном узле Moza Load Cell. Доступные соревновательные дисциплины: FORZA HORIZON 6, ASSETTO CORSA, ASSETTO CORSA COMPETIZIONE, DiRT, BEAMNG.DRIVE, CITY CAR DRIVING.',
+    tagline: '2 кокпита на базе руля Moza R12 и педалях Moza Load Cell',
+    description: 'Эксклюзив CyberX Arena на Ленина, 19 с двумя профессиональными гоночными кокпитами на базе руля Moza R12 Direct Drive (12 Нм) и педальном узле Moza Load Cell. Доступные соревновательные дисциплины: FORZA HORIZON 6, ASSETTO CORSA, ASSETTO CORSA COMPETIZIONE, DiRT, BEAMNG.DRIVE, CITY CAR DRIVING.',
     capacity: '1–2 пилота (CyberX Arena // Ленина, 19)',
     hardwareBrief: [
-      '2x Профессиональные базы Moza Direct Drive Force Feedback',
+      '2x Базы руля: Moza R12 Direct Drive Force Feedback (12 Нм)',
       'Педальные узлы Moza Load Cell (реалистичное усилие торможения)',
       'Спортивные анатомические ковши с точной регулировкой посадки',
-      'Изогнутые UltraWide 165Hz дисплеи',
+      'UltraWide 165Hz дисплеи',
       'Секвентальный шифтер и подрулевые лепестки'
     ],
     features: [
@@ -176,41 +176,40 @@ export const ZONES: ZoneType[] = [
   },
   {
     id: 'projector-lounge',
-    name: 'ЛАУНЖ-БАР С ПРОЕКТОРОМ',
+    name: 'LOUNGE BAR С ПРОЕКТОРОМ',
     category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: 'Большой проекционный экран, сцена, диваны, PS5 и трансляции',
-    description: 'Просторный лаунж-бар в CyberX Arena со сценой и большим экраном. Просмотр киберспортивных чемпионатов (The International, CS2 Major), спортивных матчей, фильмов и турниров по консольным файтингам и симуляторам.',
-    capacity: 'до 15 человек (CyberX Arena // Ленина, 19)',
+    tagline: 'Большой проекционный экран, сцена, пуфы, PS5 и трансляции',
+    description: 'Просторный Lounge Bar в CyberX Arena со сценой и большим экраном. Просмотр киберспортивных чемпионатов, спортивных матчей и турниров по консольным файтингам и симуляторам. Игры: MK, FC, UFC, NHL.',
+    capacity: 'до 20 человек (CyberX Arena // Ленина, 19)',
     hardwareBrief: [
       'Лазерный 4K проектор высокой яркости',
       'Большой экран со световозвращающим полотном',
-      'PlayStation 5 + каталог топ игр',
+      'PlayStation 5 + каталог топ игр (MK, FC, UFC, NHL)',
       'Концертный звук 5.1 Surround Sound'
     ],
     features: [
       'Доступно только в CyberX Arena на Ленина',
-      'Мягкие диваны, кресла-мешки и столики',
-      'Прямые трансляции турниров и кинопоказы',
-      'Кальянная и барная карта'
+      'Мягкие пуфы и зона отдыха',
+      'Прямые трансляции турниров и LAN-чемпионаты',
+      'Кальяны и широкий ассортимент напитков и закусок'
     ],
     pricePerHour: 1000,
     priceNight: 5000,
     image: '/images/arena/15-bar-lounge.jpg',
-    badge: 'Лаунж на Ленина',
+    badge: 'Lounge Bar на Ленина',
   },
   {
     id: 'solo-stream-room',
-    name: 'SOLO & DUO ROOMS',
+    name: 'SOLO & DUO КОМНАТЫ',
     category: 'ВО ВСЕХ 3 КЛУБАХ (ЛЕНИНА, ЕВРОПА, ОКТЯБРЬ)',
     tagline: 'Приватные изолированные комнаты на топовом соревновательном железе',
-    description: 'Приватные изолированные Solo и Duo залы в кибераренах CyberX в Омске (Ленина, 19, Мира, 42к1, Серова, 19А). Ультимативные игровые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, видеокарты RTX 5070 Ti, сверхбыстрые мониторы BenQ, премиум механика Dark Project и полная звукоизоляция.',
+    description: 'Приватные изолированные Solo и Duo залы во всех 3 кибераренах CyberX в Омске (Ленина, 19, Мира, 42к1, Серова, 19А). Ультимативные игровые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, видеокарты RTX 5070 Ti, сверхбыстрые мониторы 240Hz, 400Hz и 600Hz, премиальные девайсы и полная звукоизоляция.',
     capacity: '1–2 человека (Во всех 3 клубах сети)',
     hardwareBrief: [
       'PC: AMD Ryzen 7 7800X3D / i5-14600KF + RTX 5070 Ti',
-      'Монитор: BenQ 24.5" 600Hz / 400Hz / 240Hz Extreme Speed',
-      'Клавиатура: Dark Project KD87A механическая',
-      'Мышь: Logitech G Pro X Superlight 2 / Ajazz',
-      'Гарнитура: HyperX Cloud Pro'
+      'Мониторы: BenQ 24.5" 600Hz / 400Hz / 240Hz Extreme Speed',
+      'Мышь: Logitech G Pro X Superlight 2',
+      'Премиальные соревновательные девайсы'
     ],
     features: [
       'Доступно во всех 3 кибераренах сети CyberX в Омске',
@@ -227,21 +226,21 @@ export const ZONES: ZoneType[] = [
     id: 'ps5-lounge',
     name: '16 PS5 КОМНАТ',
     category: 'ВО ВСЕХ 3 КЛУБАХ',
-    tagline: '16 приватных PS5 комнат с мягкими диванами, 4K экранами и кальянами',
-    description: '16 комфортабельных приватных PS5 комнат в кибераренах CyberX в Омске (7 комнат на Ленина, 5 комнат на Мира и 4 комнаты на Серова). Новейшие консоли PlayStation 5 Slim, геймпады DualSense, огромные 4K экраны со 120Hz, барное меню и кальяны.',
+    tagline: '16 приватных PS5 комнат с глубокими диванами, пуфами и 4K экранами',
+    description: '16 комфортабельных приватных PS5 комнат во всех 3 кибераренах CyberX в Омске. Новейшие консоли PlayStation 5 Slim, по 2 геймпада DualSense в каждой комнате (с возможностью взять дополнительные), 4K телевизоры со звуком Harman Kardon. Игры всегда самые актуальные новинки — появляются у нас самыми первыми.',
     capacity: 'до 6 человек в каждой комнате',
     hardwareBrief: [
       '16x Консолей Sony PlayStation 5 Slim',
-      '4K HDR экраны с поддержкой 120Hz',
-      'По 4 геймпада DualSense на каждую комнату',
-      'Мягкие кожаные угловые диваны',
-      'Премиальные паровые коктейли и напитки'
+      '4K HDR телевизоры со звуком Harman Kardon',
+      'По 2 геймпада DualSense (+ доп. по запросу)',
+      'Глубокие комфортные диваны и мягкие пуфы',
+      'Кальяны, холодные напитки и снеки'
     ],
     features: [
-      '7 комнат на Ленина, 5 комнат на Мира, 4 комнаты на Серова',
-      'Каталог лучших спортивных симуляторов и файтингов',
-      'Кальянная карта и авторские напитки',
-      'Отдельное приватное зонирование с неоновой подсветкой'
+      'Игры всегда самые актуальные новинки (появляются первыми)',
+      'Звук Harman Kardon в 4K телевизорах',
+      'Кальяны и широкий ассортимент напитков и закусок',
+      'Отдельное приватное зонирование с атмосферной подсветкой'
     ],
     pricePerHour: 300,
     priceNight: 900,
@@ -254,131 +253,59 @@ export const ZONES: ZoneType[] = [
     badge: '16 комнат в 3 клубах',
   },
   {
-    id: 'sim-racing',
-    name: 'SIM-RACING // 2 АВТОСИМУЛЯТОРА',
-    category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: '2 кокпита на рулевой базе Moza и педальном узле Moza Load Cell',
-    description: 'Эксклюзив CyberX Arena на Ленина, 19 с двумя профессиональными гоночными кокпитами на рулевой базе Moza Direct Drive и педальном узле Moza Load Cell. Доступные соревновательные дисциплины: FORZA HORIZON 6, ASSETTO CORSA, ASSETTO CORSA COMPETIZIONE, DiRT, BEAMNG.DRIVE, CITY CAR DRIVING.',
-    capacity: '1–2 пилота (CyberX Arena // Ленина, 19)',
+    id: 'super-vip',
+    name: 'SUPER VIP',
+    category: 'ТОП ФЛАГМАНСКАЯ ЗОНА',
+    tagline: 'RTX 5070 Ti, Ryzen 7 7800X3D и мониторы 480Hz 2K / 400Hz',
+    description: 'Флагманская зона повышенного комфорта для максимального соревновательного преимущества. Топовые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, мощные видеокарты RTX 5070 Ti, киберспортивные мониторы 480Hz 2K и 400Hz, эргономичные кресла CyberX и премиальная периферия.',
+    capacity: 'CyberX Arena & CyberX Европа',
     hardwareBrief: [
-      '2x Профессиональные базы Moza Direct Drive Force Feedback',
-      'Педальные узлы Moza Load Cell (реалистичное усилие торможения)',
-      'Спортивные анатомические ковши с точной регулировкой посадки',
-      'Изогнутые UltraWide 165Hz дисплеи',
-      'Секвентальный шифтер и подрулевые лепестки'
+      'PC: NVIDIA GeForce RTX 5070 Ti + Ryzen 7 7800X3D',
+      'Мониторы: ASUS ROG Swift 480Hz 2K & ViewSonic 400Hz',
+      'Мышь: Logitech G Pro X Superlight / Ajazz',
+      'Кресла: CyberX Pro Gaming Chair'
     ],
     features: [
-      'Доступно только в CyberX Arena (2 симулятора)',
-      'Парные дуэли в реальном времени',
-      'Дисциплины: Forza Horizon 6, Assetto Corsa, ACC, DiRT, BeamNG, City Car Driving',
-      'Реалистичная физика управления и обратная связь FFB'
+      'Флагманская соревновательная зона',
+      'Мониторы 480Hz 2K и 400Hz с нулевой задержкой',
+      'Кнопка вызова администратора в 1 клик',
+      'Кальяны и широкий ассортимент напитков'
     ],
-    pricePerHour: 600,
-    priceNight: 1350,
-    image: '/images/sim-racing-real.jpg',
-    badge: '2 автосима на Ленина',
+    pricePerHour: 270,
+    priceNight: 1300,
+    image: '/images/arena/06-pc-blue.jpg',
+    badge: '480Hz 2K // Flagship',
   },
   {
-    id: 'projector-lounge',
-    name: 'КИНО-ЛАУНЖ С ПРОЕКТОРОМ 150"',
-    category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: 'Огромный 150" экран, диваны, PS5 и трансляции мейджоров',
-    description: 'Просторный лаунж в CyberX Arena со 150" проекционным экраном и сценой. Просмотр киберспортивных чемпионатов (The International, CS2 Major), спортивных матчей, фильмов и турниров по Mortal Kombat / EA FC 25.',
-    capacity: 'до 15 человек (CyberX Arena // Ленина, 19)',
-    hardwareBrief: [
-      'Лазерный 4K проектор высокой яркости',
-      'Экран 150" со световозвращающим полотном',
-      'PlayStation 5 + каталог топ игр',
-      'Концертный звук 5.1 Surround Sound'
-    ],
-    features: [
-      'Доступно только в CyberX Arena на Ленина',
-      'Мягкие диваны, кресла-мешки и столики',
-      'Прямые трансляции турниров и кинопоказы',
-      'Кальянная и барная карта'
-    ],
-    pricePerHour: 1000,
-    priceNight: 5000,
-    image: '/images/arena/15-bar-lounge.jpg',
-    badge: '150" Экран на Ленина',
-  },
-  {
-    id: 'solo-stream-room',
-    name: 'SOLO & DUO ROOMS // 600HZ & RYZEN 7800X3D',
-    category: 'ВО ВСЕХ 3 КЛУБАХ (ЛЕНИНА, ЕВРОПА, ОКТЯБРЬ)',
-    tagline: 'Приватные изолированные комнаты на топовом соревновательном железе',
-    description: 'Приватные изолированные Solo и Duo залы во всех 3 кибераренах CyberX в Омске (Ленина, 19, Мира, 42к1, Серова, 19А). Ультимативные игровые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, видеокарты RTX 5070 Ti, сверхбыстрые мониторы BenQ 600Hz / 400Hz, премиум механика Dark Project и полная звукоизоляция.',
-    capacity: '1–2 человека (Во всех 3 клубах сети)',
-    hardwareBrief: [
-      'PC: AMD Ryzen 7 7800X3D / i5-14600KF + RTX 5070 Ti',
-      'Монитор: BenQ 24.5" 600Hz / 400Hz Extreme Speed DyAc 2',
-      'Клавиатура: Dark Project KD87A механическая',
-      'Мышь: Logitech G Pro X Superlight 2 / Ajazz',
-      'Гарнитура: HyperX Cloud Pro + студийный микрофон'
-    ],
-    features: [
-      'Доступно во всех 3 кибераренах сети CyberX в Омске',
-      'Абсолютная тишина, приватность и звукоизоляция (55dB)',
-      'Максимальный соревновательный FPS (CS2: 750+ FPS)',
-      'Идеально для стримов, дуо-праков и турнирных квалификаций'
-    ],
-    pricePerHour: 250,
-    priceNight: 1100,
-    image: '/images/evropa/05-mural-solo.jpg',
-    badge: 'Во всех 3 клубах (600Hz)',
-  },
-  {
-    id: 'ps5-lounge',
-    name: 'PS5 DELUXE ЗАЛЫ',
+    id: 'open-arena',
+    name: 'STANDART И STANDART+',
     category: 'ВО ВСЕХ 3 КЛУБАХ',
-    tagline: '4 зала в CyberX Arena, по 3 зала в CyberX Европа и Октябрь',
-    description: 'Уютные консольные залы с большими экранами 4K 120Hz, PlayStation 5, глубокими диванами и барным обслуживанием.',
-    capacity: '2–6 человек (Во всех 3 клубах)',
+    tagline: 'Самый большой соревновательный зал в Омске: 55 ПК в CyberX Arena (Ленина, 19)',
+    description: 'Самый масштабный киберспортивный зал в городе! 55 ПК в CyberX Arena (9 ПК Standart+ на Super VIP сетапе и 46 ПК Standart). Standart+: видеокарты RTX 5070 Ti и мониторы BenQ 240Hz Fast-TN. Standart: видеокарты RTX 3060/4060 и мониторы 144Hz. Фирменные кресла CyberX и кнопка вызова администратора в 1 клик прямо с рабочего места.',
+    capacity: '55 ПК на Ленина (185 ПК суммарно по Омску)',
     hardwareBrief: [
-      'Sony PlayStation 5 + подписка PS Plus Deluxe',
-      '75" / 85" 4K 120Hz VRR дисплеи',
-      'Геймпады DualSense + гарнитуры Pulse 3D',
-      'Премиальный объемный звук'
+      'Standart+: RTX 5070 Ti + мониторы BenQ 240Hz Fast-TN (9 ПК)',
+      'Standart: RTX 3060 / 4060 + мониторы 144Hz (46 ПК)',
+      'Кресла: Фирменные эргономичные кресла CyberX',
+      'Кнопка вызова администратора в 1 клик прямо с места'
     ],
     features: [
-      '4 зала в CyberX Arena, по 3 зала в Европе и Октябре',
-      'Игры: EA FC 25, UFC 5, Mortal Kombat 1, Tekken 8, GTA V',
-      'Напитки, кофе, энергетики, кальян и снеки',
-      'Приватные шторы для изоляции от общего зала'
-    ],
-    pricePerHour: 300,
-    priceNight: 900,
-    image: '/images/arena/16-ps5-red-mural.jpg',
-    gallery: [
-      '/images/arena/16-ps5-red-mural.jpg',
-      '/images/arena/11-nhl-console.jpg',
-      '/images/arena/12-pink-girl-console.jpg'
-    ],
-    badge: 'Все 3 клуба (10 залов)',
-  },
-  {
-    id: 'pro-stage',
-    name: 'ОТКРЫТЫЙ ЗАЛ // SUPER VIP & STANDART',
-    category: 'ОБЩИЙ ЗАЛ & VIP',
-    tagline: '185 игровых ПК во всех трех клубах с мониторами до 600Hz',
-    description: 'Главные игровые залы сети CyberX в Омске. Мониторы BenQ 600Hz / ASUS 480Hz / 400Hz / 240Hz, видеокарты RTX 5070 Ti / 3060 Ti, кресла Tesoro, гигабитный пинг >1 Гбит.',
-    capacity: '185 игровых ПК суммарно',
-    hardwareBrief: [
-      'Super VIP: RTX 5070 Ti / i5-14600KF / 32GB DDR5 / BenQ 600Hz',
-      'Standart: RTX 3060 Ti / i5-12400F / 16GB / BenQ 144Hz & 240Hz',
-      'Девайсы: Dark Project, Logitech, Ajazz, HyperX',
-      'Кресла: Анатомические Tesoro Zone / Master'
-    ],
-    features: [
-      '89 ПК в CyberX Arena • 46 ПК в Европе • 50 ПК в Октябре',
-      'Прямой оптический канал >1 Гбит/с (Ping 0.8ms)',
-      'Широкие столы с профессиональными коврами',
-      'Быстрый заказ напитков и кальяна к месту'
+      '55 ПК на Ленина: 9 ПК Standart+ и 46 ПК Standart',
+      'Мониторы BenQ 240Hz на Standart+ и 144Hz на Standart',
+      'Кнопка вызова администратора прямо с рабочего места',
+      'Прямая гигабитная оптика без задержек и лагов'
     ],
     pricePerHour: 110,
     priceNight: 600,
-    image: '/images/arena-lenina-card.jpg',
-    badge: 'от 70-110 ₽/час',
+    image: '/images/oktyabr/03-pc-row.jpg',
+    gallery: [
+      '/images/oktyabr/03-pc-row.jpg',
+      '/images/oktyabr/04-pc-column.jpg',
+      '/images/oktyabr/05-pc-closeup.jpg',
+      '/images/arena/06-pc-blue.jpg',
+      '/images/evropa/03-pc-hall.jpg'
+    ],
+    badge: '55 ПК на Ленина // 185 ПК в Омске',
   }
 ];
 
