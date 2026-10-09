@@ -142,7 +142,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
                 ДНИ РОЖДЕНИЯ В PREMIUM
               </h3>
               <p className="text-xs sm:text-sm text-zinc-300 mt-2 font-normal leading-relaxed">
-                Закрытые сьюты для вашей компании: 5 соревновательных ПК + PS5 4K + стол для праздничного угощения, пиццы и торта.
+                Закрытые Premium комнаты для вашей компании: 5 соревновательных ПК + PS5 4K + стол для праздничного угощения, пиццы и торта.
               </p>
 
               {/* Feature List */}
@@ -157,7 +157,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
                 </div>
                 <div className="flex items-start gap-2.5 text-zinc-300">
                   <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span><strong>Кино-Лаунж 150" & PS5:</strong> матчи в FC 25, UFC, Mortal Kombat и просмотр фильмов</span>
+                  <span><strong>Лаунж-бар со сценой & PS5:</strong> турниры в консольные игры и трансляции</span>
                 </div>
                 <div className="flex items-start gap-2.5 text-zinc-300">
                   <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
@@ -171,7 +171,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
               <button
                 onClick={() => {
                   sound.playTrigger();
-                  onOpenBooking('cyberx-arena', 'premium-suite');
+                  onOpenBooking('cyberx-arena', 'premium-squad');
                 }}
                 onMouseEnter={() => sound.playHover()}
                 className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-black font-mono text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_0_25px_rgba(245,158,11,0.5)] hover:shadow-[0_0_40px_rgba(245,158,11,0.85)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-amber-300/40"
@@ -192,8 +192,8 @@ export const EventsSection: React.FC<EventsSectionProps> = ({
             <div className="text-[11px] text-zinc-400 mt-0.5">В 3 клубах Омска</div>
           </div>
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-            <div className="text-xl sm:text-2xl font-black text-[#E32124]">150" Экран</div>
-            <div className="text-[11px] text-zinc-400 mt-0.5">Кино-Лаунж сцена</div>
+            <div className="text-xl sm:text-2xl font-black text-[#E32124]">16 PS5</div>
+            <div className="text-[11px] text-zinc-400 mt-0.5">Комнат в 3 клубах</div>
           </div>
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
             <div className="text-xl sm:text-2xl font-black text-amber-400">2 Sim-Racing</div>

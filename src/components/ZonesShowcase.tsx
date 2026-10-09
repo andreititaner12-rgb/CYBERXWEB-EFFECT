@@ -134,7 +134,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
               zone={displayZones[3]}
               isExpanded={expandedZoneId === displayZones[3].id}
               onClick={() => handleCardClick(displayZones[3])}
-              accentBadge="ВО ВСЕХ 3 КЛУБАХ // 600HZ"
+              accentBadge="ВО ВСЕХ 3 КЛУБАХ"
             />
           </div>
 
@@ -144,7 +144,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
               zone={displayZones[2]}
               isExpanded={expandedZoneId === displayZones[2].id}
               onClick={() => handleCardClick(displayZones[2])}
-              accentBadge='150" ЭКРАН + СЦЕНА'
+              accentBadge="ЛАУНЖ-БАР СО СЦЕНОЙ"
             />
           </div>
 
@@ -154,7 +154,7 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
               zone={displayZones[4]}
               isExpanded={expandedZoneId === displayZones[4].id}
               onClick={() => handleCardClick(displayZones[4])}
-              accentBadge="10 ЗАЛОВ // ВСЕ КЛУБЫ"
+              accentBadge="16 КОМНАТ // ВСЕ КЛУБЫ"
             />
           </div>
 

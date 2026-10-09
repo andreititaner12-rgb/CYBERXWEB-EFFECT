@@ -35,13 +35,13 @@ interface ClubBookingInfo {
 const CLUBS_BOOKING: ClubBookingInfo[] = [
   {
     id: 'cyberx-arena',
-    title: 'CyberX Arena // Флагман',
+    title: 'CyberX Arena // Центр',
     shortTitle: 'Ленина, 19',
     address: 'ул. Ленина, 19',
     langameUrl: 'https://langame.ru/club/799452760',
     qrImage: '/qr/qr-lenina.png',
-    description: '89 ПК • Solo/Duo • 2 Sim-Racing • 2 Premium зала • 150" Экран',
-    badge: 'Центр // Флагман',
+    description: '89 ПК • Solo/Duo • 2 Sim-Racing • 2 Premium комнаты • 7 PS5 комнат',
+    badge: 'Центр',
   },
   {
     id: 'cyberx-evropa',
@@ -50,18 +50,18 @@ const CLUBS_BOOKING: ClubBookingInfo[] = [
     address: 'просп. Мира, 42, корп. 1',
     langameUrl: 'https://langame.ru/club/799457743',
     qrImage: '/qr/qr-evropa.png',
-    description: '46 ПК • Solo Room Ryzen 7800X3D + 600Hz • 3 PS5 зала',
-    badge: 'Студгородок',
+    description: '46 ПК • Solo Room Ryzen 7800X3D + 600Hz • 5 PS5 комнат',
+    badge: 'Нефтяники',
   },
   {
     id: 'cyberx-oktyabr',
-    title: 'CyberX Октябрь // Ленинский',
+    title: 'CyberX Октябрь // 2 Этажа',
     shortTitle: 'Серова, 19А',
     address: 'ул. Серова, 19А',
     langameUrl: 'https://langame.ru/club/799456444',
     qrImage: '/qr/qr-oktyabr.png',
-    description: '50 ПК • Solo 600Hz • Trio & Duo Rooms • Удобная парковка',
-    badge: 'Приватные залы',
+    description: '50 ПК • 2 этажа • BenQ 240Hz • Trio, Duo & Solo • 4 PS5 комнаты',
+    badge: '2 этажа // Приватные залы',
   },
 ];
 

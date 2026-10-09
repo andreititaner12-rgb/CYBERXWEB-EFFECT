@@ -8,20 +8,20 @@ export const BrandManifesto: React.FC = () => {
     {
       icon: Flame,
       value: '3 АРЕНЫ',
-      label: 'Флагманские клубы в Омске',
+      label: 'Киберспортивные клубы в Омске',
       detail: 'Ленина 19 • Мира 42к1 • Серова 19А',
     },
     {
       icon: Monitor,
       value: '185 ПК',
-      label: 'Дисплеи BenQ 600Hz & ASUS 480Hz',
-      detail: 'RTX 5070 Ti & Ryzen 7 7800X3D',
+      label: 'RTX 5070 Ti & Ryzen 7 7800X3D',
+      detail: 'Дисплеи BenQ 600Hz, 480Hz & 240Hz',
     },
     {
       icon: Trophy,
-      value: '10 PS5 ЗАЛОВ',
+      value: '16 PS5 КОМНАТ',
       label: 'VIP & Lounge пространства',
-      detail: '2 Premium Squad сьюта + Кинозал 150"',
+      detail: '2 Premium комнаты + Лаунж-бар со сценой',
     },
     {
       icon: ShieldCheck,

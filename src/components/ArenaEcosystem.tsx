@@ -9,14 +9,15 @@ import {
   ArrowRight, 
   Building2, 
   Tv, 
-  Gamepad2, 
-  Gauge, 
   PhoneCall, 
   Flame, 
   Cpu,
   Zap, 
   ChevronLeft, 
-  ChevronRight 
+  ChevronRight,
+  HardDrive,
+  Layers,
+  Monitor
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { smoothScrollTo } from '../utils/smoothScroll';
@@ -131,7 +132,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
             3 КЛУБА В ОМСКЕ <span className="text-[#E32124]">//</span> АРЕНЫ
           </h2>
           <p className="mt-3 text-zinc-300 text-sm sm:text-base leading-relaxed">
-            Три флагманских пространства в Омске: <strong className="text-white font-medium">CyberX Arena</strong> (Ленина, 19), <strong className="text-white font-medium">CyberX Европа</strong> (Мира, 42к1) и <strong className="text-white font-medium">CyberX Октябрь</strong> (Серова, 19А). 185 игровых ПК, BenQ 600Hz, Premium Squad сьюты, Solo/Duo залы и 2 автосимулятора Sim-Racing.
+            Три киберспортивных пространства в Омске: <strong className="text-white font-medium">CyberX Arena</strong> (Ленина, 19), <strong className="text-white font-medium">CyberX Европа</strong> (Мира, 42к1) и <strong className="text-white font-medium">CyberX Октябрь</strong> (Серова, 19А). 185 игровых ПК, BenQ 600Hz, 2 Premium комнаты, Solo/Duo/Trio залы, 16 PS5 комнат и 2 автосимулятора Sim-Racing.
           </p>
           <p className="mt-2 text-zinc-500 text-xs sm:text-sm font-mono">
             Нажмите на карточку клуба для просмотра детального оснащения, галереи фото и бронирования.
@@ -194,7 +195,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                         {isFlagship ? (
                           <>
                             <Flame className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                            <span>ФЛАГМАН // ЦЕНТР</span>
+                            <span>ЦЕНТР</span>
                           </>
                         ) : isEvropa ? (
                           <>
@@ -203,7 +204,7 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                           </>
                         ) : (
                           <>
-                            <Building2 className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                            <Layers className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                             <span>ОКТЯБРЬ</span>
                           </>
                         )}
@@ -250,32 +251,34 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                             {arena.ps5RoomsCount} PS5
                           </span>
                         </div>
-
-                        <div className="absolute bottom-2.5 left-2.5 right-2.5 rounded-xl flex items-center justify-between text-xs font-mono bg-black/85 px-3 py-1.5 border border-white/10 z-10">
-                          <span className="text-zinc-200 truncate font-medium">
-                            {isFlagship ? '2 Premium + 2 Автосима' : isEvropa ? 'Solo Ryzen 7800X3D' : 'Solo & Trio Rooms'}
-                          </span>
-                          <span className="text-emerald-400 font-bold flex items-center gap-1 shrink-0">
-                            <Clock className="w-3.5 h-3.5 text-emerald-400" />
-                            <span>24/7</span>
-                          </span>
-                        </div>
                       </div>
                     </CardItem>
 
                     {/* Specs & Hardware Chips */}
                     <CardItem translateZ={25} className="space-y-2 mb-6 mt-auto w-full">
                       <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-2.5 text-xs font-mono text-zinc-300">
-                        <Gauge className="w-4 h-4 text-[#E32124] shrink-0" />
+                        <HardDrive className="w-4 h-4 text-[#E32124] shrink-0" />
                         <span className="truncate">
-                          {isFlagship ? 'BenQ 600Hz & ASUS 480Hz' : isEvropa ? 'BenQ 600Hz + Ryzen 7800X3D' : 'BenQ 600Hz Extreme Speed'}
+                          RTX 5070 Ti & Ryzen 7 7800X3D
                         </span>
                       </div>
                       <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-2.5 text-xs font-mono text-zinc-300">
-                        <Gamepad2 className="w-4 h-4 text-[#E32124] shrink-0" />
-                        <span className="truncate">
-                          {isFlagship ? 'RTX 5070 Ti / 3060 Ti' : isEvropa ? 'RTX 5070 Ti DLSS 3.5' : 'RTX 5070 Ti & i5-14600KF'}
-                        </span>
+                        {isFlagship ? (
+                          <>
+                            <Tv className="w-4 h-4 text-[#E32124] shrink-0" />
+                            <span className="truncate">Lounge & LAN-сцена</span>
+                          </>
+                        ) : isEvropa ? (
+                          <>
+                            <Monitor className="w-4 h-4 text-[#E32124] shrink-0" />
+                            <span className="truncate">BenQ 600Hz & Solo Room</span>
+                          </>
+                        ) : (
+                          <>
+                            <Layers className="w-4 h-4 text-[#E32124] shrink-0" />
+                            <span className="truncate">2-этажный клуб // BenQ 240Hz</span>
+                          </>
+                        )}
                       </div>
                     </CardItem>
 
@@ -517,25 +520,25 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
                     <div className="p-3.5 rounded-2xl bg-[#E32124]/10 border border-[#E32124]/30 mb-6 flex items-center gap-3">
                       <Tv className="w-5 h-5 text-[#E32124] shrink-0" />
                       <div className="text-xs text-zinc-300">
-                        <span className="font-bold text-white">Эксклюзив Arena на Ленина:</span> 2 автосимулятора Sim-Racing, 2 Premium Squad зала (5 ПК + PS5 + стол) и Кино-Лаунж 150".
+                        <span className="font-bold text-white">Эксклюзив Arena на Ленина:</span> 2 автосимулятора Sim-Racing, 2 Premium комнаты (до 14 чел) и большой лаунж-бар со сценой.
                       </div>
                     </div>
                   )}
 
                   {currentArena.id === 'cyberx-evropa' && (
                     <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.1] mb-6 flex items-center gap-3">
-                      <Gauge className="w-5 h-5 text-[#E32124] shrink-0" />
+                      <Monitor className="w-5 h-5 text-[#E32124] shrink-0" />
                       <div className="text-xs text-zinc-300">
-                        <span className="font-bold text-white">Фишка Европа на Мира:</span> Solo Room с процессором <span className="text-white font-semibold">AMD Ryzen 7 7800X3D</span> и монитором <span className="text-[#E32124] font-bold">BenQ 600Hz</span>.
+                        <span className="font-bold text-white">Фишка Европа на Мира:</span> Solo Room с процессором <span className="text-white font-semibold">AMD Ryzen 7 7800X3D</span> и монитором <span className="text-[#E32124] font-bold">BenQ 600Hz</span>, 5 PS5 комнат.
                       </div>
                     </div>
                   )}
 
                   {currentArena.id === 'cyberx-oktyabr' && (
                     <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.1] mb-6 flex items-center gap-3">
-                      <Flame className="w-5 h-5 text-[#E32124] shrink-0" />
+                      <Layers className="w-5 h-5 text-[#E32124] shrink-0" />
                       <div className="text-xs text-zinc-300">
-                        <span className="font-bold text-white">Фишка Октябрь на Серова:</span> Двухуровневый клуб, Solo и Trio комнаты с мониторами <span className="text-[#E32124] font-bold">BenQ 600Hz</span> и VIP лаунж PS5.
+                        <span className="font-bold text-white">Фишка Октябрь на Серова:</span> Двухэтажное игровое пространство, комнаты VIP (5 ПК), Trio, Duo и Solo, 4 уютных комнаты с PS5.
                       </div>
                     </div>
                   )}

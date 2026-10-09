@@ -4,13 +4,13 @@ export const ARENAS: ArenaLocation[] = [
   {
     id: 'cyberx-evropa',
     name: 'CYBERX ЕВРОПА // МИРА, 42К1',
-    tagline: 'Киберспортивный хаб в Нефтяниках с Solo Room на Ryzen 7 7800X3D и 600Hz',
+    tagline: 'Киберспортивный хаб в Нефтяниках с Solo Room на Ryzen 7 7800X3D и BenQ 600Hz',
     address: 'просп. Мира, 42, корп. 1',
     metro: 'Ост. «Технический университет» / «Кристалл»',
     area: '480 м²',
     rigsCount: 46,
     vipRoomsCount: 0,
-    ps5RoomsCount: 3,
+    ps5RoomsCount: 5,
     phone: '+7 (951) 400-77-77',
     telegram: '@cyberxcommunityomsklenina',
     workingHours: '24/7 Круглосуточно',
@@ -29,9 +29,9 @@ export const ARENAS: ArenaLocation[] = [
     ],
     features: [
       '46 игровых ПК (Super VIP, VIP, Duo Room и Solo Room)',
-      'Solo Стримерская на AMD Ryzen 7 7800X3D + BenQ 600Hz',
+      'Solo Room на AMD Ryzen 7 7800X3D + BenQ 600Hz',
       'Мониторы BenQ 600Hz, ASUS 480Hz, ViewSonic 400Hz, BenQ 240Hz',
-      '3 комфортных PS5 зала на компании до 6 человек',
+      '5 комфортных PS5 комнат на компании до 5 человек',
       'Кальян, бар, гигабитный интернет >1 Гбит/с'
     ],
     status: 'ONLINE',
@@ -40,13 +40,13 @@ export const ARENAS: ArenaLocation[] = [
   {
     id: 'cyberx-arena',
     name: 'CYBERX ARENA // ЛЕНИНА, 19',
-    tagline: 'Главный киберспортивный комплекс Омска со сценой, Premium залами, Solo/Duo и автосимуляторами',
+    tagline: 'Главный киберспортивный комплекс Омска со сценой, Premium комнатами, Solo/Duo и автосимуляторами',
     address: 'ул. Ленина, 19',
     metro: 'Ост. «Драмтеатр» / «КДЦ Маяковский»',
     area: '540 м²',
     rigsCount: 89,
     vipRoomsCount: 2,
-    ps5RoomsCount: 4,
+    ps5RoomsCount: 7,
     phone: '+7 (908) 110-97-77',
     telegram: '@cyberxcommunityomsklenina',
     workingHours: '24/7 Круглосуточно',
@@ -67,11 +67,11 @@ export const ARENAS: ArenaLocation[] = [
     ],
     features: [
       '89 мощных игровых ПК (RTX 5070 Ti / i5-14600KF / BenQ 600Hz & 400Hz)',
-      '2 эксклюзивных Premium зала (5 ПК + PS5 + Большой стол для команды)',
+      '2 эксклюзивных Premium комнаты (5 ПК + PS5 + Большой стол для компании)',
       'Приватные Solo и Duo комнаты с максимальной шумоизоляцией',
       '2 профессиональных автосимулятора Sim-Racing с рулевой базой Moza и педалями Moza Load Cell',
-      'Большой кино-лаунж с проектором 150" для трансляций и турниров',
-      '4 приватных PS5 зала с диванами, кальян и бар'
+      'Большой лаунж-бар со сценой и проектором для трансляций и турниров',
+      '7 приватных PS5 комнат с диванами, кальянами и баром'
     ],
     status: 'ONLINE',
     coordinates: { x: 54.984185, y: 73.375841 },
@@ -79,13 +79,13 @@ export const ARENAS: ArenaLocation[] = [
   {
     id: 'cyberx-oktyabr',
     name: 'CYBERX ОКТЯБРЬ // СЕРОВА, 19А',
-    tagline: 'Приватная киберарена в Ленинском округе с Solo 600Hz, Trio и Duo залами',
+    tagline: 'Просторный двухэтажный клуб с уникальным зонированием и атмосферой',
     address: 'ул. Серова, 19А',
     metro: 'Ост. «Улица Серова» / «Ленинский рынок»',
     area: '430 м²',
     rigsCount: 50,
     vipRoomsCount: 0,
-    ps5RoomsCount: 3,
+    ps5RoomsCount: 4,
     phone: '+7 (950) 950-33-33',
     telegram: '@cyberxcommunityomsklenina',
     workingHours: '24/7 Круглосуточно',
@@ -103,11 +103,11 @@ export const ARENAS: ArenaLocation[] = [
       '/images/oktyabr/08-hall.jpg'
     ],
     features: [
-      '50 игровых ПК (Общий зал, VIP 1-3, Trio Rooms, Duo Room, Solo Room)',
-      'Solo Room на AMD Ryzen 7 7800X3D + BenQ 600Hz',
-      '3 уютных PS5 зала (FC 25, MK1, UFC 5, Tekken 8)',
-      'Клавиатуры Dark Project & Logitech, гарнитуры HyperX',
-      'Кальян, напитки, удобная парковка у входа'
+      '50 игровых ПК: Общий зал, комнаты VIP (5 ПК), Trio, Duo и Solo',
+      'Мониторы BenQ 240Hz Fast-TN во всех соревновательных зонах',
+      '4 уютных комнаты с PS5',
+      'Кальяны, бар, напитки и комфортная зона отдыха',
+      'Фирменное двухэтажное игровое пространство'
     ],
     status: 'ONLINE',
     coordinates: { x: 54.940795, y: 73.382982 },
@@ -117,22 +117,22 @@ export const ARENAS: ArenaLocation[] = [
 export const ZONES: ZoneType[] = [
   {
     id: 'premium-squad',
-    name: 'PREMIUM',
+    name: 'PREMIUM КОМНАТЫ',
     category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
-    tagline: '5 Pro ПК (RTX 5070 Ti) + PS5 + Большой стол для команды & диван',
-    description: 'Эксклюзив флагмана CyberX Arena на ул. Ленина, 19! Изолированная комната премиум-класса на 5–14 человек. 5 мощнейших ПК (i5-14600KF / RTX 5070 Ti / BenQ 600Hz), отдельная зона PlayStation 5 на 85" 4K экране, мягкий диван и большой переговорно-обеденный стол для тактики и перекуса.',
+    tagline: '5 Pro ПК (RTX 5070 Ti) + PS5 + Большой стол для компании & диван',
+    description: 'Эксклюзив CyberX Arena на ул. Ленина, 19! Изолированная комната премиум-класса на 5–14 человек. 5 мощнейших ПК (i5-14600KF / RTX 5070 Ti / BenQ 600Hz), отдельная зона PlayStation 5 с 4K экраном, мягкий диван и большой переговорно-обеденный стол для компании и перекуса.',
     capacity: 'до 14 человек (CyberX Arena // Ленина, 19)',
     hardwareBrief: [
       '5x PC: RTX 5070 Ti / i5-14600KF / 32GB DDR5',
       '5x Мониторы: BenQ 600Hz / ASUS 480Hz / 400Hz',
       '1x Sony PlayStation 5 Slim + 4 геймпада DualSense',
-      '85" 4K 120Hz HDR экран + саундбар',
+      '4K 120Hz HDR экран + саундбар',
       'Большой стол на 6–8 посадочных мест + кожаный диван'
     ],
     features: [
-      'Доступно только в CyberX Arena (2 зала)',
+      'Доступно только в CyberX Arena (2 комнаты)',
       'Звукоизоляция 55dB (полная приватность)',
-      'Большой стол для тактических разборов / еды',
+      'Большой стол для компании и угощений',
       'Кальян и барное обслуживание',
       'Вызов администратора в 1 клик'
     ],
@@ -146,8 +146,112 @@ export const ZONES: ZoneType[] = [
       '/images/arena/13-blue-cyber-girl.jpg',
       '/images/arena/14-gamer-zone-blue.jpg'
     ],
-    badge: '2 зала на Ленина',
+    badge: '2 комнаты на Ленина',
     popular: true,
+  },
+  {
+    id: 'sim-racing',
+    name: 'SIM-RACING // 2 АВТОСИМУЛЯТОРА',
+    category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
+    tagline: '2 кокпита на рулевой базе Moza и педальном узле Moza Load Cell',
+    description: 'Эксклюзив CyberX Arena на Ленина, 19 с двумя профессиональными гоночными кокпитами на рулевой базе Moza Direct Drive и педальном узле Moza Load Cell. Доступные соревновательные дисциплины: FORZA HORIZON 6, ASSETTO CORSA, ASSETTO CORSA COMPETIZIONE, DiRT, BEAMNG.DRIVE, CITY CAR DRIVING.',
+    capacity: '1–2 пилота (CyberX Arena // Ленина, 19)',
+    hardwareBrief: [
+      '2x Профессиональные базы Moza Direct Drive Force Feedback',
+      'Педальные узлы Moza Load Cell (реалистичное усилие торможения)',
+      'Спортивные анатомические ковши с точной регулировкой посадки',
+      'Изогнутые UltraWide 165Hz дисплеи',
+      'Секвентальный шифтер и подрулевые лепестки'
+    ],
+    features: [
+      'Доступно только в CyberX Arena (2 симулятора)',
+      'Парные дуэли в реальном времени',
+      'Дисциплины: Forza Horizon 6, Assetto Corsa, ACC, DiRT, BeamNG, City Car Driving',
+      'Реалистичная физика управления и обратная связь FFB'
+    ],
+    pricePerHour: 600,
+    priceNight: 1350,
+    image: '/images/sim-racing-real.jpg',
+    badge: '2 автосима на Ленина',
+  },
+  {
+    id: 'projector-lounge',
+    name: 'ЛАУНЖ-БАР С ПРОЕКТОРОМ',
+    category: 'ЭКСКЛЮЗИВ В CYBERX ARENA',
+    tagline: 'Большой проекционный экран, сцена, диваны, PS5 и трансляции',
+    description: 'Просторный лаунж-бар в CyberX Arena со сценой и большим экраном. Просмотр киберспортивных чемпионатов (The International, CS2 Major), спортивных матчей, фильмов и турниров по консольным файтингам и симуляторам.',
+    capacity: 'до 15 человек (CyberX Arena // Ленина, 19)',
+    hardwareBrief: [
+      'Лазерный 4K проектор высокой яркости',
+      'Большой экран со световозвращающим полотном',
+      'PlayStation 5 + каталог топ игр',
+      'Концертный звук 5.1 Surround Sound'
+    ],
+    features: [
+      'Доступно только в CyberX Arena на Ленина',
+      'Мягкие диваны, кресла-мешки и столики',
+      'Прямые трансляции турниров и кинопоказы',
+      'Кальянная и барная карта'
+    ],
+    pricePerHour: 1000,
+    priceNight: 5000,
+    image: '/images/arena/15-bar-lounge.jpg',
+    badge: 'Лаунж на Ленина',
+  },
+  {
+    id: 'solo-stream-room',
+    name: 'SOLO & DUO ROOMS',
+    category: 'ВО ВСЕХ 3 КЛУБАХ (ЛЕНИНА, ЕВРОПА, ОКТЯБРЬ)',
+    tagline: 'Приватные изолированные комнаты на топовом соревновательном железе',
+    description: 'Приватные изолированные Solo и Duo залы в кибераренах CyberX в Омске (Ленина, 19, Мира, 42к1, Серова, 19А). Ультимативные игровые процессоры AMD Ryzen 7 7800X3D и Intel Core i5-14600KF, видеокарты RTX 5070 Ti, сверхбыстрые мониторы BenQ, премиум механика Dark Project и полная звукоизоляция.',
+    capacity: '1–2 человека (Во всех 3 клубах сети)',
+    hardwareBrief: [
+      'PC: AMD Ryzen 7 7800X3D / i5-14600KF + RTX 5070 Ti',
+      'Монитор: BenQ 24.5" 600Hz / 400Hz / 240Hz Extreme Speed',
+      'Клавиатура: Dark Project KD87A механическая',
+      'Мышь: Logitech G Pro X Superlight 2 / Ajazz',
+      'Гарнитура: HyperX Cloud Pro'
+    ],
+    features: [
+      'Доступно во всех 3 кибераренах сети CyberX в Омске',
+      'Абсолютная тишина, приватность и звукоизоляция (55dB)',
+      'Максимальный соревновательный FPS (CS2: 750+ FPS)',
+      'Идеально для дуо-праков, турнирных квалификаций и приватной игры'
+    ],
+    pricePerHour: 250,
+    priceNight: 1100,
+    image: '/images/evropa/05-mural-solo.jpg',
+    badge: 'Во всех 3 клубах',
+  },
+  {
+    id: 'ps5-lounge',
+    name: '16 PS5 КОМНАТ',
+    category: 'ВО ВСЕХ 3 КЛУБАХ',
+    tagline: '16 приватных PS5 комнат с мягкими диванами, 4K экранами и кальянами',
+    description: '16 комфортабельных приватных PS5 комнат в кибераренах CyberX в Омске (7 комнат на Ленина, 5 комнат на Мира и 4 комнаты на Серова). Новейшие консоли PlayStation 5 Slim, геймпады DualSense, огромные 4K экраны со 120Hz, барное меню и кальяны.',
+    capacity: 'до 6 человек в каждой комнате',
+    hardwareBrief: [
+      '16x Консолей Sony PlayStation 5 Slim',
+      '4K HDR экраны с поддержкой 120Hz',
+      'По 4 геймпада DualSense на каждую комнату',
+      'Мягкие кожаные угловые диваны',
+      'Премиальные паровые коктейли и напитки'
+    ],
+    features: [
+      '7 комнат на Ленина, 5 комнат на Мира, 4 комнаты на Серова',
+      'Каталог лучших спортивных симуляторов и файтингов',
+      'Кальянная карта и авторские напитки',
+      'Отдельное приватное зонирование с неоновой подсветкой'
+    ],
+    pricePerHour: 300,
+    priceNight: 900,
+    image: '/images/arena/16-ps5-red-mural.jpg',
+    gallery: [
+      '/images/arena/16-ps5-red-mural.jpg',
+      '/images/arena/11-nhl-console.jpg',
+      '/images/arena/12-pink-girl-console.jpg'
+    ],
+    badge: '16 комнат в 3 клубах',
   },
   {
     id: 'sim-racing',
@@ -414,7 +518,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'tv-arena',
         title: 'АРЕНДА TV (PS5)',
-        badge: '4 ЗАЛА PS5 НА ЛЕНИНА',
+        badge: '7 КОМНАТ PS5 НА ЛЕНИНА',
         iconType: 'Tv',
         specs: '4K 120Hz экран • DualSense • Топ игры',
         rows: [
@@ -520,7 +624,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'tv-evropa',
         title: 'АРЕНДА TV (PS5)',
-        badge: 'ДО 3-Х ЧЕЛОВЕК',
+        badge: '5 КОМНАТ PS5 В ЕВРОПЕ',
         iconType: 'Tv',
         specs: 'PlayStation 5 • 4K экран • Уютный диван',
         rows: [
@@ -541,7 +645,7 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'STANDARD',
         badge: 'БАЗОВЫЙ',
         iconType: 'Monitor',
-        specs: 'RTX 3060 • 240Hz • Механика Dark Project',
+        specs: 'RTX 3060 / 4060 • BenQ 240Hz • Механика',
         rows: [
           { period: 'УТРО ЗА 1 ЧАС', subtext: '08:00 – 14:00', weekday: '70 ₽', weekend: '90 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '110 ₽', weekend: '130 ₽', filterKey: '1h' },
@@ -552,10 +656,10 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'vip-oktyabr',
-        title: 'VIP ROOM',
+        title: 'VIP ROOM (5 ПК)',
         badge: 'PRO КИБЕРСПОРТ',
         iconType: 'Crown',
-        specs: 'RTX 4070 • 280Hz • HyperX Cloud Pro',
+        specs: '5 ПК • RTX 5070 Ti • BenQ 240Hz',
         rows: [
           { period: 'УТРО', subtext: '08:00 – 14:00', weekday: '90 ₽', weekend: '120 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '130 ₽', weekend: '160 ₽', filterKey: '1h' },
@@ -570,7 +674,7 @@ export const DEFAULT_PRICES: AllPricesData = {
         badge: 'КОМНАТА НА 3 ПК',
         highlight: true,
         iconType: 'Users',
-        specs: 'Приватная комната на 3 игрока • 280Hz',
+        specs: '3 ПК • RTX 5070 Ti • BenQ 240Hz • Приватность',
         rows: [
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '150 ₽', weekend: '180 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '400 ₽', weekend: '500 ₽', filterKey: '3h' },
@@ -583,7 +687,7 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'DUO ROOM',
         badge: 'ПАРНЫЙ ЗАЛ',
         iconType: 'ShieldCheck',
-        specs: '2 Игрока • RTX 4070 • 280Hz • Комфорт',
+        specs: '2 ПК • RTX 5070 Ti • BenQ 240Hz • Звукоизоляция',
         rows: [
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '190 ₽', weekend: '210 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '550 ₽', weekend: '600 ₽', filterKey: '3h' },
@@ -594,9 +698,9 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'solo-oktyabr',
         title: 'SOLO ROOM',
-        badge: 'ТОП ФЛАГМАН 600HZ',
+        badge: 'ПРИВАТНЫЙ ЗАЛ',
         iconType: 'Flame',
-        specs: 'Ryzen 7 7800X3D • BenQ 600Hz • Звукоизоляция',
+        specs: 'Ryzen 7 7800X3D • BenQ 240Hz • Звукоизоляция',
         rows: [
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '230 ₽', weekend: '260 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '650 ₽', weekend: '750 ₽', filterKey: '3h' },
@@ -609,7 +713,7 @@ export const DEFAULT_PRICES: AllPricesData = {
       {
         id: 'tv-oktyabr',
         title: 'АРЕНДА TV (PS5)',
-        badge: '3 ЗАЛА PS5 В ОКТЯБРЕ',
+        badge: '4 КОМНАТЫ PS5 В ОКТЯБРЕ',
         iconType: 'Tv',
         specs: 'PlayStation 5 • 4K экран • Мягкие диваны',
         rows: [
