@@ -419,13 +419,13 @@ export const DEFAULT_PRICES: AllPricesData = {
         badge: '5 ПК + PS5 + СТОЛ',
         highlight: true,
         iconType: 'Crown',
-        specs: 'До 14 человек (+1 чел: утро 200₽, 1ч 300₽, 3ч 600₽, 5ч 750₽)',
+        specs: 'До 14 человек • 5 Pro ПК • PS5 Slim • Стол на 6 мест',
         rows: [
           { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '1 500 ₽', weekend: '1 500 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '2 000 ₽', weekend: '2 000 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '5 000 ₽', weekend: '5 000 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '7 000 ₽', weekend: '7 000 ₽', filterKey: '5h' },
-          { period: '+1 Человек (1 час)', subtext: 'Доп. гость', weekday: '300 ₽', weekend: '300 ₽', filterKey: '1h' },
+          { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '7 000 ₽', weekend: '7 000 ₽', filterKey: 'night' },
         ]
       },
       {
@@ -434,7 +434,7 @@ export const DEFAULT_PRICES: AllPricesData = {
         badge: 'SIM-RACING 2 КОКПИТА',
         highlight: true,
         iconType: 'Gauge',
-        specs: 'Moza Direct Drive • Moza Load Cell • UltraWide',
+        specs: 'Moza R12 Direct Drive • Moza Load Cell • UltraWide',
         rows: [
           { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '400 ₽', weekend: '500 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '600 ₽', weekend: '700 ₽', filterKey: '1h' },
@@ -447,7 +447,7 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'АРЕНДА TV (PS5)',
         badge: '7 КОМНАТ PS5 НА ЛЕНИНА',
         iconType: 'Tv',
-        specs: '4K 120Hz экран • DualSense • Топ игры',
+        specs: '4K 120Hz экран • Звук Harman Kardon • Топ новинки',
         rows: [
           { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '200 ₽', weekend: '300 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '350 ₽', weekend: '350 ₽', filterKey: '1h' },
@@ -455,21 +455,68 @@ export const DEFAULT_PRICES: AllPricesData = {
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 200 ₽', weekend: '1 200 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '1 000 ₽', weekend: '1 000 ₽', filterKey: 'night' },
         ]
+      }
+    ],
+    extraServices: [
+      {
+        id: 'extra-gamepad-arena',
+        title: 'Дополнительный геймпад PS5',
+        price: '200 ₽ / шт',
+        subtext: 'Sony DualSense на всё время сессии',
+        category: 'gamepad',
+        iconType: 'Gamepad2',
+        badge: '200 ₽ / ШТ',
+        description: 'Оригинальный беспроводной геймпад Sony DualSense с тактильной отдачей и адаптивными триггерами.'
       },
       {
-        id: 'tv-pro-services-arena',
-        title: 'TV PRO & УСЛУГИ',
-        badge: 'ДОП. ОПЦИИ',
-        iconType: 'Gamepad2',
-        specs: 'TV Pro, геймпады и паровые коктейли',
-        rows: [
-          { period: 'TV PRO (1 ЧАС)', subtext: 'Премиум экран', weekday: '450 ₽', weekend: '450 ₽', filterKey: '1h' },
-          { period: 'TV PRO (3 ЧАСА)', subtext: '08:00 – 19:00', weekday: '1 000 ₽', weekend: '1 000 ₽', filterKey: '3h' },
-          { period: 'Доплата за доп. игрока', subtext: 'За 1 час', weekday: '200 ₽', weekend: '200 ₽', filterKey: '1h' },
-          { period: 'Доплата за 1 геймпад', subtext: 'За 1 час', weekday: '200 ₽', weekend: '200 ₽', filterKey: '1h' },
-          { period: 'Доплата за 2 геймпада', subtext: 'За 1 час', weekday: '350 ₽', weekend: '350 ₽', filterKey: '1h' },
-          { period: 'Паровой коктейль', subtext: 'Lounge Hookah', weekday: '1 200 ₽', weekend: '1 200 ₽', filterKey: 'night' },
-        ]
+        id: 'extra-guest-ps5-arena',
+        title: 'Доплата за доп. гостя в PS5 комнату',
+        price: '150 ₽ / час',
+        subtext: '400 ₽ / пакет Ночь',
+        category: 'guest',
+        iconType: 'Users',
+        badge: '150 ₽ / ЧАС',
+        description: 'Дополнительный гость в PS5 комнате свыше стандартной комфортной посадки.'
+      },
+      {
+        id: 'extra-guest-premium-arena',
+        title: 'Доплата за доп. гостя в Premium комнату',
+        price: '200 ₽ / час',
+        subtext: '600 ₽ / пакет Ночь',
+        category: 'guest',
+        iconType: 'Crown',
+        badge: '200 ₽ / ЧАС',
+        description: 'Дополнительный гость в Premium комнате (свыше базовых 5 игроков, вместимость до 14 гостей).'
+      },
+      {
+        id: 'hookah-classic-arena',
+        title: 'Кальян Classic Mix',
+        price: '900 ₽',
+        subtext: 'Легкие и средние табаки',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'ХИТ',
+        description: 'Большая вкусовая палитра, свежая чаша, профессиональная забивка и своевременный контроль углей.'
+      },
+      {
+        id: 'hookah-premium-arena',
+        title: 'Кальян Premium Dark',
+        price: '1 200 ₽',
+        subtext: 'Darkside / Musthave / Black Burn',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'PREMIUM',
+        description: 'Крепкие премиальные табачные бленды с насыщенным вкусом, густым дымом и долгим ровным жаром.'
+      },
+      {
+        id: 'hookah-refill-arena',
+        title: 'Замена чаши / Перезабивка',
+        price: '500 ₽',
+        subtext: 'Свежая чаша и угли',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: '500 ₽',
+        description: 'Быстрая замена чаши на новый вкус табака со свежими кокосовыми углями.'
       }
     ]
   },
@@ -553,15 +600,66 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'АРЕНДА TV (PS5)',
         badge: '5 КОМНАТ PS5 В ЕВРОПЕ',
         iconType: 'Tv',
-        specs: 'PlayStation 5 • 4K экран • Уютный диван',
+        specs: 'PlayStation 5 • 4K экран • Уютный диван • Harman Kardon',
         rows: [
           { period: 'УТРО', subtext: '08:00 – 14:00', weekday: '200 ₽', weekend: '250 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '300 ₽', weekend: '300 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '750 ₽', weekend: '750 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 100 ₽', weekend: '1 100 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '900 ₽', weekend: '900 ₽', filterKey: 'night' },
-          { period: 'Паровой коктейль', subtext: 'Lounge Hookah', weekday: '1 000 ₽', weekend: '1 000 ₽', filterKey: 'night' },
         ]
+      }
+    ],
+    extraServices: [
+      {
+        id: 'extra-gamepad-evropa',
+        title: 'Дополнительный геймпад PS5',
+        price: '200 ₽ / шт',
+        subtext: 'Sony DualSense на всё время сессии',
+        category: 'gamepad',
+        iconType: 'Gamepad2',
+        badge: '200 ₽ / ШТ',
+        description: 'Оригинальный геймпад Sony DualSense с тактильной обратной связью.'
+      },
+      {
+        id: 'extra-guest-ps5-evropa',
+        title: 'Доплата за доп. гостя в PS5 комнату',
+        price: '150 ₽ / час',
+        subtext: '400 ₽ / пакет Ночь',
+        category: 'guest',
+        iconType: 'Users',
+        badge: '150 ₽ / ЧАС',
+        description: 'Дополнительный гость в PS5 зале свыше стандартной вместимости.'
+      },
+      {
+        id: 'hookah-classic-evropa',
+        title: 'Кальян Classic Mix',
+        price: '900 ₽',
+        subtext: 'Легкие и средние табаки',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'ХИТ',
+        description: 'Большой выбор вкусов, дымная чаша и регулярный контроль углей.'
+      },
+      {
+        id: 'hookah-premium-evropa',
+        title: 'Кальян Premium Dark',
+        price: '1 100 ₽',
+        subtext: 'Darkside / Musthave',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'PREMIUM',
+        description: 'Премиум бленды, глубокий насыщенный вкус и долгий ровный покур.'
+      },
+      {
+        id: 'hookah-refill-evropa',
+        title: 'Замена чаши / Перезабивка',
+        price: '500 ₽',
+        subtext: 'Свежая чаша и угли',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: '500 ₽',
+        description: 'Перезабивка кальяна с новым вкусом по вашему выбору.'
       }
     ]
   },
@@ -642,15 +740,66 @@ export const DEFAULT_PRICES: AllPricesData = {
         title: 'АРЕНДА TV (PS5)',
         badge: '4 КОМНАТЫ PS5 В ОКТЯБРЕ',
         iconType: 'Tv',
-        specs: 'PlayStation 5 • 4K экран • Мягкие диваны',
+        specs: 'PlayStation 5 • 4K экран • Мягкие диваны и пуфы',
         rows: [
           { period: 'УТРО', subtext: '08:00 – 14:00', weekday: '200 ₽', weekend: '200 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '300 ₽', weekend: '300 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '750 ₽', weekend: '750 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '1 100 ₽', weekend: '1 100 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '900 ₽', weekend: '900 ₽', filterKey: 'night' },
-          { period: 'Паровой коктейль', subtext: 'Lounge Hookah', weekday: '800 ₽', weekend: '800 ₽', filterKey: 'night' },
         ]
+      }
+    ],
+    extraServices: [
+      {
+        id: 'extra-gamepad-oktyabr',
+        title: 'Дополнительный геймпад PS5',
+        price: '200 ₽ / шт',
+        subtext: 'Sony DualSense на всё время сессии',
+        category: 'gamepad',
+        iconType: 'Gamepad2',
+        badge: '200 ₽ / ШТ',
+        description: 'Оригинальный геймпад Sony DualSense с виброотдачей нового поколения.'
+      },
+      {
+        id: 'extra-guest-ps5-oktyabr',
+        title: 'Доплата за доп. гостя в PS5 комнату',
+        price: '150 ₽ / час',
+        subtext: '400 ₽ / пакет Ночь',
+        category: 'guest',
+        iconType: 'Users',
+        badge: '150 ₽ / ЧАС',
+        description: 'Дополнительный гость в PS5 комнату свыше базовой посадки.'
+      },
+      {
+        id: 'hookah-classic-oktyabr',
+        title: 'Кальян Classic Mix',
+        price: '800 ₽',
+        subtext: 'Легкие и средние табаки',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'ХИТ',
+        description: 'Популярные ягодные и фруктовые миксы на качественной чаше.'
+      },
+      {
+        id: 'hookah-premium-oktyabr',
+        title: 'Кальян Premium Dark',
+        price: '1 000 ₽',
+        subtext: 'Darkside / Musthave',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: 'PREMIUM',
+        description: 'Крепкие табачные смеси, стабильный жар и насыщенный густой дым.'
+      },
+      {
+        id: 'hookah-refill-oktyabr',
+        title: 'Замена чаши / Перезабивка',
+        price: '500 ₽',
+        subtext: 'Свежая чаша и угли',
+        category: 'hookah',
+        iconType: 'Flame',
+        badge: '500 ₽',
+        description: 'Замена чаши на новый микс табака и свежие угли.'
       }
     ]
   }

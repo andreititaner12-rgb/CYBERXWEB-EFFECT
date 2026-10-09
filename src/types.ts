@@ -105,9 +105,21 @@ export interface PriceCategory {
   extraInfo?: string;
 }
 
+export interface ExtraServiceItem {
+  id: string;
+  title: string;
+  price: string;
+  subtext?: string;
+  category: 'gamepad' | 'guest' | 'hookah' | 'other';
+  iconType?: string;
+  badge?: string;
+  description?: string;
+}
+
 export interface ClubPrices {
   pc: PriceCategory[];
   lounge: PriceCategory[];
+  extraServices?: ExtraServiceItem[];
 }
 
 export type AllPricesData = Record<string, ClubPrices>;
