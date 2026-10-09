@@ -118,8 +118,8 @@ export function App() {
   const [liveZones, setLiveZones] = useState<ZoneType[]>(() => {
     try {
       const version = localStorage.getItem('cyberx_zones_version');
-      if (version !== 'v4_7_zones_moza_r12_super_vip') {
-        localStorage.setItem('cyberx_zones_version', 'v4_7_zones_moza_r12_super_vip');
+      if (version !== 'v5_standart_ampersand_diverse_specs') {
+        localStorage.setItem('cyberx_zones_version', 'v5_standart_ampersand_diverse_specs');
         localStorage.setItem('cyberx_live_zones', JSON.stringify(ZONES));
         return ZONES;
       }

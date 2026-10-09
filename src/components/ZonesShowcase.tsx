@@ -168,13 +168,13 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
             />
           </div>
 
-          {/* 7. STANDART И STANDART+ (md: 6 cols) */}
+          {/* 7. STANDART & STANDART+ (md: 6 cols) */}
           <div className="col-span-1 md:col-span-6 min-h-[220px] lg:min-h-[240px]">
             <BentoZoneCard
               zone={displayZones[6]}
               isExpanded={expandedZoneId === displayZones[6].id}
               onClick={() => handleCardClick(displayZones[6])}
-              accentBadge="55 ПК // ЛЕНИНА, 19"
+              accentBadge="144HZ & 240HZ // ОСНОВНОЙ ЗАЛ"
             />
           </div>
 
