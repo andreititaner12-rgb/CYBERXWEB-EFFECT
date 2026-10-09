@@ -82,8 +82,8 @@ export function App() {
   const [livePrices, setLivePrices] = useState<AllPricesData>(() => {
     try {
       const version = localStorage.getItem('cyberx_price_version');
-      if (version !== 'v4_extra_services_gamepad_hookah') {
-        localStorage.setItem('cyberx_price_version', 'v4_extra_services_gamepad_hookah');
+      if (version !== 'v6_steam_cocktails_premium_14ppl') {
+        localStorage.setItem('cyberx_price_version', 'v6_steam_cocktails_premium_14ppl');
         localStorage.setItem('cyberx_live_prices', JSON.stringify(DEFAULT_PRICES));
         return DEFAULT_PRICES;
       }

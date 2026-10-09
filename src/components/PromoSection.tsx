@@ -60,7 +60,7 @@ export const PromoSection: React.FC<PromoSectionProps> = ({ onOpenBooking, promo
             АКЦИИ <span className="text-[#E32124]">//</span> И БОНУСЫ
           </h2>
           <p className="mt-3 text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Специальные предложения для новых гостей, ночных пакетов и комбо с кальяном в CyberX Arena, Европе и Октябре.
+            Специальные предложения для новых гостей, ночных пакетов и комбо с паровым коктейлем в CyberX Arena, Европе и Октябре.
           </p>
         </motion.div>
 

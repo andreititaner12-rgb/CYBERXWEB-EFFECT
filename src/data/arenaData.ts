@@ -32,7 +32,7 @@ export const ARENAS: ArenaLocation[] = [
       'Solo Room на AMD Ryzen 7 7800X3D + BenQ 600Hz',
       'Мониторы BenQ 600Hz, ASUS 480Hz, ViewSonic 400Hz, BenQ 240Hz',
       '5 комфортных PS5 комнат на компании до 5 человек',
-      'Кальян, бар, гигабитный интернет >1 Гбит/с'
+      'Паровые коктейли, бар, гигабитный интернет >1 Гбит/с'
     ],
     status: 'ONLINE',
     coordinates: { x: 55.028508, y: 73.287744 },
@@ -71,7 +71,7 @@ export const ARENAS: ArenaLocation[] = [
       'Приватные Solo и Duo комнаты с максимальной шумоизоляцией',
       '2 профессиональных автосимулятора Sim-Racing с рулевой базой Moza и педалями Moza Load Cell',
       'Большой лаунж-бар со сценой и проектором для трансляций и турниров',
-      '7 приватных PS5 комнат с диванами, кальянами и баром'
+      '7 приватных PS5 комнат с диванами, паровыми коктейлями и баром'
     ],
     status: 'ONLINE',
     coordinates: { x: 54.984185, y: 73.375841 },
@@ -106,7 +106,7 @@ export const ARENAS: ArenaLocation[] = [
       '50 игровых ПК: Общий зал, комнаты VIP (5 ПК), Trio, Duo и Solo',
       'Мониторы BenQ 240Hz Fast-TN во всех соревновательных зонах',
       '4 уютных комнаты с PS5',
-      'Кальяны, бар, напитки и комфортная зона отдыха',
+      'Паровые коктейли, бар, напитки и комфортная зона отдыха',
       'Фирменное двухэтажное игровое пространство'
     ],
     status: 'ONLINE',
@@ -133,7 +133,7 @@ export const ZONES: ZoneType[] = [
       'Доступно только в CyberX Arena (2 комнаты)',
       'Звукоизоляция 55dB (полная приватность)',
       'Большой стол на 6 мест для компании и угощений',
-      'Кальяны, напитки и закуски',
+      'Паровые коктейли, напитки и закуски',
       'Кнопка вызова администратора в 1 клик'
     ],
     pricePerHour: 2000,
@@ -191,7 +191,7 @@ export const ZONES: ZoneType[] = [
       'Доступно только в CyberX Arena на Ленина',
       'Мягкие пуфы и зона отдыха',
       'Прямые трансляции турниров и LAN-чемпионаты',
-      'Кальяны и широкий ассортимент напитков и закусок'
+      'Паровые коктейли и широкий ассортимент напитков и закусок'
     ],
     pricePerHour: 1000,
     priceNight: 5000,
@@ -234,12 +234,12 @@ export const ZONES: ZoneType[] = [
       '4K HDR телевизоры со звуком Harman Kardon',
       'По 2 геймпада DualSense (+ доп. по запросу)',
       'Глубокие комфортные диваны и мягкие пуфы',
-      'Кальяны, холодные напитки и снеки'
+      'Паровые коктейли, холодные напитки и снеки'
     ],
     features: [
       'Игры всегда самые актуальные новинки (появляются первыми)',
       'Звук Harman Kardon в 4K телевизорах',
-      'Кальяны и широкий ассортимент напитков и закусок',
+      'Паровые коктейли и широкий ассортимент напитков и закусок',
       'Отдельное приватное зонирование с атмосферной подсветкой'
     ],
     pricePerHour: 300,
@@ -269,7 +269,7 @@ export const ZONES: ZoneType[] = [
       'Флагманская соревновательная зона',
       'Мониторы 480Hz 2K и 400Hz с нулевой задержкой',
       'Кнопка вызова администратора в 1 клик',
-      'Кальяны и широкий ассортимент напитков'
+      'Паровые коктейли и широкий ассортимент напитков'
     ],
     pricePerHour: 270,
     priceNight: 1300,
@@ -419,13 +419,14 @@ export const DEFAULT_PRICES: AllPricesData = {
         badge: '5 ПК + PS5 + СТОЛ',
         highlight: true,
         iconType: 'Crown',
-        specs: 'До 14 человек • 5 Pro ПК • PS5 Slim • Стол на 6 мест',
+        specs: 'Вместимость до 14 человек • 5 Pro ПК • PS5 Slim • Стол на 6 мест',
         rows: [
           { period: 'УТРО (за 1 час)', subtext: '08:00 – 14:00', weekday: '1 500 ₽', weekend: '1 500 ₽', filterKey: 'morning' },
           { period: '1 ЧАС', subtext: 'Обычный тариф', weekday: '2 000 ₽', weekend: '2 000 ₽', filterKey: '1h' },
           { period: '3 ЧАСА', subtext: '08:00 – 19:00', weekday: '5 000 ₽', weekend: '5 000 ₽', filterKey: '3h' },
           { period: '5 ЧАСОВ', subtext: 'Дневной сет', weekday: '7 000 ₽', weekend: '7 000 ₽', filterKey: '5h' },
           { period: 'НОЧЬ', subtext: '22:00 – 08:00', weekday: '7 000 ₽', weekend: '7 000 ₽', filterKey: 'night' },
+          { period: '+1 Гость (сверх 14 чел)', subtext: 'За 1 час', weekday: '200 ₽', weekend: '200 ₽', filterKey: '1h' },
         ]
       },
       {
@@ -480,43 +481,23 @@ export const DEFAULT_PRICES: AllPricesData = {
       },
       {
         id: 'extra-guest-premium-arena',
-        title: 'Доплата за доп. гостя в Premium комнату',
+        title: 'Доплата за доп. гостя в Premium (сверх 14 чел)',
         price: '200 ₽ / час',
         subtext: '600 ₽ / пакет Ночь',
         category: 'guest',
         iconType: 'Crown',
         badge: '200 ₽ / ЧАС',
-        description: 'Дополнительный гость в Premium комнате (свыше базовых 5 игроков, вместимость до 14 гостей).'
+        description: 'Доплата за каждого дополнительного гостя в Premium комнату свыше 14 человек, включенных в базовую стоимость.'
       },
       {
-        id: 'hookah-classic-arena',
-        title: 'Кальян Classic Mix',
-        price: '900 ₽',
-        subtext: 'Легкие и средние табаки',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: 'ХИТ',
-        description: 'Большая вкусовая палитра, свежая чаша, профессиональная забивка и своевременный контроль углей.'
-      },
-      {
-        id: 'hookah-premium-arena',
-        title: 'Кальян Premium Dark',
+        id: 'hookah-arena',
+        title: 'Паровой коктейль Lounge',
         price: '1 200 ₽',
-        subtext: 'Darkside / Musthave / Black Burn',
+        subtext: 'Премиальные бленды и густой пар',
         category: 'hookah',
         iconType: 'Flame',
         badge: 'PREMIUM',
-        description: 'Крепкие премиальные табачные бленды с насыщенным вкусом, густым дымом и долгим ровным жаром.'
-      },
-      {
-        id: 'hookah-refill-arena',
-        title: 'Замена чаши / Перезабивка',
-        price: '500 ₽',
-        subtext: 'Свежая чаша и угли',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: '500 ₽',
-        description: 'Быстрая замена чаши на новый вкус табака со свежими кокосовыми углями.'
+        description: 'Премиальные ароматные бленды с насыщенным вкусом, густым паром и долгим комфортным жаром.'
       }
     ]
   },
@@ -632,34 +613,14 @@ export const DEFAULT_PRICES: AllPricesData = {
         description: 'Дополнительный гость в PS5 зале свыше стандартной вместимости.'
       },
       {
-        id: 'hookah-classic-evropa',
-        title: 'Кальян Classic Mix',
-        price: '900 ₽',
-        subtext: 'Легкие и средние табаки',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: 'ХИТ',
-        description: 'Большой выбор вкусов, дымная чаша и регулярный контроль углей.'
-      },
-      {
-        id: 'hookah-premium-evropa',
-        title: 'Кальян Premium Dark',
+        id: 'hookah-evropa',
+        title: 'Паровой коктейль Lounge',
         price: '1 100 ₽',
-        subtext: 'Darkside / Musthave',
+        subtext: 'Премиальные бленды и густой пар',
         category: 'hookah',
         iconType: 'Flame',
         badge: 'PREMIUM',
-        description: 'Премиум бленды, глубокий насыщенный вкус и долгий ровный покур.'
-      },
-      {
-        id: 'hookah-refill-evropa',
-        title: 'Замена чаши / Перезабивка',
-        price: '500 ₽',
-        subtext: 'Свежая чаша и угли',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: '500 ₽',
-        description: 'Перезабивка кальяна с новым вкусом по вашему выбору.'
+        description: 'Премиум бленды, глубокий насыщенный вкус и долгий ровный пар.'
       }
     ]
   },
@@ -772,34 +733,14 @@ export const DEFAULT_PRICES: AllPricesData = {
         description: 'Дополнительный гость в PS5 комнату свыше базовой посадки.'
       },
       {
-        id: 'hookah-classic-oktyabr',
-        title: 'Кальян Classic Mix',
-        price: '800 ₽',
-        subtext: 'Легкие и средние табаки',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: 'ХИТ',
-        description: 'Популярные ягодные и фруктовые миксы на качественной чаше.'
-      },
-      {
-        id: 'hookah-premium-oktyabr',
-        title: 'Кальян Premium Dark',
+        id: 'hookah-oktyabr',
+        title: 'Паровой коктейль Lounge',
         price: '1 000 ₽',
-        subtext: 'Darkside / Musthave',
+        subtext: 'Премиальные бленды и густой пар',
         category: 'hookah',
         iconType: 'Flame',
         badge: 'PREMIUM',
-        description: 'Крепкие табачные смеси, стабильный жар и насыщенный густой дым.'
-      },
-      {
-        id: 'hookah-refill-oktyabr',
-        title: 'Замена чаши / Перезабивка',
-        price: '500 ₽',
-        subtext: 'Свежая чаша и угли',
-        category: 'hookah',
-        iconType: 'Flame',
-        badge: '500 ₽',
-        description: 'Замена чаши на новый микс табака и свежие угли.'
+        description: 'Качественные смеси, стабильный жар и насыщенный густой пар.'
       }
     ]
   }
@@ -1017,7 +958,7 @@ export const ALL_TOURNAMENTS: Tournament[] = [
     slotsRegistered: 22,
     registrationOpen: true,
     entryFee: '700 ₽ с участника',
-    description: 'Консольный турнир на 150" проекционном экране лаунжа с напитками и кальянами.',
+    description: 'Консольный турнир на 150" проекционном экране лаунжа с напитками и паровыми коктейлями.',
     rules: [
       'Тайм 6 минут, соревновательные составы 95 OVR',
       'Геймпады DualSense'
@@ -1049,17 +990,17 @@ export const PROMOTIONS: Promotion[] = [
   },
   {
     id: 'hookah-bonus',
-    title: 'КАЛЬЯН + ЧАС ИГРЫ В ПОДАРОК',
+    title: 'ПАРОВОЙ КОКТЕЙЛЬ + ЧАС ИГРЫ В ПОДАРОК',
     tag: 'ХИТ ЛАУНЖА',
     discount: '+1 ЧАС ИГРЫ',
     period: 'Ежедневно во всех 3 клубах',
-    description: 'Закажите кальян у администратора в CyberX Arena, Европе или Октябре и получите 1 час игры на PlayStation 5 или ПК в подарок!',
+    description: 'Закажите паровой коктейль у администратора в CyberX Arena, Европе или Октябре и получите 1 час игры на PlayStation 5 или ПК в подарок!',
     perks: [
-      'Премиальный табак и авторская чаша',
+      'Премиальные бленды и насыщенный вкус',
       '1 час игры в PS5 или ПК бесплатно',
       'Подача прямо к игровому месту или дивану'
     ],
-    code: 'HOOKAH_GAME',
+    code: 'STEAM_GAME',
     colorScheme: 'dark',
     featured: true,
   },

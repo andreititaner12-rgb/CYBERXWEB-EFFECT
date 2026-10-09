@@ -457,7 +457,7 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
         </div>
       )}
 
-      {/* 4. DEDICATED EXTRA SERVICES PLAQUE (ВСЕГДА ВИДНАЯ ПЛАШКА ДОП. УСЛУГ И КАЛЬЯНОВ ДЛЯ ВЫБРАННОГО КЛУБА) */}
+      {/* 4. DEDICATED EXTRA SERVICES PLAQUE (ВСЕГДА ВИДНАЯ ПЛАШКА ДОП. УСЛУГ И ПАРОВЫХ КОКТЕЙЛЕЙ) */}
       <div className="mt-8 rounded-3xl border border-[#E32124]/30 bg-gradient-to-br from-[#110e1a] via-[#09080e] to-[#040407] p-5 sm:p-7 shadow-2xl relative overflow-hidden">
         {/* Glow ambient background */}
         <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#E32124]/10 rounded-full blur-3xl pointer-events-none" />
@@ -474,10 +474,10 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
               <span className="text-[11px] text-zinc-400">Прозрачный фиксированный прайс</span>
             </div>
             <h3 className="font-display font-black text-xl sm:text-2xl uppercase tracking-tight text-white">
-              ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ <span className="text-[#E32124]">&</span> КАЛЬЯНЫ
+              ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ <span className="text-[#E32124]">&</span> ПАРОВЫЕ КОКТЕЙЛИ
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
-              Дополнительные геймпады Sony DualSense, доплата за гостей свыше посадочных мест и дымные кальяны от мастеров Lounge зоны.
+              Дополнительные геймпады Sony DualSense, доплата за гостей свыше базовых мест и фирменные паровые коктейли от мастеров Lounge зоны.
             </p>
           </div>
 
@@ -508,7 +508,7 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
         </div>
 
         {/* Dynamic Services Pills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-6 font-mono">
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${selectedArenaId === 'cyberx-arena' ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-3.5 mt-6 font-mono`}>
           
           {/* 1. Extra Gamepad */}
           <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between gap-3 hover:border-[#E32124]/50 transition-colors">
@@ -544,8 +544,8 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
             </div>
           </div>
 
-          {/* 3. Extra Guest Premium (Only for Lenina) OR Premium Hookah */}
-          {selectedArenaId === 'cyberx-arena' ? (
+          {/* 3. Extra Guest Premium (Only for Lenina) */}
+          {selectedArenaId === 'cyberx-arena' && (
             <div className="p-3.5 rounded-2xl bg-black/40 border border-amber-500/20 flex items-center justify-between gap-3 hover:border-amber-500/60 transition-colors">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 shrink-0">
@@ -553,7 +553,7 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
                 </div>
                 <div className="truncate">
                   <div className="text-xs font-bold text-amber-200 truncate">Доп. гость Premium</div>
-                  <div className="text-[10px] text-zinc-400 truncate">Ночь: 600 ₽ (до 14 чел)</div>
+                  <div className="text-[10px] text-zinc-400 truncate">сверх 14 чел (ночь 600 ₽)</div>
                 </div>
               </div>
               <div className="text-right shrink-0">
@@ -561,44 +561,24 @@ export const PriceSection: React.FC<PriceSectionProps> = ({ prices = DEFAULT_PRI
                 <span className="text-[9px] text-zinc-500 block">в час</span>
               </div>
             </div>
-          ) : (
-            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between gap-3 hover:border-[#E32124]/50 transition-colors">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20 text-[#E32124] shrink-0">
-                  <Flame className="w-4 h-4" />
-                </div>
-                <div className="truncate">
-                  <div className="text-xs font-bold text-white truncate">Кальян Classic</div>
-                  <div className="text-[10px] text-zinc-400 truncate">Легкие и средние</div>
-                </div>
-              </div>
-              <div className="text-right shrink-0">
-                <span className="text-xs sm:text-sm font-black text-white">
-                  {selectedArenaId === 'cyberx-oktyabr' ? '800 ₽' : '900 ₽'}
-                </span>
-                <span className="text-[9px] text-zinc-500 block">за чашу</span>
-              </div>
-            </div>
           )}
 
-          {/* 4. Hookahs & Refill */}
+          {/* 4. Steam Cocktail Lounge */}
           <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center justify-between gap-3 hover:border-[#E32124]/50 transition-colors">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20 text-[#E32124] shrink-0">
                 <Flame className="w-4 h-4" />
               </div>
               <div className="truncate">
-                <div className="text-xs font-bold text-white truncate">
-                  {selectedArenaId === 'cyberx-arena' ? 'Кальяны Lounge' : 'Кальян Premium'}
-                </div>
-                <div className="text-[10px] text-zinc-400 truncate">Перезабивка: 500 ₽</div>
+                <div className="text-xs font-bold text-white truncate">Паровой коктейль</div>
+                <div className="text-[10px] text-zinc-400 truncate">Lounge премиум бленды</div>
               </div>
             </div>
             <div className="text-right shrink-0">
               <span className="text-xs sm:text-sm font-black text-[#E32124]">
-                {selectedArenaId === 'cyberx-arena' ? 'от 900 ₽' : selectedArenaId === 'cyberx-oktyabr' ? '1 000 ₽' : '1 100 ₽'}
+                {selectedArenaId === 'cyberx-arena' ? '1 200 ₽' : selectedArenaId === 'cyberx-oktyabr' ? '1 000 ₽' : '1 100 ₽'}
               </span>
-              <span className="text-[9px] text-zinc-500 block">Dark / Musthave</span>
+              <span className="text-[9px] text-zinc-500 block">за чашу</span>
             </div>
           </div>
 
