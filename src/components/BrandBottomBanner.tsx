@@ -1,28 +1,15 @@
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 
 export const BrandBottomBanner: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
-  };
 
   return (
-    <section className="relative w-full bg-transparent pt-16 sm:pt-24 pb-10 sm:pb-14 select-none">
+    <section className="relative w-full bg-transparent pt-12 sm:pt-20 pb-8 sm:pb-12 select-none">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
-          ref={containerRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={handleMouseMove}
           className="relative group cursor-default transition-all duration-500 max-w-5xl"
         >
           {/* Typographic Hero Stack */}
@@ -45,31 +32,6 @@ export const BrandBottomBanner: React.FC = () => {
               OMSK
             </div>
 
-          </div>
-
-          {/* Description Below Typography */}
-          <motion.p 
-            initial={{ opacity: 0.75 }}
-            animate={{ opacity: isHovered ? 1 : 0.8 }}
-            transition={{ duration: 0.3 }}
-            className="mt-6 sm:mt-8 text-xs sm:text-sm md:text-base text-zinc-300 max-w-2xl font-normal leading-relaxed"
-          >
-            Официальная сеть киберспортивных клубов CyberX Community в Омске. Мониторы до 600Hz, Premium-комнаты, два автосимулятора и LAN-сцена — в трёх клубах, круглый год и круглые сутки.
-          </motion.p>
-
-          {/* Interactive Dynamic Outline Trail indicator */}
-          <div 
-            className="mt-6 sm:mt-8 h-[2px] w-full max-w-xl bg-white/[0.08] relative overflow-hidden rounded-full transition-all duration-500 group-hover:bg-[#E32124]/20"
-          >
-            <div 
-              className="absolute top-0 bottom-0 w-36 bg-gradient-to-r from-transparent via-[#E32124] to-transparent transition-all duration-75"
-              style={{
-                left: `${mousePos.x}%`,
-                transform: 'translateX(-50%)',
-                opacity: isHovered ? 1 : 0.2,
-                boxShadow: '0 0 15px #E32124'
-              }}
-            />
           </div>
 
         </div>

@@ -53,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-xs text-zinc-400 leading-relaxed max-w-sm">
-              Официальная сеть киберспортивных клубов CyberX Community в Омске. <strong className="text-white">CyberX Arena</strong> (Ленина), <strong className="text-white">CyberX Европа</strong> (Мира) и <strong className="text-white">CyberX Октябрь</strong> (Серова). Мониторы BenQ 600Hz, 2 Premium комнаты, 16 PS5 комнат, 2 автосимулятора Sim-Racing и круглосуточный сервис 24/7.
+              Официальная сеть киберспортивных клубов CyberX Community в Омске: лучшая периферия, топовое железо, премиум комнаты, 2 автосимулятора и круглосуточный сервис 24/7.
             </p>
 
             <div className="flex items-center gap-2 text-xs font-mono text-[#E32124] pt-2">
@@ -172,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="pt-2">
               <span className="text-[10px] font-mono text-zinc-500 uppercase block mb-1">
-                Для бронирования и сотрудничества:
+                Только для сотрудничества:
               </span>
               <a href="mailto:cyberx55@yandex.ru" className="text-xs font-mono text-white hover:text-[#E32124] transition-colors">
                 cyberx55@yandex.ru
