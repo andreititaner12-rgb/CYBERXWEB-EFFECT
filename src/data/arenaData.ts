@@ -277,7 +277,12 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 270,
     priceNight: 1300,
-    image: '/images/arena/05-pc-hall.jpg',
+    image: '/images/super-vip/01-super-vip-purple.jpg',
+    gallery: [
+      '/images/super-vip/01-super-vip-purple.jpg',
+      '/images/super-vip/02-super-vip-desk.jpg',
+      '/images/super-vip/03-super-vip-booth.jpg'
+    ],
     badge: '480Hz 2K // Flagship',
   },
   {
