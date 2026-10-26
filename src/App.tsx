@@ -108,13 +108,22 @@ export function App() {
   const [liveArenas, setLiveArenas] = useState<ArenaLocation[]>(() => {
     try {
       const version = localStorage.getItem('cyberx_arenas_version');
-      if (version !== 'v2_hq_photos_mira_lenina_2026') {
-        localStorage.setItem('cyberx_arenas_version', 'v2_hq_photos_mira_lenina_2026');
+      if (version !== 'v5_force_sync_lenina_mira_october_hq_2026') {
+        localStorage.setItem('cyberx_arenas_version', 'v5_force_sync_lenina_mira_october_hq_2026');
         localStorage.setItem('cyberx_live_arenas', JSON.stringify(ARENAS));
         return ARENAS;
       }
       const saved = localStorage.getItem('cyberx_live_arenas');
-      return saved ? JSON.parse(saved) : ARENAS;
+      if (saved) {
+        const parsed: ArenaLocation[] = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === ARENAS.length) {
+          return parsed.map((a: ArenaLocation) => {
+            const fresh = ARENAS.find(f => f.id === a.id);
+            return fresh ? { ...a, gallery: fresh.gallery, image: fresh.image } : a;
+          });
+        }
+      }
+      return ARENAS;
     } catch {
       return ARENAS;
     }
