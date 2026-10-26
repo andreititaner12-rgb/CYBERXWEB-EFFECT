@@ -231,7 +231,15 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 250,
     priceNight: 1100,
-    image: '/images/evropa/05-mural-solo.jpg',
+    image: '/images/solo-duo/YARP5571.jpg',
+    gallery: [
+      '/images/solo-duo/YARP5571.jpg',
+      '/images/solo-duo/IMG_3611.jpg',
+      '/images/solo-duo/IMG_3594.jpg',
+      '/images/solo-duo/YARP5585.jpg',
+      '/images/solo-duo/IMG_3592.jpg',
+      '/images/solo-duo/YARP5579.jpg'
+    ],
     badge: 'Во всех 3 клубах',
   },
   {
