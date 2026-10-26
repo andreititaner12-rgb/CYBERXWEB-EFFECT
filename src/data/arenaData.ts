@@ -59,9 +59,9 @@ export const ARENAS: ArenaLocation[] = [
       '/images/arena/03-stair-top.jpg',
       '/images/arena/04-bar-lounge.jpg',
       '/images/arena/05-pc-hall.jpg',
-      '/images/arena/06-pc-mural.jpg',
-      '/images/arena/07-play-room.jpg',
-      '/images/arena/08-vip-dragon.jpg'
+      '/images/arena/06-pc-row.jpg',
+      '/images/arena/07-pc-pillar.jpg',
+      '/images/arena/08-pc-sniper.jpg'
     ],
     features: [
       '89 мощных игровых ПК (RTX 5070 Ti / i5-14600KF / BenQ 600Hz & 400Hz)',
@@ -136,11 +136,11 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 2000,
     priceNight: 7000,
-    image: '/images/arena/08-vip-dragon.jpg',
+    image: '/images/arena/08-pc-sniper.jpg',
     gallery: [
-      '/images/arena/08-vip-dragon.jpg',
+      '/images/arena/08-pc-sniper.jpg',
       '/images/arena/05-pc-hall.jpg',
-      '/images/arena/06-pc-mural.jpg'
+      '/images/arena/06-pc-row.jpg'
     ],
     badge: '2 комнаты на Ленина',
     popular: true,
@@ -240,11 +240,11 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 300,
     priceNight: 900,
-    image: '/images/arena/07-play-room.jpg',
+    image: '/images/evropa/08-pc-room.jpg',
     gallery: [
-      '/images/arena/07-play-room.jpg',
       '/images/evropa/08-pc-room.jpg',
-      '/images/oktyabr/07-lounge.jpg'
+      '/images/oktyabr/07-lounge.jpg',
+      '/images/arena/04-bar-lounge.jpg'
     ],
     badge: '16 комнат в 3 клубах',
   },
