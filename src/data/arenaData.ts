@@ -193,7 +193,13 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 1000,
     priceNight: 5000,
-    image: '/images/arena/04-bar-lounge.jpg',
+    image: '/images/lounge/01-projector-main.jpg',
+    gallery: [
+      '/images/lounge/01-projector-main.jpg',
+      '/images/lounge/02-sofas-bar.jpg',
+      '/images/lounge/03-reception-desk.jpg',
+      '/images/lounge/04-portal-hall.jpg'
+    ],
     badge: 'Lounge Bar на Ленина',
   },
   {
