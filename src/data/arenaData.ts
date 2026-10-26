@@ -52,18 +52,16 @@ export const ARENAS: ArenaLocation[] = [
     workingHours: '24/7 Круглосуточно',
     rating: 5.0,
     reviewsCount: 1280,
-    image: '/images/arena/02-bar.jpg',
+    image: '/images/arena/04-bar-lounge.jpg',
     gallery: [
       '/images/arena/01-facade.jpg',
-      '/images/arena/02-bar.jpg',
-      '/images/arena/04-escalator.jpg',
-      '/images/arena/05-stair-top.jpg',
-      '/images/arena/06-pc-blue.jpg',
-      '/images/arena/07-pink-dragon.jpg',
-      '/images/arena/10-purple-girl.jpg',
-      '/images/arena/11-nhl-console.jpg',
-      '/images/arena/12-pink-girl-console.jpg',
-      '/images/arena/15-bar-lounge.jpg'
+      '/images/arena/02-escalator.jpg',
+      '/images/arena/03-stair-top.jpg',
+      '/images/arena/04-bar-lounge.jpg',
+      '/images/arena/05-pc-hall.jpg',
+      '/images/arena/06-pc-mural.jpg',
+      '/images/arena/07-play-room.jpg',
+      '/images/arena/08-vip-dragon.jpg'
     ],
     features: [
       '89 мощных игровых ПК (RTX 5070 Ti / i5-14600KF / BenQ 600Hz & 400Hz)',
@@ -138,13 +136,11 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 2000,
     priceNight: 7000,
-    image: '/images/arena/03-pc-hall.jpg',
+    image: '/images/arena/08-vip-dragon.jpg',
     gallery: [
-      '/images/arena/03-pc-hall.jpg',
-      '/images/arena/08-gamer-zone.jpg',
-      '/images/arena/09-gamer-zone-tv.jpg',
-      '/images/arena/13-blue-cyber-girl.jpg',
-      '/images/arena/14-gamer-zone-blue.jpg'
+      '/images/arena/08-vip-dragon.jpg',
+      '/images/arena/05-pc-hall.jpg',
+      '/images/arena/06-pc-mural.jpg'
     ],
     badge: '2 комнаты на Ленина',
     popular: true,
@@ -195,7 +191,7 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 1000,
     priceNight: 5000,
-    image: '/images/arena/15-bar-lounge.jpg',
+    image: '/images/arena/04-bar-lounge.jpg',
     badge: 'Lounge Bar на Ленина',
   },
   {
@@ -244,11 +240,11 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 300,
     priceNight: 900,
-    image: '/images/arena/16-ps5-red-mural.jpg',
+    image: '/images/arena/07-play-room.jpg',
     gallery: [
-      '/images/arena/16-ps5-red-mural.jpg',
-      '/images/arena/11-nhl-console.jpg',
-      '/images/arena/12-pink-girl-console.jpg'
+      '/images/arena/07-play-room.jpg',
+      '/images/evropa/08-pc-room.jpg',
+      '/images/oktyabr/07-lounge.jpg'
     ],
     badge: '16 комнат в 3 клубах',
   },
@@ -273,7 +269,7 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 270,
     priceNight: 1300,
-    image: '/images/arena/06-pc-blue.jpg',
+    image: '/images/arena/05-pc-hall.jpg',
     badge: '480Hz 2K // Flagship',
   },
   {
@@ -302,7 +298,7 @@ export const ZONES: ZoneType[] = [
       '/images/oktyabr/03-pc-row.jpg',
       '/images/oktyabr/04-pc-column.jpg',
       '/images/oktyabr/05-pc-closeup.jpg',
-      '/images/arena/06-pc-blue.jpg',
+      '/images/arena/05-pc-hall.jpg',
       '/images/evropa/03-pc-hall.jpg'
     ],
     badge: '144Hz & 240Hz // Основной зал',
