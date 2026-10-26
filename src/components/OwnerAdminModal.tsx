@@ -115,7 +115,10 @@ const PRESET_GALLERY_IMAGES = [
   {
     group: 'Спец-Оборудование',
     images: [
-      { label: 'Автосимуляторы Moza', url: '/images/sim-racing-real.jpg' },
+      { label: 'Автосимуляторы Moza', url: '/images/sim-racing/01-cockpit-red-glow.jpg' },
+      { label: 'Автосимуляторы: два кокпита', url: '/images/sim-racing/02-two-cockpits.jpg' },
+      { label: 'Автосимуляторы: кокпит сбоку', url: '/images/sim-racing/03-cockpit-side.jpg' },
+      { label: 'Руль Moza R12 V2', url: '/images/sim-racing/04-moza-wheel.jpg' },
       { label: 'Дисплей BenQ 600Hz', url: '/images/hardware/benq-monitor.png' },
     ]
   }

@@ -169,7 +169,13 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 600,
     priceNight: 1350,
-    image: '/images/sim-racing-real.jpg',
+    image: '/images/sim-racing/01-cockpit-red-glow.jpg?v=20261027_01',
+    gallery: [
+      '/images/sim-racing/01-cockpit-red-glow.jpg?v=20261027_01',
+      '/images/sim-racing/02-two-cockpits.jpg?v=20261027_01',
+      '/images/sim-racing/03-cockpit-side.jpg?v=20261027_01',
+      '/images/sim-racing/04-moza-wheel.jpg?v=20261027_01'
+    ],
     badge: '2 автосима на Ленина',
   },
   {

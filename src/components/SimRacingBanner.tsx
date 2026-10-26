@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Gauge, Zap, ArrowRight, Trophy, Maximize2, X } from 'lucide-react';
+import { Gauge, Zap, ArrowRight, Trophy, Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { pauseLenis, resumeLenis } from '../utils/smoothScroll';
+
+// Фотогалерея автосимуляторов (первое фото — заглавное)
+export const SIM_RACING_PHOTOS = [
+  { src: '/images/sim-racing/01-cockpit-red-glow.jpg?v=20261027_01', label: 'Кокпит Moza с неоновой подсветкой' },
+  { src: '/images/sim-racing/02-two-cockpits.jpg?v=20261027_01', label: 'Два кокпита для парных дуэлей' },
+  { src: '/images/sim-racing/03-cockpit-side.jpg?v=20261027_01', label: 'Кокпит, руль Moza и UltraWide мониторы' },
+  { src: '/images/sim-racing/04-moza-wheel.jpg?v=20261027_01', label: 'Руль Moza R12 V2 и база Direct Drive' },
+];
 
 interface SimRacingBannerProps {
   onOpenBooking: (arenaId: string, zoneId: string) => void;
@@ -11,6 +19,11 @@ interface SimRacingBannerProps {
 export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking }) => {
   const [selectedGame, setSelectedGame] = useState<string>('assetto');
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+  const [photoIndex, setPhotoIndex] = useState<number>(0);
+
+  const photoCount = SIM_RACING_PHOTOS.length;
+  const nextPhoto = () => setPhotoIndex((i) => (i + 1) % photoCount);
+  const prevPhoto = () => setPhotoIndex((i) => (i - 1 + photoCount) % photoCount);
 
   // Lock body scroll and pause Lenis when lightbox is active
   useEffect(() => {
@@ -22,6 +35,10 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
       const handleKey = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
           setIsLightboxOpen(false);
+        } else if (e.key === 'ArrowRight') {
+          setPhotoIndex((i) => (i + 1) % SIM_RACING_PHOTOS.length);
+        } else if (e.key === 'ArrowLeft') {
+          setPhotoIndex((i) => (i - 1 + SIM_RACING_PHOTOS.length) % SIM_RACING_PHOTOS.length);
         }
       };
       window.addEventListener('keydown', handleKey);
@@ -170,15 +187,58 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
                 }}
                 className="relative w-full h-[360px] sm:h-[420px] lg:h-[480px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black cursor-pointer group/frame"
               >
-                <img
-                  src="/images/sim-racing-real.jpg"
-                  alt="CyberX Sim Racing Омск Ленина 19"
-                  className="w-full h-full object-cover object-center group-hover/frame:scale-105 transition-transform duration-700 ease-out"
-                />
+                {SIM_RACING_PHOTOS.map((photo, idx) => (
+                  <img
+                    key={photo.src}
+                    src={photo.src}
+                    alt={`CyberX Sim Racing Омск Ленина 19 — ${photo.label}`}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out ${
+                      idx === photoIndex
+                        ? 'opacity-100 scale-100 group-hover/frame:scale-105'
+                        : 'opacity-0 scale-100 pointer-events-none'
+                    }`}
+                  />
+                ))}
 
                 {/* Dark Vignettes */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#090910]/80 via-transparent to-black/40 pointer-events-none" />
-                
+
+                {/* Photo Counter */}
+                <div className="absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-lg bg-black/80 border border-white/20 text-[10px] font-mono text-zinc-200 backdrop-blur-md">
+                  {photoIndex + 1} / {photoCount}
+                </div>
+
+                {/* Prev / Next Arrows */}
+                <div className="absolute inset-x-2.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-between pointer-events-none">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sound.playClick();
+                      prevPhoto();
+                    }}
+                    onMouseEnter={() => sound.playHover()}
+                    className="p-2 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 transition-all pointer-events-auto active:scale-90 shadow-xl cursor-pointer"
+                    aria-label="Предыдущее фото"
+                    title="Предыдущее фото"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      sound.playClick();
+                      nextPhoto();
+                    }}
+                    onMouseEnter={() => sound.playHover()}
+                    className="p-2 rounded-full bg-black/70 hover:bg-[#E32124] text-white border border-white/20 transition-all pointer-events-auto active:scale-90 shadow-xl cursor-pointer"
+                    aria-label="Следующее фото"
+                    title="Следующее фото"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
                 {/* Fullscreen Photo Button at Top */}
                 <button
                   onClick={(e) => {
@@ -193,6 +253,29 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
                   <Maximize2 className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" />
                   <span>ФОТО НА ВЕСЬ ЭКРАН</span>
                 </button>
+              </div>
+
+              {/* Thumbnails Strip */}
+              <div className="flex items-center gap-2 pt-3">
+                {SIM_RACING_PHOTOS.map((photo, idx) => (
+                  <button
+                    key={photo.src}
+                    onClick={() => {
+                      sound.playClick();
+                      setPhotoIndex(idx);
+                    }}
+                    onMouseEnter={() => sound.playHover()}
+                    className={`flex-1 h-12 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                      idx === photoIndex
+                        ? 'border-[#E32124] ring-2 ring-[#E32124]/50 opacity-100'
+                        : 'border-white/15 opacity-60 hover:opacity-100'
+                    }`}
+                    aria-label={photo.label}
+                    title={photo.label}
+                  >
+                    <img src={photo.src} alt="" className="w-full h-full object-cover" loading="lazy" />
+                  </button>
+                ))}
               </div>
 
               {/* Action Booking Button */}
@@ -238,6 +321,9 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
               <span className="text-xs font-mono text-zinc-400 hidden sm:inline">
                 CyberX Arena • ул. Ленина, 19
               </span>
+              <span className="text-xs font-mono text-zinc-300 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 shrink-0">
+                {photoIndex + 1} / {photoCount}
+              </span>
             </div>
 
             <button
@@ -255,10 +341,39 @@ export const SimRacingBanner: React.FC<SimRacingBannerProps> = ({ onOpenBooking 
           {/* Centered High-Res Image */}
           <div className="relative my-auto flex items-center justify-center max-h-[82vh] w-full cursor-default" onClick={(e) => e.stopPropagation()}>
             <img
-              src="/images/sim-racing-real.jpg"
-              alt="CyberX Sim Racing Омск Ленина 19 Fullscreen"
+              src={SIM_RACING_PHOTOS[photoIndex].src}
+              alt={`CyberX Sim Racing Омск Ленина 19 — ${SIM_RACING_PHOTOS[photoIndex].label}`}
               className="max-h-[80vh] max-w-full w-auto object-contain rounded-2xl shadow-2xl border border-white/20 cursor-default"
             />
+
+            {photoCount > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    sound.playClick();
+                    prevPhoto();
+                  }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="absolute left-2 sm:left-4 p-2.5 sm:p-3.5 rounded-full bg-black/80 hover:bg-[#E32124] text-white border border-white/20 transition-all active:scale-90 shadow-2xl cursor-pointer"
+                  aria-label="Предыдущее фото"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    sound.playClick();
+                    nextPhoto();
+                  }}
+                  onMouseEnter={() => sound.playHover()}
+                  className="absolute right-2 sm:right-4 p-2.5 sm:p-3.5 rounded-full bg-black/80 hover:bg-[#E32124] text-white border border-white/20 transition-all active:scale-90 shadow-2xl cursor-pointer"
+                  aria-label="Следующее фото"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Bottom Bar Caption */}
