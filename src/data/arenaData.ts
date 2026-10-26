@@ -780,7 +780,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'BenQ Zowie 600Hz / ASUS 480Hz / 400Hz',
     model: '600Hz / 480Hz / 400Hz / 240Hz Fast-TN & OLED // 0.03ms Response',
     tagline: 'Абсолютная рекордная частота обновления 600 кадров в секунду',
-    image: '/images/hardware/benq-monitor.png',
+    image: '/images/hardware/monitor-cyberx.jpg',
     keySpecs: [
       { label: 'Флагманская герцовка', value: '600 Hz', detail: 'Установлены в Super VIP и Solo Rooms' },
       { label: 'VIP мониторы', value: '480 / 400 Hz', detail: 'ASUS 27" 480Гц и ViewSonic 400Гц' },
@@ -798,7 +798,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'Механические клавиатуры & Custom Switches',
     model: 'Смазанные механические свитчи // Gasket Mount шумоизоляция',
     tagline: 'Премиальная кастомная механика с мягким акустическим тайпингом',
-    image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/hardware/keyboard-cyberx.jpg',
     keySpecs: [
       { label: 'Тип', value: 'Кастомная механика', detail: 'Механические клавиатуры' },
       { label: 'Свитчи', value: 'Factory Lubed Pro', detail: 'Плавный ход без песка и люфтов' },
@@ -816,7 +816,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'Logitech G Pro & Ajazz',
     model: 'Оптические сенсоры Hero / PixArt 3395 // Сверхлегкий вес',
     tagline: 'Флагманские киберспортивные мыши с идеальным балансом и тефлоновыми глайдами',
-    image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/hardware/mouse-cyberx.jpg',
     keySpecs: [
       { label: 'Бренды', value: 'Logitech / Ajazz', detail: 'Топовые соревновательные мыши' },
       { label: 'Сенсоры', value: 'PixArt 3395 / Hero', detail: 'До 26 000 DPI без срывов' },
@@ -834,7 +834,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'NVIDIA RTX 5070 Ti & AMD Ryzen 7 7800X3D',
     model: 'RTX 5070 Ti / i5-14600KF / Ryzen 7 7800X3D // 32GB DDR5',
     tagline: 'Флагманские конфигурации Super VIP и Solo комнат со стабильными 600+ FPS',
-    image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/hardware/rig-cyberx.jpg',
     keySpecs: [
       { label: 'Процессоры VIP', value: 'Ryzen 7 7800X3D / i5-14600KF', detail: 'Топовый игровой однопоток' },
       { label: 'Видеокарты VIP', value: 'NVIDIA RTX 5070 Ti', detail: 'DLSS 3.5 & Reflex' },
@@ -852,7 +852,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'HyperX Cloud Pro Series',
     model: '53mm динамические излучатели с шумоподавлением микрофона',
     tagline: 'Золотой стандарт соревновательного киберспортивного звука',
-    image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/hardware/headset-cyberx.jpg',
     keySpecs: [
       { label: 'Драйверы', value: '53mm с неодимовыми магнитами', detail: 'Закрытая акустическая конструкция' },
       { label: 'Амбушюры', value: 'Memory Foam с эффектом памяти', detail: 'Мягкая посадка без давления' },
@@ -870,7 +870,7 @@ export const HARDWARE_LIST: HardwareItem[] = [
     name: 'Фирменные кресла CyberX Esports Pro',
     model: 'Анатомический стальной каркас 1.5мм + Memory Foam + 3D/4D подлокотники',
     tagline: 'Фирменная эргономика CyberX для идеальной осанки во время 10+ часовых каток',
-    image: 'https://images.unsplash.com/photo-1580481077195-c3a82da91883?auto=format&fit=crop&w=1000&q=80',
+    image: '/images/hardware/chair-cyberx.jpg',
     keySpecs: [
       { label: 'Каркас', value: 'Усиленная сталь 1.5мм', detail: 'Газлифт 4 класса, нагрузка до 150 кг' },
       { label: 'Обивка', value: 'Перфорированная экокожа', detail: 'Дышащая микрофибра с теплоотводом' },
