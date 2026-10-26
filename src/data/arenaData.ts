@@ -248,11 +248,12 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 300,
     priceNight: 900,
-    image: '/images/evropa/08-pc-room.jpg',
+    image: '/images/ps5/01-place-t-play.jpg?v=20261027_01',
     gallery: [
-      '/images/evropa/08-pc-room.jpg',
-      '/images/oktyabr/07-lounge.jpg',
-      '/images/arena/04-bar-lounge.jpg'
+      '/images/ps5/01-place-t-play.jpg?v=20261027_01',
+      '/images/ps5/02-ufc6-room.jpg?v=20261027_01',
+      '/images/ps5/03-dualsense-pads.jpg?v=20261027_01',
+      '/images/ps5/04-cyberx-mural.jpg?v=20261027_01'
     ],
     badge: '16 комнат в 3 клубах',
   },
