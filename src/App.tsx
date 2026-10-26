@@ -104,9 +104,15 @@ export function App() {
     }
   });
 
-  // Dynamic state for live arenas with localStorage persistence
+  // Dynamic state for live arenas with localStorage persistence & versioning
   const [liveArenas, setLiveArenas] = useState<ArenaLocation[]>(() => {
     try {
+      const version = localStorage.getItem('cyberx_arenas_version');
+      if (version !== 'v2_hq_photos_mira_lenina_2026') {
+        localStorage.setItem('cyberx_arenas_version', 'v2_hq_photos_mira_lenina_2026');
+        localStorage.setItem('cyberx_live_arenas', JSON.stringify(ARENAS));
+        return ARENAS;
+      }
       const saved = localStorage.getItem('cyberx_live_arenas');
       return saved ? JSON.parse(saved) : ARENAS;
     } catch {
@@ -118,8 +124,8 @@ export function App() {
   const [liveZones, setLiveZones] = useState<ZoneType[]>(() => {
     try {
       const version = localStorage.getItem('cyberx_zones_version');
-      if (version !== 'v5_standart_ampersand_diverse_specs') {
-        localStorage.setItem('cyberx_zones_version', 'v5_standart_ampersand_diverse_specs');
+      if (version !== 'v6_hq_photos_zones_2026') {
+        localStorage.setItem('cyberx_zones_version', 'v6_hq_photos_zones_2026');
         localStorage.setItem('cyberx_live_zones', JSON.stringify(ZONES));
         return ZONES;
       }
