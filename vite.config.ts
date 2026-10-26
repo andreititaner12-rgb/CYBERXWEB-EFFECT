@@ -25,9 +25,9 @@ export default defineConfig({
     strictPort: true,
     cors: true,
     allowedHosts: true,
-    hmr: false,
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
     },
   },
   preview: {

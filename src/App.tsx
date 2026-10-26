@@ -104,30 +104,22 @@ export function App() {
     }
   });
 
-  // Dynamic state for live arenas with localStorage persistence & versioning
+  // Dynamic state for live arenas with clean reset to fresh definitions
   const [liveArenas, setLiveArenas] = useState<ArenaLocation[]>(() => {
     try {
-      const version = localStorage.getItem('cyberx_arenas_version');
-      if (version !== 'v5_force_sync_lenina_mira_october_hq_2026') {
-        localStorage.setItem('cyberx_arenas_version', 'v5_force_sync_lenina_mira_october_hq_2026');
-        localStorage.setItem('cyberx_live_arenas', JSON.stringify(ARENAS));
-        return ARENAS;
-      }
-      const saved = localStorage.getItem('cyberx_live_arenas');
-      if (saved) {
-        const parsed: ArenaLocation[] = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === ARENAS.length) {
-          return parsed.map((a: ArenaLocation) => {
-            const fresh = ARENAS.find(f => f.id === a.id);
-            return fresh ? { ...a, gallery: fresh.gallery, image: fresh.image } : a;
-          });
-        }
-      }
+      localStorage.removeItem('cyberx_live_arenas');
       return ARENAS;
     } catch {
       return ARENAS;
     }
   });
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem('cyberx_live_arenas');
+    } catch {}
+    setLiveArenas(ARENAS);
+  }, []);
 
   // Dynamic state for live zones with localStorage persistence & versioning
   const [liveZones, setLiveZones] = useState<ZoneType[]>(() => {
