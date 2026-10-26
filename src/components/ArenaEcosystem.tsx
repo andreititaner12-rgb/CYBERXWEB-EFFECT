@@ -52,10 +52,11 @@ export const ArenaEcosystem: React.FC<ArenaEcosystemProps> = ({
   const [prevGalleryIndex, setPrevGalleryIndex] = useState<number>(0);
   const [isHoveringGallery, setIsHoveringGallery] = useState<boolean>(false);
 
-  const currentArena = arenasList.find((a) => a.id === displayArenaId) || arenasList[1] || arenasList[0];
-  const galleryPhotos = currentArena.gallery && currentArena.gallery.length > 0 
-    ? currentArena.gallery 
-    : [currentArena.image];
+  const staticArena = ARENAS.find((a) => a.id === displayArenaId) || ARENAS.find((a) => a.id === 'cyberx-arena') || ARENAS[1];
+  const currentArena = arenasList.find((a) => a.id === displayArenaId) || staticArena;
+  const galleryPhotos = (staticArena && staticArena.gallery && staticArena.gallery.length > 0)
+    ? staticArena.gallery
+    : (currentArena.gallery && currentArena.gallery.length > 0 ? currentArena.gallery : [currentArena.image]);
 
   // Reset gallery to first photo when switching arenas
   useEffect(() => {
