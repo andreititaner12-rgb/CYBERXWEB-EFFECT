@@ -119,6 +119,8 @@ const PRESET_GALLERY_IMAGES = [
       { label: 'Автосимуляторы: два кокпита', url: '/images/sim-racing/02-two-cockpits.jpg' },
       { label: 'Автосимуляторы: кокпит сбоку', url: '/images/sim-racing/03-cockpit-side.jpg' },
       { label: 'Руль Moza R12 V2', url: '/images/sim-racing/04-moza-wheel.jpg' },
+      { label: 'Вид пилота на кокпит', url: '/images/sim-racing/05-wheel-driver-view.jpg' },
+      { label: 'Шифтер и ручник Moza', url: '/images/sim-racing/06-shifter-handbrake.jpg' },
       { label: 'Дисплей BenQ 600Hz', url: '/images/hardware/benq-monitor.png' },
     ]
   }

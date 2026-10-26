@@ -10,6 +10,8 @@ export const SIM_RACING_PHOTOS = [
   { src: '/images/sim-racing/02-two-cockpits.jpg?v=20261027_01', label: 'Два кокпита для парных дуэлей' },
   { src: '/images/sim-racing/03-cockpit-side.jpg?v=20261027_01', label: 'Кокпит, руль Moza и UltraWide мониторы' },
   { src: '/images/sim-racing/04-moza-wheel.jpg?v=20261027_01', label: 'Руль Moza R12 V2 и база Direct Drive' },
+  { src: '/images/sim-racing/05-wheel-driver-view.jpg?v=20261027_02', label: 'Вид пилота: руль Moza, ковш и шифтер' },
+  { src: '/images/sim-racing/06-shifter-handbrake.jpg?v=20261027_02', label: 'Секвентальный шифтер и ручник Moza' },
 ];
 
 interface SimRacingBannerProps {

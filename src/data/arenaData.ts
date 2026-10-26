@@ -174,7 +174,9 @@ export const ZONES: ZoneType[] = [
       '/images/sim-racing/01-cockpit-red-glow.jpg?v=20261027_01',
       '/images/sim-racing/02-two-cockpits.jpg?v=20261027_01',
       '/images/sim-racing/03-cockpit-side.jpg?v=20261027_01',
-      '/images/sim-racing/04-moza-wheel.jpg?v=20261027_01'
+      '/images/sim-racing/04-moza-wheel.jpg?v=20261027_01',
+      '/images/sim-racing/05-wheel-driver-view.jpg?v=20261027_02',
+      '/images/sim-racing/06-shifter-handbrake.jpg?v=20261027_02'
     ],
     badge: '2 автосима на Ленина',
   },
