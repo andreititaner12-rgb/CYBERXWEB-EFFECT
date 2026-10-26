@@ -136,11 +136,13 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 2000,
     priceNight: 7000,
-    image: '/images/arena/08-pc-sniper.jpg',
+    image: '/images/premium/01-main.jpg',
     gallery: [
-      '/images/arena/08-pc-sniper.jpg',
-      '/images/arena/05-pc-hall.jpg',
-      '/images/arena/06-pc-row.jpg'
+      '/images/premium/01-main.jpg',
+      '/images/premium/02-tv-lounge.jpg',
+      '/images/premium/03-pc-row.jpg',
+      '/images/premium/04-ps5-spiderman.jpg',
+      '/images/premium/05-pc-wide.jpg'
     ],
     badge: '2 комнаты на Ленина',
     popular: true,

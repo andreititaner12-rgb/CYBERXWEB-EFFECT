@@ -121,30 +121,22 @@ export function App() {
     setLiveArenas(ARENAS);
   }, []);
 
-  // Dynamic state for live zones with localStorage persistence & versioning
+  // Dynamic state for live zones with clean reset
   const [liveZones, setLiveZones] = useState<ZoneType[]>(() => {
     try {
-      const version = localStorage.getItem('cyberx_zones_version');
-      if (version !== 'v6_hq_photos_zones_2026') {
-        localStorage.setItem('cyberx_zones_version', 'v6_hq_photos_zones_2026');
-        localStorage.setItem('cyberx_live_zones', JSON.stringify(ZONES));
-        return ZONES;
-      }
-      const saved = localStorage.getItem('cyberx_live_zones');
-      if (saved) {
-        const parsed: ZoneType[] = JSON.parse(saved);
-        if (parsed.length >= 7) {
-          return parsed.map(z => {
-            const fresh = ZONES.find(f => f.id === z.id);
-            return fresh && z.image?.includes('langame.ru') ? { ...z, image: fresh.image } : z;
-          });
-        }
-      }
+      localStorage.removeItem('cyberx_live_zones');
       return ZONES;
     } catch {
       return ZONES;
     }
   });
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem('cyberx_live_zones');
+    } catch {}
+    setLiveZones(ZONES);
+  }, []);
 
   // Dynamic state for live tournament with localStorage persistence
   const [liveTournament, setLiveTournament] = useState<Tournament>(() => {

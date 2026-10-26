@@ -29,7 +29,10 @@ export const ZonesShowcase: React.FC<ZonesShowcaseProps> = ({ onOpenBooking, zon
   const [isClosing, setIsClosing] = useState(false);
   const closeTimerRef = useRef<number | null>(null);
 
-  const displayZones = zonesList && zonesList.length >= 7 ? zonesList : ZONES;
+  const displayZones = (zonesList && zonesList.length >= 7 ? zonesList : ZONES).map(z => {
+    const fresh = ZONES.find(f => f.id === z.id);
+    return fresh ? { ...z, image: fresh.image, gallery: fresh.gallery } : z;
+  });
   const expandedZone = displayZones.find((z) => z.id === expandedZoneId) || null;
 
   useEffect(() => {
