@@ -229,7 +229,10 @@ interface ExpandedZoneModalProps {
 }
 
 const ExpandedZoneModal: React.FC<ExpandedZoneModalProps> = ({ zone, onClose, onOpenBooking }) => {
-  const gallery = zone.gallery && zone.gallery.length > 0 ? zone.gallery : [zone.image];
+  const staticZone = ZONES.find(z => z.id === zone.id);
+  const gallery = (staticZone && staticZone.gallery && staticZone.gallery.length > 0)
+    ? staticZone.gallery
+    : (zone.gallery && zone.gallery.length > 0 ? zone.gallery : [zone.image]);
   const [activeImage, setActiveImage] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
