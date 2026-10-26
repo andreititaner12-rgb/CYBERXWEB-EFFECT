@@ -193,12 +193,12 @@ export const ZONES: ZoneType[] = [
     ],
     pricePerHour: 1000,
     priceNight: 5000,
-    image: '/images/lounge/01-projector-main.jpg?v=20261026_02',
+    image: '/images/lounge/01-lounge-bar-mural.jpg?v=20261027_01',
     gallery: [
-      '/images/lounge/01-projector-main.jpg?v=20261026_02',
-      '/images/lounge/02-sofas-bar.jpg?v=20261026_02',
+      '/images/lounge/01-lounge-bar-mural.jpg?v=20261027_01',
       '/images/lounge/03-reception-desk.jpg?v=20261026_02',
-      '/images/lounge/04-portal-hall.jpg?v=20261026_02'
+      '/images/lounge/04-portal-hall.jpg?v=20261026_02',
+      '/images/lounge/01-projector-main.jpg?v=20261026_02'
     ],
     badge: 'Lounge Bar на Ленина',
   },
