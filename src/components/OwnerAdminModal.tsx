@@ -97,14 +97,14 @@ const PRESET_GALLERY_IMAGES = [
   {
     group: 'CyberX Европа (просп. Мира, 42к1)',
     images: [
-      { label: 'Фасад Мира', url: '/images/evropa/01-facade.jpg' },
-      { label: 'Бар и Напитки', url: '/images/evropa/02-bar.jpg' },
-      { label: 'ПК Зал Европа', url: '/images/evropa/03-pc-hall.jpg' },
-      { label: 'Сетап ПК Крупно', url: '/images/evropa/04-pc-closeup.jpg' },
-      { label: 'Solo Room 600Hz', url: '/images/evropa/05-mural-solo.jpg' },
-      { label: 'Игровой стол Pro', url: '/images/evropa/06-desk.jpg' },
-      { label: 'Входная группа', url: '/images/evropa/07-entrance.jpg' },
-      { label: 'VIP ПК Зал', url: '/images/evropa/08-pc-room.jpg' },
+      { label: 'Фасад Мира, 42к1', url: '/images/evropa/01-facade.jpg' },
+      { label: 'Неоновый Бар & Ресепшн', url: '/images/evropa/02-bar.jpg' },
+      { label: 'Главный ПК Зал', url: '/images/evropa/03-pc-hall.jpg' },
+      { label: 'Вывеска & Ряд ПК', url: '/images/evropa/04-pc-closeup.jpg' },
+      { label: 'Красный арт & Ряд ПК', url: '/images/evropa/05-mural-solo.jpg' },
+      { label: 'Синий арт Have Fun', url: '/images/evropa/06-desk.jpg' },
+      { label: 'Неоновый коридор & VIP', url: '/images/evropa/07-entrance.jpg' },
+      { label: 'PS5 комната & VR арт', url: '/images/evropa/08-pc-room.jpg' },
     ]
   },
   {
