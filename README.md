@@ -14,19 +14,19 @@
    * Приватные **Solo и Duo залы** с максимальной звукоизоляцией
    * Большой **Кино-Лаунж с проектором 150"** и сценой для турниров
    * 4 приватных PS5 зала с диванами и кальяном
-   * Бронь: `https://langame.ru/club/799452760` (QR: `/qr/qr-lenina.png`)
+   * Бронь: `https://langame.ru/club/799452760` (или через приложение CYBERX Community)
 
 2. **CyberX Европа** — `просп. Мира, 42к1` (Нефтяники / Студгородок)
    * 46 игровых ПК (Super VIP, VIP, Duo Room, Solo Room)
    * **Solo Стримерская** на AMD Ryzen 7 7800X3D + BenQ 600Hz
    * 3 комфортных PS5 зала
-   * Бронь: `https://langame.ru/club/799457743` (QR: `/qr/qr-evropa.png`)
+   * Бронь: `https://langame.ru/club/799457743` (или через приложение CYBERX Community)
 
 3. **CyberX Октябрь** — `ул. Серова, 19А` (Ленинский округ)
    * 50 игровых ПК (VIP 1-3, Trio Rooms, Duo Room, Solo Room)
    * **Solo Room** на AMD Ryzen 7 7800X3D + BenQ 600Hz
    * 3 PS5 зала
-   * Бронь: `https://langame.ru/club/799456444` (QR: `/qr/qr-oktyabr.png`)
+   * Бронь: `https://langame.ru/club/799456444` (или через приложение CYBERX Community)
 
 ---
 
@@ -54,6 +54,41 @@
    - 1-Click экспорт полного JSON бэкапа базы сайта.
    - 1-Click импорт JSON файла для мгновенного восстановления.
    - Сброс к заводским настройкам, смена PIN.
+
+---
+
+## 🖱️ Арендное оборудование и 3D-модели
+
+В блоке «Арендное оборудование» — 5 мышек и 3 клавиатуры. У каждой мыши своя интерактивная GLB-модель (вращение 360° + зум колесом):
+
+| Мышь | Модель |
+|---|---|
+| Logitech PRO X2 SUPERSTRIKE | `/models/logitech-pro-x2-superstrike.glb` |
+| Logitech PRO X SUPERLIGHT 2 DEX SE | `/models/logitech-superlight-2-dex-se.glb` |
+| Lunacy x Honkai: Star Rail | `/models/lunacy-honkai-star-rail.glb` |
+| Lunacy One | `/models/lunacy-one.glb` |
+| Lunacy Another One | `/models/lunacy-another-one.glb` |
+
+Исходные GLB лежат в корне ветки `main` на GitHub. **Важно:** в модели Lunacy x Honkai: Star Rail принт кнопок использует UV3 (`TEXCOORD_3`), потому что three.js не поддерживает `TEXCOORD_4` — при переэкспорте модели не возвращайте UV4, иначе принт кнопок пропадёт.
+
+Клавиатуры (Black Pearl, x Honkai: Star Rail, Moonlight) — квадратные фото 1:1 в `/images/rental/` во всю ячейку (без полей и рамок), без полноэкранного просмотра; у каждой есть описание и краткие ТТХ. У двух моделей Logitech из GLB удалён лишний дефолтный куб Blender, который просвечивал внутри корпуса.
+
+## 📲 QR-код установки приложения в бронировании
+
+В модалке бронирования один QR на установку приложения CYBERX Community и переключатель магазина:
+
+* **Google Play**: https://play.google.com/store/apps/details?id=ru.langame.cyberx&hl=ru → `/qr/qr-google-play.png`
+* **App Store**: https://apps.apple.com/ru/app/cyberx/id6504088566 → `/qr/qr-appstore.png`
+
+QR клубов (`qr-lenina.png`, `qr-evropa.png`, `qr-oktyabr.png`) в интерфейсе больше не используются.
+
+---
+
+## ✅ Обязательные правила перед бронью и таймер турнира
+
+Любое нажатие **«Забронировать»** сначала открывает полные правила клуба (43 пункта, 2 страницы). Кнопка перехода к бронированию активна только после того, как гость откроет страницу 02 (или воспользуется поиском по всем правилам). Закрытие правил крестиком/Esc/по фону бронирование не открывает.
+
+Таймер ближайшего турнира считается от полей `date` + `time` в `src/data/arenaData.ts` (Омск, UTC+6) и обновляется при правке даты в CMS. Актуальная дата: **15 Ноября 2026, 12:00 Омск**. Парсер — `src/utils/tournamentDate.ts`; если дата прошла, показывается «ТУРНИР НАЧАЛСЯ // LIVE», а не нули.
 
 ---
 

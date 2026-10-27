@@ -16,17 +16,32 @@ interface ClubRulesModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirmAndBook?: () => void;
-  isFirstBookingGate?: boolean;
+  /** true = правила открыты как обязательный гейт перед бронированием */
+  isBookingGate?: boolean;
 }
 
 export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
   isOpen,
   onClose,
   onConfirmAndBook,
-  isFirstBookingGate = false,
+  isBookingGate = false,
 }) => {
   const [activePage, setActivePage] = useState<1 | 2>(1);
   const [searchQuery, setSearchQuery] = useState('');
+  // Пока гость не откроет страницу 02 (или поиск по всем 43 правилам),
+  // кнопка «перейти к бронированию» заблокирована.
+  const [hasReadAll, setHasReadAll] = useState(false);
+
+  // Каждое открытие правил начинается с первой страницы и чистого поиска —
+  // иначе гость мог бы «проскочить» гейт, не посмотрев правила заново.
+  useEffect(() => {
+    if (!isOpen) return;
+    setActivePage(1);
+    setSearchQuery('');
+    setHasReadAll(false);
+  }, [isOpen]);
+
+
 
   // Lock body scroll and pause Lenis while rules modal is active
   useEffect(() => {
@@ -39,7 +54,10 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight' && activePage === 1) setActivePage(2);
+      if (e.key === 'ArrowRight' && activePage === 1) {
+        setActivePage(2);
+        setHasReadAll(true);
+      }
       if (e.key === 'ArrowLeft' && activePage === 2) setActivePage(1);
     };
     window.addEventListener('keydown', onKey);
@@ -62,10 +80,13 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
     : currentRules;
 
   const handleConfirm = () => {
+    // Страховка: ЛЮБОЙ переход к бронированию (из гейта или из обычного
+    // просмотра правил) возможен только после ознакомления со всеми правилами.
+    if (onConfirmAndBook && !hasReadAll) {
+      setActivePage(2);
+      return;
+    }
     sound.playClick();
-    try {
-      sessionStorage.setItem('cyberx_rules_confirmed', 'true');
-    } catch {}
     if (onConfirmAndBook) {
       onConfirmAndBook();
     } else {
@@ -151,6 +172,7 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
                 onClick={() => {
                   sound.playClick();
                   setActivePage(2);
+                  setHasReadAll(true);
                 }}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
                   activePage === 2
@@ -170,7 +192,11 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                // Поиск показывает все 43 правила сразу — тоже считаем ознакомлением.
+                if (e.target.value.trim()) setHasReadAll(true);
+              }}
               placeholder="Поиск по правилам (18+, еда, bios...)"
               className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-[#E32124]/70 transition-all font-mono"
             />
@@ -238,6 +264,7 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
                   onClick={() => {
                     sound.playClick();
                     setActivePage(2);
+                    setHasReadAll(true);
                   }}
                   className="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 text-white border border-white/10 flex items-center gap-2 cursor-pointer transition-all ml-auto"
                 >
@@ -263,18 +290,33 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
         {/* 4. STICKY BOTTOM ACTION BAR */}
         <div className="shrink-0 bg-[#0c0a14]/95 backdrop-blur-md border-t border-white/10 px-4 sm:px-6 py-3.5 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 z-30 font-mono">
           
-          <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Незнание правил не освобождает от ответственности</span>
+          <div className="flex flex-col gap-1 text-xs text-zinc-400">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Незнание правил не освобождает от ответственности</span>
+            </div>
+            {isBookingGate && (
+              <span className={`text-[10px] ${hasReadAll ? 'text-emerald-400' : 'text-amber-400'}`}>
+                {hasReadAll
+                  ? '✓ Вы ознакомились со всеми 43 правилами'
+                  : 'Откройте страницы 01 и 02, чтобы перейти к бронированию'}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-            {isFirstBookingGate ? (
+            {isBookingGate ? (
               <button
                 onClick={handleConfirm}
-                className="w-full sm:w-auto py-3.5 px-6 sm:px-8 rounded-2xl font-mono font-black text-xs sm:text-sm uppercase tracking-[0.16em] text-white bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] shadow-[0_0_30px_rgba(227,33,36,0.65)] hover:shadow-[0_0_45px_rgba(227,33,36,0.95)] hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20 shrink-0"
+                disabled={!hasReadAll}
+                title={!hasReadAll ? 'Сначала откройте страницу 02 (правила 24—43)' : undefined}
+                className={`w-full sm:w-auto py-3.5 px-6 sm:px-8 rounded-2xl font-mono font-black text-xs sm:text-sm uppercase tracking-[0.16em] flex items-center justify-center gap-2 border border-white/20 transition-all shrink-0 ${
+                  hasReadAll
+                    ? 'text-white bg-gradient-to-r from-[#E32124] via-[#FF2A2E] to-[#E32124] shadow-[0_0_30px_rgba(227,33,36,0.65)] hover:shadow-[0_0_45px_rgba(227,33,36,0.95)] hover:scale-[1.01] active:scale-95 cursor-pointer'
+                    : 'text-zinc-500 bg-white/[0.04] border-white/10 cursor-not-allowed'
+                }`}
               >
-                <span>ПОНЯТНО, ПЕРЕЙТИ К БРОНИРОВАНИЮ</span>
+                <span>Я ОЗНАКОМИЛСЯ, К БРОНИРОВАНИЮ</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
@@ -289,7 +331,13 @@ export const ClubRulesModal: React.FC<ClubRulesModalProps> = ({
                 {onConfirmAndBook && (
                   <button
                     onClick={handleConfirm}
-                    className="w-1/2 sm:w-auto py-3 px-6 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-gradient-to-r from-[#E32124] to-[#FF2A2E] shadow-md hover:shadow-red-600/50 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer border border-white/20"
+                    disabled={!hasReadAll}
+                    title={!hasReadAll ? 'Сначала ознакомьтесь со страницами 01 и 02' : undefined}
+                    className={`w-1/2 sm:w-auto py-3 px-6 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/20 transition-all ${
+                      hasReadAll
+                        ? 'text-white bg-gradient-to-r from-[#E32124] to-[#FF2A2E] shadow-md hover:shadow-red-600/50 hover:scale-[1.02] active:scale-95 cursor-pointer'
+                        : 'text-zinc-500 bg-white/[0.04] border-white/10 cursor-not-allowed'
+                    }`}
                   >
                     <span>ЗАБРОНИРОВАТЬ</span>
                     <ArrowRight className="w-4 h-4" />

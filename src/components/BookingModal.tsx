@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Smartphone, 
-  ExternalLink, 
-  Zap, 
-  Download, 
-  ShieldCheck, 
-  MapPin, 
-  Flame, 
-  FileText
+import {
+  X,
+  Smartphone,
+  ExternalLink,
+  Zap,
+  Download,
+  ShieldCheck,
+  MapPin,
+  Flame,
+  FileText,
+  QrCode,
+  Play,
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { pauseLenis, resumeLenis } from '../utils/smoothScroll';
@@ -17,55 +19,60 @@ interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenRules?: () => void;
+  /** Клуб, из которого пришли (показываем подсказку, но QR больше не привязан к клубу) */
   defaultArenaId?: string;
   defaultZoneId?: string;
 }
 
-interface ClubBookingInfo {
-  id: string;
-  title: string;
-  shortTitle: string;
-  address: string;
-  langameUrl: string;
+type StoreId = 'google-play' | 'app-store';
+
+interface AppStoreInfo {
+  id: StoreId;
+  label: string;
+  shortLabel: string;
+  platform: string;
+  url: string;
   qrImage: string;
-  description: string;
-  badge?: string;
+  icon: React.ElementType;
 }
 
-const CLUBS_BOOKING: ClubBookingInfo[] = [
+/** Один QR на установку приложения, две площадки на выбор. */
+const APP_STORES: AppStoreInfo[] = [
   {
-    id: 'cyberx-arena',
-    title: 'CyberX Arena // Центр',
-    shortTitle: 'Ленина, 19',
-    address: 'ул. Ленина, 19',
-    langameUrl: 'https://langame.ru/club/799452760',
-    qrImage: '/qr/qr-lenina.png',
-    description: '89 ПК • Solo/Duo • 2 Sim-Racing • 2 Premium комнаты • 7 PS5 комнат',
-    badge: 'Центр',
+    id: 'google-play',
+    label: 'Google Play',
+    shortLabel: 'ANDROID',
+    platform: 'Для смартфонов Android',
+    url: 'https://play.google.com/store/apps/details?id=ru.langame.cyberx&hl=ru',
+    qrImage: '/qr/qr-google-play.png',
+    icon: Play,
   },
   {
-    id: 'cyberx-evropa',
-    title: 'CyberX Европа // Нефтяники',
-    shortTitle: 'Мира, 42к1',
-    address: 'просп. Мира, 42, корп. 1',
-    langameUrl: 'https://langame.ru/club/799457743',
-    qrImage: '/qr/qr-evropa.png',
-    description: '46 ПК • Solo Room Ryzen 7800X3D + 600Hz • 5 PS5 комнат',
-    badge: 'Нефтяники',
-  },
-  {
-    id: 'cyberx-oktyabr',
-    title: 'CyberX Октябрь // 2 Этажа',
-    shortTitle: 'Серова, 19А',
-    address: 'ул. Серова, 19А',
-    langameUrl: 'https://langame.ru/club/799456444',
-    qrImage: '/qr/qr-oktyabr.png',
-    description: '50 ПК • 2 этажа • BenQ 240Hz • Trio, Duo & Solo • 4 PS5 комнаты',
-    badge: '2 этажа // Приватные залы',
+    id: 'app-store',
+    label: 'App Store',
+    shortLabel: 'iOS',
+    platform: 'Для iPhone и iPad',
+    url: 'https://apps.apple.com/ru/app/cyberx/id6504088566',
+    qrImage: '/qr/qr-appstore.png',
+    icon: Smartphone,
   },
 ];
 
-const APP_STORE_URL = 'https://apps.apple.com/ru/app/cyberx/id6504088566';
+const CLUB_LABELS: Record<string, string> = {
+  'cyberx-arena': 'Ленина, 19',
+  'cyberx-evropa': 'Мира, 42к1',
+  'cyberx-oktyabr': 'Серова, 19А',
+};
+
+const ZONE_LABELS: Record<string, string> = {
+  'premium-squad': 'Premium Squad',
+  'sim-racing': 'Sim-Racing',
+  'projector-lounge': 'Кино-лаунж',
+  'solo-stream-room': 'Solo 600Hz',
+  'ps5-lounge': 'PS5 зал',
+  'super-vip': 'Super VIP',
+  'open-arena': 'Открытая арена',
+};
 
 export const BookingModal: React.FC<BookingModalProps> = ({
   isOpen,
@@ -74,22 +81,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   defaultArenaId,
   defaultZoneId,
 }) => {
-  const [selectedClubId, setSelectedClubId] = useState<string>(
-    defaultArenaId || 'cyberx-arena'
-  );
+  const [selectedStoreId, setSelectedStoreId] = useState<StoreId>(() => {
+    if (typeof navigator === 'undefined') return 'google-play';
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) ? 'app-store' : 'google-play';
+  });
   const [isMobileDevice, setIsMobileDevice] = useState(false);
-  const [showAppStoreQR, setShowAppStoreQR] = useState(false);
-
-  useEffect(() => {
-    if (defaultArenaId) {
-      const match = CLUBS_BOOKING.find((c) => c.id === defaultArenaId);
-      if (match) setSelectedClubId(match.id);
-    }
-  }, [defaultArenaId]);
 
   useEffect(() => {
     const checkMobile = () => {
-      const isMobile = /android|iphone|ipad|ipod|windows phone/i.test(navigator.userAgent || '') || window.innerWidth < 768;
+      const isMobile =
+        /android|iphone|ipad|ipod|windows phone/i.test(navigator.userAgent || '') ||
+        window.innerWidth < 768;
       setIsMobileDevice(isMobile);
     };
     checkMobile();
@@ -120,7 +122,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
   if (!isOpen) return null;
 
-  const currentClub = CLUBS_BOOKING.find((c) => c.id === selectedClubId) || CLUBS_BOOKING[0];
+  const currentStore = APP_STORES.find((s) => s.id === selectedStoreId) || APP_STORES[0];
+  const otherStore = APP_STORES.find((s) => s.id !== currentStore.id) || APP_STORES[1];
+  const clubLabel = defaultArenaId ? CLUB_LABELS[defaultArenaId] : undefined;
+  const zoneLabel = defaultZoneId
+    ? ZONE_LABELS[defaultZoneId] || defaultZoneId.replace(/-/g, ' ')
+    : undefined;
 
   const handleOpenExternal = (url: string) => {
     sound.playClick();
@@ -131,16 +138,22 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   };
 
+  const handleOpenRules = () => {
+    sound.playClick();
+    onClose();
+    onOpenRules?.();
+  };
+
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-xl animate-fadeIn select-none overscroll-contain"
       data-lenis-prevent="true"
       onClick={onClose}
     >
-      <div 
+      <div
         data-lenis-prevent="true"
         data-lenis-prevent-wheel="true"
-        className="relative w-full h-full sm:h-auto overflow-hidden overscroll-contain bg-gradient-to-b from-[#141018] via-[#0E0B14] to-[#07060A] border-0 sm:border border-white/10 rounded-none sm:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.95)] flex flex-col my-auto max-w-xl sm:max-h-[92vh] p-6 sm:p-8"
+        className="relative w-full h-full sm:h-auto overflow-y-auto overscroll-contain bg-gradient-to-b from-[#141018] via-[#0E0B14] to-[#07060A] border-0 sm:border border-white/10 rounded-none sm:rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.95)] flex flex-col my-auto max-w-xl sm:max-h-[92vh] p-6 sm:p-8"
         onClick={(e) => e.stopPropagation()}
         onWheel={(e) => e.stopPropagation()}
       >
@@ -158,12 +171,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        {/* =========================================================================
-            BOOKING VIEW (DIRECT APP / QR CODE SELECTION)
-        ========================================================================= */}
         <div className="animate-fadeIn">
-          {/* Header Title */}
-          <div className="mb-6 font-mono text-center sm:text-left">
+          {/* Header */}
+          <div className="mb-6 font-mono text-center sm:text-left pr-8">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E32124]/15 border border-[#E32124]/30 text-[#E32124] text-[10px] font-bold uppercase tracking-wider mb-2">
               <Zap className="w-3.5 h-3.5" />
               <span>ОНЛАЙН БРОНИРОВАНИЕ В 1 КЛИК // 24/7</span>
@@ -171,218 +181,168 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <h3 className="font-display font-black text-2xl sm:text-3xl uppercase tracking-tight text-white">
               МОБИЛЬНОЕ <span className="text-[#E32124]">ПРИЛОЖЕНИЕ</span>
             </h3>
-            <p className="text-xs text-zinc-400 mt-1">
-              Выбирайте нужный клуб CyberX в Омске и бронируйте желаемый ПК или зал в официальном приложении CyberX Community.
+            <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Установите официальное приложение CYBERX Community — и бронируйте ПК, приватные залы и PS5 в любом из трёх клубов сети в Омске.
             </p>
           </div>
 
-          {/* Zone indicator if directed from a specific zone card */}
-          {defaultZoneId && (
-            <div className="mb-4 p-3 rounded-2xl bg-[#E32124]/10 border border-[#E32124]/30 flex items-center justify-between font-mono text-xs text-white">
+          {/* Context hints from the zone/card the visitor came from */}
+          {(zoneLabel || clubLabel) && (
+            <div className="mb-4 p-3 rounded-2xl bg-[#E32124]/10 border border-[#E32124]/30 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-white">
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-[#E32124] animate-pulse" />
-                <span>Выбрана зона: <strong className="text-white uppercase">{defaultZoneId}</strong></span>
+                <span>
+                  {clubLabel ? `Клуб: ${clubLabel}` : 'Все клубы сети'}
+                  {zoneLabel ? ` • Зона: ${zoneLabel}` : ''}
+                </span>
               </div>
-              <span className="text-[10px] text-zinc-400">Переход в приложение →</span>
+              <span className="text-[10px] text-zinc-400">Доступно в приложении →</span>
             </div>
           )}
 
-          {/* 1. Club Selector Tabs */}
-          <div className="mb-6">
+          {/* 1. Store selector: Google Play / App Store */}
+          <div className="mb-5">
             <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#E32124]" />
-              <span>1. Выберите клуб для брони:</span>
+              <QrCode className="w-3.5 h-3.5 text-[#E32124]" />
+              <span>1. Выберите, откуда скачать приложение:</span>
             </div>
-            
-            <div className="grid grid-cols-3 gap-2">
-              {CLUBS_BOOKING.map((club) => {
-                const isSelected = selectedClubId === club.id && !showAppStoreQR;
+
+            <div className="grid grid-cols-2 gap-2">
+              {APP_STORES.map((store) => {
+                const Icon = store.icon;
+                const isSelected = selectedStoreId === store.id;
                 return (
                   <button
-                    key={club.id}
+                    key={store.id}
                     onClick={() => {
                       sound.playClick();
-                      setSelectedClubId(club.id);
-                      setShowAppStoreQR(false);
+                      setSelectedStoreId(store.id);
                     }}
                     onMouseEnter={() => sound.playHover()}
-                    className={`p-3 rounded-2xl text-left border transition-all cursor-pointer flex flex-col justify-between ${
+                    className={`p-3 rounded-2xl text-left border transition-all cursor-pointer flex items-center gap-2.5 ${
                       isSelected
                         ? 'bg-[#181116] border-[#E32124] shadow-[0_0_20px_rgba(227,33,36,0.3)]'
                         : 'bg-white/[0.02] border-white/10 hover:border-white/30 text-zinc-400 hover:text-white'
                     }`}
                   >
-                    <div className="font-mono font-bold text-xs uppercase text-white truncate">
-                      {club.shortTitle}
-                    </div>
-                    <div className="text-[10px] font-mono text-zinc-400 truncate mt-1">
-                      {club.badge || club.address}
-                    </div>
+                    <span
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
+                        isSelected
+                          ? 'bg-[#E32124]/20 border-[#E32124]/50 text-[#E32124]'
+                          : 'bg-white/[0.04] border-white/10 text-zinc-400'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-mono font-bold text-xs uppercase text-white truncate">
+                        {store.label}
+                      </span>
+                      <span className="block text-[10px] font-mono text-zinc-400 truncate mt-0.5">
+                        {store.shortLabel} • {store.platform}
+                      </span>
+                    </span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* 2. Main Action Card (Mobile Direct vs Desktop QR) */}
-          {isMobileDevice ? (
-            /* MOBILE VIEW: Direct 1-Tap Action Buttons */
-            <div className="relative p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-[#151018] to-[#0A0910] border border-[#E32124]/30 shadow-xl space-y-4 font-mono text-center overflow-hidden">
-              <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-[#E32124]/40 to-transparent pointer-events-none" />
-              
-              <div className="w-14 h-14 rounded-2xl bg-[#E32124]/20 border border-[#E32124]/50 flex items-center justify-center mx-auto text-[#E32124] shadow-[0_0_20px_rgba(227,33,36,0.4)]">
-                <Smartphone className="w-7 h-7" />
+          {/* 2. Single app-install QR + instructions */}
+          <div className="relative p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-[#151018] to-[#0A0910] border border-[#E32124]/30 shadow-2xl flex flex-col sm:flex-row items-center gap-5 sm:gap-6 font-mono overflow-hidden">
+            <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-[#E32124]/40 to-transparent pointer-events-none" />
+
+            {/* QR code */}
+            <div className="flex flex-col items-center gap-3 shrink-0 w-full sm:w-auto">
+              <div className="relative p-3 bg-white rounded-2xl shadow-[0_0_30px_rgba(227,33,36,0.25)] border-2 border-[#E32124]">
+                <img
+                  key={currentStore.id}
+                  src={currentStore.qrImage}
+                  alt={`QR-код для установки CYBERX из ${currentStore.label}`}
+                  className="w-36 h-36 sm:w-40 sm:h-40 object-contain rounded-lg"
+                />
+                {/* Corner Accents */}
+                <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#E32124]" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#E32124]" />
+                <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#E32124]" />
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#E32124]" />
               </div>
 
+              <button
+                onClick={handleOpenRules}
+                className="w-full py-2 px-3 rounded-xl bg-white/[0.05] hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:border-[#E32124]/50"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#E32124]" />
+                <span>ПРАВИЛА КЛУБА</span>
+              </button>
+            </div>
+
+            {/* Info & steps */}
+            <div className="space-y-3 text-left flex-1 w-full">
               <div>
-                <h4 className="font-sans font-black text-xl text-white uppercase">
-                  {currentClub.title}
+                <span className="text-[10px] font-bold uppercase text-[#E32124] tracking-widest block">
+                  ОФИЦИАЛЬНОЕ ПРИЛОЖЕНИЕ • {currentStore.shortLabel}
+                </span>
+                <h4 className="font-sans font-black text-lg text-white uppercase">
+                  CYBERX COMMUNITY APP
                 </h4>
-                <p className="text-xs text-zinc-300 mt-1">
-                  {currentClub.address}
-                </p>
-                <p className="text-[11px] text-zinc-400 mt-1">
-                  {currentClub.description}
+                <p className="text-xs text-zinc-400 mt-0.5">
+                  {currentStore.platform} • {currentStore.label}
                 </p>
               </div>
 
-              {/* Primary Action Button: Open in Langame / CyberX App */}
-              <div className="space-y-2.5 pt-2">
+              <div className="space-y-1.5 text-[11px] text-zinc-300">
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
+                  <span>Наведите камеру смартфона на QR-код</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
+                  <span>Установите приложение CYBERX Community</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
+                  <span>Выберите клуб, свободный ПК или зал</span>
+                </div>
+              </div>
+
+              <div className="pt-1 space-y-2">
                 <button
-                  onClick={() => handleOpenExternal(currentClub.langameUrl)}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#E32124] to-[#FF2A2E] text-white font-bold text-xs uppercase tracking-widest shadow-[0_0_30px_rgba(227,33,36,0.7)] flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer border border-white/20"
+                  onClick={() => handleOpenExternal(currentStore.url)}
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#E32124] to-[#FF2A2E] text-white font-bold text-xs uppercase tracking-widest shadow-[0_0_25px_rgba(227,33,36,0.5)] flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-95 transition-all cursor-pointer border border-white/20"
                 >
-                  <span>ЗАБРОНИРОВАТЬ В CYBERX APP</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <Download className="w-4 h-4" />
+                  <span>ОТКРЫТЬ {currentStore.label.toUpperCase()}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Secondary Button: Download App in App Store */}
-                <button
-                  onClick={() => handleOpenExternal(APP_STORE_URL)}
-                  className="w-full py-3 px-6 rounded-2xl bg-white/[0.05] hover:bg-white/10 text-zinc-200 hover:text-white border border-white/15 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
-                >
-                  <Download className="w-4 h-4 text-zinc-400" />
-                  <span>СКАЧАТЬ В APP STORE</span>
-                </button>
-
-                {/* Rules Button under QR/Actions (Mobile) */}
                 <button
                   onClick={() => {
                     sound.playClick();
-                    onClose();
-                    onOpenRules?.();
+                    setSelectedStoreId(otherStore.id);
                   }}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-zinc-300 hover:text-white border border-white/10 text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer mt-2"
+                  className="w-full py-2 px-3 rounded-xl bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5 text-[#E32124]" />
-                  <span>ПРАВИЛА КЛУБА</span>
+                  <Smartphone className="w-3.5 h-3.5 text-[#E32124]" />
+                  <span>НУЖЕН {otherStore.label.toUpperCase()}? СМЕНИТЬ QR</span>
                 </button>
               </div>
-
             </div>
-          ) : (
-            /* DESKTOP VIEW: High-Resolution Scannable QR Code */
-            <div className="relative p-6 rounded-3xl bg-gradient-to-b from-[#151018] to-[#0A0910] border border-[#E32124]/30 shadow-2xl flex flex-col sm:flex-row items-center gap-6 font-mono overflow-hidden">
-              <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-[#E32124]/40 to-transparent pointer-events-none" />
-              
-              {/* Left: QR Code Box + Rules Button directly below */}
-              <div className="flex flex-col items-center gap-3 shrink-0">
-                <div className="relative p-3 bg-white rounded-2xl shadow-[0_0_30px_rgba(227,33,36,0.25)] border-2 border-[#E32124]">
-                  <img
-                    src={showAppStoreQR ? '/qr/qr-appstore.png' : currentClub.qrImage}
-                    alt={`QR code for ${showAppStoreQR ? 'App Store' : currentClub.title}`}
-                    className="w-40 h-40 object-contain rounded-lg"
-                  />
-                  {/* Corner Accents */}
-                  <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#E32124]" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#E32124]" />
-                  <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#E32124]" />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#E32124]" />
-                </div>
+          </div>
 
-                {/* Rules Button directly under QR code */}
-                <button
-                  onClick={() => {
-                    sound.playClick();
-                    onClose();
-                    onOpenRules?.();
-                  }}
-                  className="w-full py-2 px-3 rounded-xl bg-white/[0.05] hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10 text-[11px] font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm hover:border-[#E32124]/50"
-                >
-                  <FileText className="w-3.5 h-3.5 text-[#E32124]" />
-                  <span>ПРАВИЛА КЛУБА</span>
-                </button>
-              </div>
-
-              {/* Right: Info & Steps */}
-              <div className="space-y-3 text-left flex-1">
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-[#E32124] tracking-widest block">
-                    {showAppStoreQR ? 'ОФИЦИАЛЬНОЕ ПРИЛОЖЕНИЕ' : currentClub.badge}
-                  </span>
-                  <h4 className="font-sans font-black text-lg text-white uppercase">
-                    {showAppStoreQR ? 'CYBERX COMMUNITY APP' : currentClub.title}
-                  </h4>
-                  <p className="text-xs text-zinc-400 mt-0.5">
-                    {showAppStoreQR ? 'Доступно в App Store для iOS' : currentClub.address}
-                  </p>
-                </div>
-
-                {/* 3 Step Guide */}
-                <div className="space-y-1.5 text-[11px] text-zinc-300">
-                  <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">1</span>
-                    <span>Наведите камеру смартфона на QR-код</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">2</span>
-                    <span>Откроется страница {showAppStoreQR ? 'приложения' : 'клуба'}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-[#E32124]/20 text-[#E32124] font-bold text-[10px] flex items-center justify-center shrink-0">3</span>
-                    <span>Выберите свободный ПК или зону</span>
-                  </div>
-                </div>
-
-                {/* Direct Link Button */}
-                <div className="pt-2 flex items-center gap-2">
-                  <button
-                    onClick={() => handleOpenExternal(showAppStoreQR ? APP_STORE_URL : currentClub.langameUrl)}
-                    className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer border border-white/10"
-                  >
-                    <span>Открыть в браузере</span>
-                    <ExternalLink className="w-3 h-3 text-zinc-400" />
-                  </button>
-                </div>
-              </div>
-
+          {/* 3. Footer */}
+          <div className="mt-5 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 font-mono text-[10px] sm:text-xs">
+            <div className="flex items-center gap-1.5 text-zinc-400">
+              <MapPin className="w-3.5 h-3.5 text-[#E32124] shrink-0" />
+              <span>В приложении: Ленина 19 • Мира 42к1 • Серова 19А</span>
             </div>
-          )}
-
-          {/* 3. Bottom App Store Quick Switch Bar */}
-          <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs">
-            
-            <button
-              onClick={() => {
-                sound.playClick();
-                setShowAppStoreQR(!showAppStoreQR);
-              }}
-              className="text-zinc-400 hover:text-white flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <Download className="w-4 h-4 text-[#E32124]" />
-              <span>{showAppStoreQR ? '← Вернуться к выбору клубов' : 'Показать QR для скачивания в App Store'}</span>
-            </button>
-
-            <div className="flex items-center gap-1.5 text-[10px] text-zinc-500">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="flex items-center gap-1.5 text-zinc-500">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>Официальный сервис бронирования Langame</span>
             </div>
-
           </div>
         </div>
-
       </div>
-
     </div>
   );
 };

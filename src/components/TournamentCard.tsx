@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { UPCOMING_TOURNAMENT } from '../data/arenaData';
 import { Tournament } from '../types';
+import { parseTournamentStart, getTimeLeft, TimeLeft } from '../utils/tournamentDate';
 import { 
   Calendar, 
   MapPin, 
@@ -26,38 +27,24 @@ export const TournamentCard: React.FC<TournamentCardProps> = ({
   onOpenAllTournaments,
   tournamentData,
 }) => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 24,
-    hours: 8,
-    minutes: 42,
-    seconds: 15,
-  });
+  const tournament = tournamentData || UPCOMING_TOURNAMENT;
+
+  // Дата старта берётся ИЗ ДАННЫХ турнира (в т.ч. из CMS), а не из захардкоженной строки.
+  // Омск = UTC+6, поэтому результат одинаков в любом часовом поясе браузера.
+  const targetDate = useMemo(
+    () => parseTournamentStart(tournament),
+    [tournament.date, tournament.time]
+  );
+
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(() => getTimeLeft(targetDate));
 
   useEffect(() => {
-    // Target date: 25 Октября 2026, 12:00 (Омск GMT+6)
-    const targetDate = new Date('2026-10-25T12:00:00+06:00').getTime();
-
-    const updateTimer = () => {
-      const now = Date.now();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
+    const updateTimer = () => setTimeLeft(getTimeLeft(targetDate));
     updateTimer();
     const timer = setInterval(updateTimer, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
-  const tournament = tournamentData || UPCOMING_TOURNAMENT;
   const isTournamentActive = Boolean(tournament && tournament.registrationOpen);
 
   return (
@@ -186,37 +173,54 @@ export const TournamentCard: React.FC<TournamentCardProps> = ({
                   </div>
                 </div>
 
-                {/* Countdown */}
+                {/* Countdown — всегда считаем от даты турнира, при прошедшей дате показываем LIVE */}
                 <div className="py-6">
-                  <span className="text-[10px] uppercase tracking-widest text-zinc-500 block text-center mb-3">
-                    До старта турнира осталось:
-                  </span>
-                  <div className="grid grid-cols-4 gap-2 text-center">
-                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                      <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
-                        {timeLeft.days}
+                  {timeLeft ? (
+                    <>
+                      <span className="text-[10px] uppercase tracking-widest text-zinc-500 block text-center mb-3">
+                        До старта турнира осталось:
+                      </span>
+                      <div className="grid grid-cols-4 gap-2 text-center">
+                        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
+                            {timeLeft.days}
+                          </div>
+                          <div className="text-[9px] uppercase text-zinc-500">Дней</div>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
+                            {timeLeft.hours}
+                          </div>
+                          <div className="text-[9px] uppercase text-zinc-500">Часов</div>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
+                            {timeLeft.minutes}
+                          </div>
+                          <div className="text-[9px] uppercase text-zinc-500">Мин</div>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                          <div className="font-display font-extrabold text-xl sm:text-2xl text-[#E32124]">
+                            {timeLeft.seconds}
+                          </div>
+                          <div className="text-[9px] uppercase text-zinc-500">Сек</div>
+                        </div>
                       </div>
-                      <div className="text-[9px] uppercase text-zinc-500">Дней</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                      <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
-                        {timeLeft.hours}
+                    </>
+                  ) : (
+                    <div className="text-center">
+                      <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#E32124]/15 border border-[#E32124]/40 text-[#E32124] text-xs font-bold uppercase tracking-widest">
+                        <Radio className="w-3.5 h-3.5 animate-pulse" />
+                        ТУРНИР НАЧАЛСЯ // LIVE
                       </div>
-                      <div className="text-[9px] uppercase text-zinc-500">Часов</div>
+                      <p className="text-[10px] text-zinc-500 mt-3 leading-relaxed">
+                        Идёт игра — следите за трансляцией и результатами в Telegram клуба.
+                      </p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                      <div className="font-display font-extrabold text-xl sm:text-2xl text-white">
-                        {timeLeft.minutes}
-                      </div>
-                      <div className="text-[9px] uppercase text-zinc-500">Мин</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                      <div className="font-display font-extrabold text-xl sm:text-2xl text-[#E32124]">
-                        {timeLeft.seconds}
-                      </div>
-                      <div className="text-[9px] uppercase text-zinc-500">Сек</div>
-                    </div>
-                  </div>
+                  )}
+                  <p className="text-[10px] text-zinc-500 text-center mt-3">
+                    Старт: {tournament.date} • {tournament.time}
+                  </p>
                 </div>
 
                 {/* CTAs */}

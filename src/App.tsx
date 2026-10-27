@@ -33,6 +33,7 @@ import { TopScrollProgressBar } from './components/ui/TopScrollProgressBar';
 import { CyberSectionDivider } from './components/ui/CyberSectionDivider';
 import { CyberBackground } from './components/ui/CyberBackground';
 import { LazyMount } from './components/ui/LazyMount';
+import { parseTournamentStart } from './utils/tournamentDate';
 import { 
   UPCOMING_TOURNAMENT, 
   PROMOTIONS, 
@@ -66,6 +67,9 @@ export function App() {
   const [bookingZoneId, setBookingZoneId] = useState<string | undefined>(undefined);
 
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
+  // true = правила открыты как обязательный «гейт» перед бронированием.
+  // Пока пользователь не подтвердит ознакомление, bookingOpen не откроется.
+  const [rulesGateMode, setRulesGateMode] = useState(false);
 
   const [tournamentsOpen, setTournamentsOpen] = useState(false);
   const [targetTournamentId, setTargetTournamentId] = useState<string | undefined>(undefined);
@@ -138,11 +142,19 @@ export function App() {
     setLiveZones(ZONES);
   }, []);
 
-  // Dynamic state for live tournament with localStorage persistence
+  // Dynamic state for live tournament with localStorage persistence.
+  // Если в сохранённом бэкапе дата уже прошла — подтягиваем актуальную дату из
+  // дефолтов, чтобы таймер снова шёл вперёд (остальные правки владельца сохраняем).
   const [liveTournament, setLiveTournament] = useState<Tournament>(() => {
     try {
       const saved = localStorage.getItem('cyberx_live_tournament');
-      return saved ? JSON.parse(saved) : UPCOMING_TOURNAMENT;
+      if (!saved) return UPCOMING_TOURNAMENT;
+      const parsed = JSON.parse(saved) as Tournament;
+      const start = parseTournamentStart(parsed);
+      if (start === null || start <= Date.now()) {
+        return { ...parsed, date: UPCOMING_TOURNAMENT.date, time: UPCOMING_TOURNAMENT.time };
+      }
+      return parsed;
     } catch {
       return UPCOMING_TOURNAMENT;
     }
@@ -308,19 +320,11 @@ export function App() {
     setBookingArenaId(arenaId);
     setBookingZoneId(zoneId);
 
-    const isConfirmed = (() => {
-      try {
-        return sessionStorage.getItem('cyberx_rules_confirmed') === 'true';
-      } catch {
-        return false;
-      }
-    })();
-
-    if (isConfirmed) {
-      setBookingOpen(true);
-    } else {
-      setRulesModalOpen(true);
-    }
+    // ВСЕГДА сначала правила: бронирование откроется только после того,
+    // как гость ознакомится с обоими разделами и нажмёт «Я ознакомился».
+    setBookingOpen(false);
+    setRulesGateMode(true);
+    setRulesModalOpen(true);
   };
 
   const handleOpenTournaments = (tournamentId?: string) => {
@@ -502,7 +506,7 @@ export function App() {
         <Footer
           onOpenBooking={() => handleOpenBooking()}
           onOpenTournaments={() => handleOpenTournaments()}
-          onOpenRules={() => setRulesModalOpen(true)}
+          onOpenRules={() => { setRulesGateMode(false); setRulesModalOpen(true); }}
           arenasList={liveArenas}
           siteLinks={liveLinks}
         />
@@ -526,27 +530,22 @@ export function App() {
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
-        onOpenRules={() => setRulesModalOpen(true)}
+        onOpenRules={() => { setRulesGateMode(false); setRulesModalOpen(true); }}
         defaultArenaId={bookingArenaId}
         defaultZoneId={bookingZoneId}
       />
 
-      {/* Standalone & First-Booking Gate 2-Page Official Rules Modal */}
+      {/* Обязательный гейт правил: открывается при ЛЮБОМ нажатии «Забронировать». */}
       <ClubRulesModal
         isOpen={rulesModalOpen}
-        isFirstBookingGate={(() => {
-          try {
-            return sessionStorage.getItem('cyberx_rules_confirmed') !== 'true';
-          } catch {
-            return true;
-          }
-        })()}
-        onClose={() => setRulesModalOpen(false)}
-        onConfirmAndBook={() => {
-          try {
-            sessionStorage.setItem('cyberx_rules_confirmed', 'true');
-          } catch {}
+        isBookingGate={rulesGateMode}
+        onClose={() => {
           setRulesModalOpen(false);
+          setRulesGateMode(false);
+        }}
+        onConfirmAndBook={() => {
+          setRulesModalOpen(false);
+          setRulesGateMode(false);
           setBookingOpen(true);
         }}
       />

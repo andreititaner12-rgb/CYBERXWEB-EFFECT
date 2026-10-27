@@ -3,7 +3,17 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RotateCw, ZoomIn, Box, Loader2 } from 'lucide-react';
 
-export const Mouse3DViewer: React.FC = () => {
+interface Mouse3DViewerProps {
+  /** Путь к GLB-модели в public/ */
+  modelUrl?: string;
+  /** Подпись на бейдже поверх канваса */
+  label?: string;
+}
+
+export const Mouse3DViewer: React.FC<Mouse3DViewerProps> = ({
+  modelUrl = '/models/mouse.glb',
+  label = '3D МОДЕЛЬ GLB (360°)',
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
@@ -36,6 +46,10 @@ export const Mouse3DViewer: React.FC = () => {
     if (!activated) return;
     const container = containerRef.current;
     if (!container) return;
+
+    // Смена модели = новый цикл загрузки (оверлей и зум сбрасываются).
+    setLoading(true);
+    setZoomLevel(1);
 
     const width = container.clientWidth || 360;
     const height = container.clientHeight || 280;
@@ -77,7 +91,7 @@ export const Mouse3DViewer: React.FC = () => {
     // 4. Load GLB Model
     const loader = new GLTFLoader();
     loader.load(
-      '/models/mouse.glb',
+      modelUrl,
       (gltf) => {
         const object = gltf.scene;
 
@@ -111,7 +125,7 @@ export const Mouse3DViewer: React.FC = () => {
       },
       undefined,
       (err) => {
-        console.error('Error loading mouse.glb:', err);
+        console.error('Error loading 3D model:', modelUrl, err);
         setLoading(false);
       }
     );
@@ -291,7 +305,7 @@ export const Mouse3DViewer: React.FC = () => {
       renderer.dispose();
       renderer.forceContextLoss();
     };
-  }, [activated]);
+  }, [activated, modelUrl]);
 
   return (
     <div 
@@ -317,7 +331,7 @@ export const Mouse3DViewer: React.FC = () => {
       <div className="absolute top-3 left-3 z-10 flex items-center gap-2 pointer-events-none">
         <span className="px-2.5 py-1 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-mono font-bold text-white flex items-center gap-1.5 shadow-lg">
           <Box className="w-3 h-3 text-[#E32124]" />
-          3D МОДЕЛЬ GLB (360°)
+          {label}
         </span>
       </div>
 
